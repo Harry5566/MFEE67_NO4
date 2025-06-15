@@ -321,7 +321,7 @@ $endPage = min($totalPage, $page + 2);
   <link rel="stylesheet" href="../assets/vendor/css/core.css" />
 
   <!-- custom 自定義 CSS -->
-  <link rel="stylesheet" href="../custom.css">
+  <link rel="stylesheet" href="../assets/css/custom.css">
 </head>
 
 <body>
