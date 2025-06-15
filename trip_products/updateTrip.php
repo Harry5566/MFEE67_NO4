@@ -16,10 +16,6 @@ $sqlCity = "SELECT * FROM `cities`";
 $sqlNotice = "SELECT * FROM `notices` WHERE `trip_id` = ?";
 $sqlImg = "SELECT * FROM `trip_images` WHERE `trip_id` = ?";
 
-date_default_timezone_set("Asia/Taipei");
-$now = date("Y-m-d\TH:i");
-
-
 try {
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute([$id]);
@@ -54,6 +50,16 @@ try {
 	exit;
 }
 
+date_default_timezone_set("Asia/Taipei");
+
+$now = new DateTime();
+$startAt = new DateTime($row["booking_start_at"]);
+$disableStart = $startAt < $now ? "disabled" : "";
+$endAt = new DateTime($row["booking_end_at"]);
+$disableEnd = $endAt < $now ? "disabled" : "";
+$publishedAt = new DateTime($row["published_at"]);
+$disablePublished = $publishedAt < $now ? "disabled" : "";
+
 
 ?>
 
@@ -72,7 +78,7 @@ try {
 	<meta name="description" content="" />
 
 	<!-- Favicon -->
-	<link rel="icon" type="image/x-icon" href="../vnlogo.png" />
+	<link rel="icon" type="image/x-icon" href="../assets/img/favicon/vnlogo-ic.ico" />
 
 	<!-- Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -114,7 +120,7 @@ try {
 	<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
 	<!-- custom 自定義 CSS -->
-	<link rel="stylesheet" href="../custom.css">
+	<link rel="stylesheet" href="../assets/css/custom.css">
 </head>
 
 <body>
@@ -126,7 +132,7 @@ try {
 				<div class="app-brand demo">
 					<a href="./index.php" class="app-brand-link">
 						<span>
-							<span><img class="w-40px h-40px" src="../vnlogo.png" alt=""></span>
+							<span><img class="w-40px h-40px" src="../assets/img/favicon/vnlogo.png" alt=""></span>
 						</span>
 						<span class="fs-4 fw-bold ms-2 app-brand-text demo menu-text align-items-center">xin_chào</span>
 					</a>
@@ -140,104 +146,107 @@ try {
 
 				<div class="menu-inner-shadow"></div>
 
-				<ul class="menu-inner py-1">
-					<!-- 會員管理 -->
-					<li class="menu-item">
-						<a href="#" class="menu-link menu-toggle">
-							<i class="fa-solid fa-users me-3 menu-text"></i>
-							<div class="menu-text fs-5" data-i18n="Dashboards">會員管理</div>
-						</a>
-						<ul class="menu-sub">
-							<li class="menu-item active">
-								<a href="#" class="menu-link">
-									<div class="menu-text fs-6" data-i18n="Analytics">會員列表</div>
-								</a>
-							</li>
-							<li class="menu-item">
-								<a href="#" class="menu-link">
-									<div class="menu-text fs-6" data-i18n="Analytics">停權會員帳號</div>
-								</a>
-							</li>
-						</ul>
-					</li>
+        <ul class="menu-inner py-1">
+          <!-- 會員管理 -->
+          <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle ">
+              <i class="fa-solid fa-users me-3 menu-text"></i>
+              <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">會員管理</div>
+            </a>
+            <ul class="menu-sub">
+              <li class="menu-item active">
+                <a href="../user/index.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Analytics">會員列表</div>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="../user/add.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Analytics">新增會員</div>
+                </a>
+              </li>
+            </ul>
+          </li>
 
-					<!-- 商品管理 -->
-					<li class="menu-item active open">
-						<a href="./index.php" class="menu-link menu-toggle">
-							<i class="fa-solid fa-map-location-dot me-3 menu-text"></i>
-							<div class="menu-text fs-5" data-i18n="Layouts">商品管理</div>
-						</a>
+          <!-- 商品管理 -->
+          <li class="menu-item active open">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <i class="fa-solid fa-map-location-dot me-3 menu-text"></i>
+              <div class="menu-text fs-5 fw-bold" data-i18n="Layouts">商品管理</div>
+            </a>
 
-						<ul class="menu-sub">
-							<li class="menu-item active">
-								<a href="./index.php" class="menu-link">
-									<div class="menu-text fw-bold" data-i18n="Without menu">行程列表</div>
-								</a>
-							</li>
-							<li class="menu-item">
-								<a href="./addTrip.php" class="menu-link">
-									<div class="menu-text fw-bold" data-i18n="Without menu">新增行程</div>
-								</a>
-							</li>
-						</ul>
-					</li>
+            <ul class="menu-sub">
+              <li class="menu-item active">
+                <a href="./index.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Without menu">行程列表</div>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="./addTrip.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Without menu">新增行程</div>
+                </a>
+              </li>
+            </ul>
+          </li>
 
-					<!-- 票券管理 -->
-					<li class="menu-item">
-						<a href="#" class="menu-link menu-toggle">
-							<i class="fa-solid fa-ticket me-3 menu-text"></i>
-							<div class="menu-text fs-5" data-i18n="Dashboards">票券管理</div>
-						</a>
-						<ul class="menu-sub">
-							<li class="menu-item active">
-								<a href="#" class="menu-link">
-									<div class="menu-text fw-bold" data-i18n="Analytics">票券列表</div>
-								</a>
-							</li>
-							<li class="menu-item">
-								<a href="#" class="menu-link">
-									<div class="menu-text fw-bold" data-i18n="Analytics">新增票券</div>
-								</a>
-							</li>
-						</ul>
-					</li>
+          <!-- 票券管理 -->
+          <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <i class="fa-solid fa-ticket me-3 menu-text"></i>
+              <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">票券管理</div>
+            </a>
+            <ul class="menu-sub">
+              <li class="menu-item active">
+                <a href="../ticket/ticketIndex.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Analytics">票券列表</div>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="../ticket/ticketAdd.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Analytics">新增票券</div>
+                </a>
+              </li>
+            </ul>
+          </li>
 
-					<!-- 優惠券管理 -->
-					<li class="menu-item">
-						<a href="#" class="menu-link menu-toggle">
-							<i class="fa-solid fa-tags me-3 menu-text"></i>
-							<div class="menu-text fs-5" data-i18n="Dashboards">優惠券管理</div>
-						</a>
-						<ul class="menu-sub">
-							<li class="menu-item active">
-								<a href="#" class="menu-link">
-									<div class="menu-text fw-bold" data-i18n="Analytics">優惠券列表</div>
-								</a>
-							</li>
-							<li class="menu-item">
-								<a href="#" class="menu-link">
-									<div class="menu-text fw-bold" data-i18n="Analytics">新增優惠券</div>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<!-- 登出(要等建立帳號) -->
-					<!-- <li class="menu-header small text-uppercase">
-						<span class="menu-text fw-bold">會員資訊</span>
-					</li>
-					<div class="container text-center">
-						<div class="d-flex justify-content-center gap-3 mb-3">
-							<img class="head" src="../logo.png?>" alt="">
-							<div class="menu-text fw-bold align-self-center">suxing測試</div>
-						</div>
-						<li class="menu-item row justify-content-center">
-							<a href="../doLogout.php"
-								class="btn rounded-pill btn-gradient-success btn-ban col-10 justify-content-center">
-								<div class="menu-text fw-bold"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>登出</div>
-							</a>
-						</li>
-					</div> -->
-				</ul>
+          <!-- 優惠券管理 -->
+          <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <i class="fa-solid fa-tags me-3 menu-text"></i>
+              <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">優惠券管理</div>
+            </a>
+            <ul class="menu-sub">
+              <li class="menu-item active">
+                <a href="../coupons/index.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Analytics">優惠券列表</div>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="../coupons/add.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Analytics">新增優惠券</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- 登出 -->
+          <li class="menu-header small text-uppercase">
+            <span class="menu-text fw-bold">會員資訊</span>
+          </li>
+          <div class="container text-center">
+
+            <div class="d-flex justify-content-center gap-3 mb-3">
+              <img class="head" src="./img/<?= $_SESSION["members"]["avatar"] ?>" alt="">
+              <div class="menu-text fw-bold align-self-center"><?= $_SESSION["members"]["name"] ?></div>
+            </div>
+
+            <li class="menu-item row justify-content-center">
+              <a href="./doLogout.php"
+                class="btn rounded-pill btn-gradient-success btn-ban col-10 justify-content-center">
+                <div class="menu-text fw-bold"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>登出</div>
+              </a>
+            </li>
+
+          </div>
+        </ul>
 			</aside>
 			<!-- / Menu -->
 
@@ -254,7 +263,7 @@ try {
 						<!-- 需要調整文字和active的顏色 -->
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item">
-								<a href="#" class="text-primary">Home</a>
+								<a href="../user/index.php" class="text-primary">Home</a>
 							</li>
 							<li class="breadcrumb-item">
 								<a href="./index.php" class="text-primary">商品管理</a>
@@ -400,18 +409,22 @@ try {
 										<div class="row mb-6">
 											<label class="col-sm-1 col-form-label text-primary">注意事項</label>
 											<div class="col-sm-11 notice-area">
-												<!-- 需要再調整加號的位置，並加上減號的位置-->
-												<!-- <i class="fa-solid fa-plus text-primary ms-3" id="add-notice"></i> -->
 												<?php foreach ($rowsNotice as $index => $rowNotice): ?>
-													<div class="row mb-2">
+													<div class="row mb-2 notice-item">
 														<div class="col-sm-11 mb-2 d-flex align-items-center justify-content-between">
 															<input type="hidden" name="notice[<?= $index ?>][id]" value="<?= $rowNotice["id"] ?>">
 															<input required name="notice[<?= $index ?>][text]" value="<?= $rowNotice["text"] ?>"
 																type=" text" class="form-control" id="basic-default-company" placeholder="請列點說明注意事項" />
+															<?php if ($index == 0): ?>
+																<i class="fa-solid fa-plus text-primary ms-3" id="add-notice"></i>
+															<?php elseif ($index >= 1): ?>
+																<input type="hidden" value="<?= $rowNotice["id"] ?>">
+																<i class="fa-regular fa-trash-can text-secondary ms-3 del-ori-notice" data-id="<?= $rowNotice['id'] ?>"></i>
+															<?php endif; ?>
 														</div>
+
 													</div>
 												<?php endforeach; ?>
-
 											</div>
 										</div>
 
@@ -420,12 +433,12 @@ try {
 											<div class="col-md-5">
 												<input required name="start-at" class="form-control start-at" type="datetime-local"
 													value="<?= $row["booking_start_at"] ?>" id="html5-datetime-local-input"
-													<?= $row["booking_start_at"] < $now ? "disabled" : "" ?> />
+													<?= $row["booking_start_at"] < $now ? $disableStart : "" ?> />
 											</div>
 											<label class="col-sm-1 col-form-label text-primary">結束販售</label>
 											<div class="col-md-5">
 												<input required name="end-at" class="form-control end-at" type="datetime-local"
-													value="<?= $row["booking_end_at"] ?>" id="html5-datetime-local-input" <?= $row["booking_end_at"] < $now ? "disabled" : "" ?> />
+													value="<?= $row["booking_end_at"] ?>" id="html5-datetime-local-input" <?= $row["booking_end_at"] < $now ? $disableEnd : "" ?> />
 											</div>
 										</div>
 
@@ -433,12 +446,12 @@ try {
 											<label class="col-sm-1 col-form-label text-primary">上架時間</label>
 											<div class="col-md-11">
 												<input required name="published-at" class="form-control published-at" type="datetime-local"
-													value="<?= $row["published_at"] ?>" id="html5-datetime-local-input" <?= $row["published_at"] < $now ? "disabled" : "" ?> />
+													value="<?= $row["published_at"] ?>" id="html5-datetime-local-input" <?= $row["published_at"] < $now ? $disablePublished : "" ?> />
 											</div>
 										</div>
 
 										<!-- 需要設定限制整體容量 -->
-										<!-- 需要預覽檔案圖片 -->
+
 										<div class="row mb-6">
 											<label class="col-sm-1 col-form-label text-primary">封面圖片</label>
 											<div class="col-md-11">
@@ -460,12 +473,17 @@ try {
 										</div>
 
 										<div class="d-flex justify-content-between">
-											<button type="button" class="btn-off btn btn-gradient-success ms-2" data-bs-toggle="modal"
-												data-bs-target="#offModal" data-id="<?= $row["id"] ?>" data-name="<?= $row["name"] ?>">下架</button>
-											<div>
-												<button type="submit" class="btn btn-gradient-warning">完成編輯</button>
+											<?php if ($publishedAt < $now): ?>
+												<button type="button" class="btn-off btn btn-gradient-success ms-2" data-bs-toggle="modal"
+													data-bs-target="#offModal" data-id="<?= $row["id"] ?>" data-name="<?= $row["name"] ?>">下架</button>
+												<div>
+													<button type="submit" class="btn btn-gradient-warning">完成編輯</button>
+													<a class="btn btn-gradient-info ms-2" href="./index.php">取消</a>
+												</div>
+											<?php elseif ($publishedAt > $now): ?>
+												<button type="submit" class="btn btn-gradient-warning ms-auto">完成編輯</button>
 												<a class="btn btn-gradient-info ms-2" href="./index.php">取消</a>
-											</div>
+											<?php endif; ?>
 										</div>
 									</form>
 								<?php endif; ?>
@@ -539,8 +557,9 @@ try {
 		<template id="inputs-notice">
 			<div class="row mb-2">
 				<div class="col-sm-11 mb-2 d-flex align-items-center">
-					<input required name="newNotice[]" type="text" class="form-control" id="basic-default-company"
+					<input required name="notice_new[]" type="text" class="form-control" id="basic-default-company"
 						placeholder="請列點說明注意事項" />
+					<i class="fa-regular fa-trash-can text-secondary ms-3 del-notice"></i></span>
 				</div>
 			</div>
 		</template>
@@ -593,7 +612,9 @@ try {
 
 			const noticeArea = document.querySelector(".notice-area");
 			const addNotice = document.querySelector("#add-notice");
-			const template = document.querySelector("#inputs-notice")
+			const delOriNotice = document.querySelectorAll(".del-ori-notice");
+			const template = document.querySelector("#inputs-notice");
+			const delNoticeId = document.querySelectorAll("input[name=notice_delete]")
 
 			const startInput = document.querySelector(".start-at");
 			const endInput = document.querySelector(".end-at");
@@ -669,11 +690,36 @@ try {
 				});
 			}
 
-			// addNotice.addEventListener("click", e => {
-			// 	// e.preventDefault();
-			// 	const node = template.content.cloneNode(true);
-			// 	noticeArea.append(node);
-			// })
+			delOriNotice.forEach(function (btn) {
+				btn.addEventListener("click", function () {
+					const noticeId = btn.dataset.id;
+
+					if (noticeId) {
+						const input = document.createElement("input");
+						input.type = "hidden";
+						input.name = "notice_delete[]";
+						input.value = noticeId;
+						document.querySelector("form").append(input);
+					}
+
+					btn.closest(".notice-item").remove();
+				});
+			});
+
+
+			addNotice.addEventListener("click", e => {
+				// e.preventDefault();
+				const node = template.content.cloneNode(true);
+				const newNotice = node.querySelector(".row");
+
+				const notices = noticeArea.querySelectorAll("#inputs-notice");
+				const delNotice = newNotice.querySelector(".del-notice");
+				delNotice.addEventListener("click", e => {
+					newNotice.remove();
+				})
+
+				noticeArea.appendChild(newNotice);
+			})
 
 			// 設定日曆選擇時間限制
 			function toDatetimeLocal(dt) {

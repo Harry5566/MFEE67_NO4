@@ -43,20 +43,32 @@ $descriptionLength = mb_strlen($description);
 
 $now = date("Y-m-d H:i:s");
 
-$inputStartTime = $_POST["start-at"];
-$startDt = new DateTime($inputStartTime);
-$startTime = $startDt->format("Y-m-d H:i:s");
+$startTime = $row["booking_start_at"];
+$endTime = $row["booking_end_at"];
+$publishedTime = $row["published_at"];
 
-$inputEndTime = $_POST["end-at"];
-$endDt = new DateTime($inputEndTime);
-$endTime = $endDt->format("Y-m-d H:i:s");
+if (isset($_POST["start-at"]) && $_POST["start-at"] !== "") {
+  $startDt = new DateTime($_POST["start-at"]);
+  $startTime = $startDt->format("Y-m-d H:i:s");
+}
 
-$inputPublishedTime = $_POST["published-at"];
-$publishedDt = new DateTime($inputPublishedTime);
-$publishedTime = $publishedDt->format("Y-m-d H:i:s");
+if (isset($_POST["end-at"]) && $_POST["end-at"] !== "") {
+  $endDt = new DateTime($_POST["end-at"]);
+  $endTime = $endDt->format("Y-m-d H:i:s");
+}
 
-//notices 目前是修改現有的 不刪減
-$notices = $_POST["notice"];
+if (isset($_POST["published-at"]) && $_POST["published-at"] !== "") {
+  $publishedDt = new DateTime($_POST["published-at"]);
+  $publishedTime = $publishedDt->format("Y-m-d H:i:s");
+}
+
+//notices 更改判斷
+$notices = $_POST["notice"] ?? [];
+$noticesNew = $_POST["notice_new"] ?? [];
+$noticesDel = $_POST["notice_delete"] ?? [];
+
+$totalNoticeCount = count($notices) + count($noticesNew) + count($noticesDel);
+
 
 
 // $newNotices = $_POST["newNotice"];
@@ -115,77 +127,79 @@ if ($days != $row["duration"]) {
   $values[":duration"] = $days;
 }
 
-if ($startTime != $row["booking_start_at"]) {
+if (date("Y-m-d H:i:s", strtotime($startTime)) != date("Y-m-d H:i:s", strtotime($row["booking_start_at"]))) {
   $set[] = "`booking_start_at` = :booking_start_at";
   $values[":booking_start_at"] = $startTime;
 }
 
-if ($endTime != $row["booking_end_at"]) {
+
+if (date("Y-m-d H:i:s", strtotime($endTime)) != date("Y-m-d H:i:s", strtotime($row["booking_end_at"]))) {
   $set[] = "`booking_end_at` = :booking_end_at";
   $values[":booking_end_at"] = $endTime;
 }
 
-if ($publishedTime != $row["published_at"]) {
+if (date("Y-m-d H:i:s", strtotime($publishedTime)) != date("Y-m-d H:i:s", strtotime($row["published_at"]))) {
   $set[] = "`published_at` = :published_at";
   $values[":published_at"] = $publishedTime;
 }
 
+
 // 輸入的判斷
 if ($days < 1) {
-    alertAndBack("❌ 行程天數不可小於1");
-    exit;
+  alertAndBack("❌ 行程天數不可小於1");
+  exit;
 }
 
 if ($price <= 0 || $price > 99999999) {
-    alertAndBack("❌ 價格範圍不合理，請重新輸入");
-    exit;
+  alertAndBack("❌ 價格範圍不合理，請重新輸入");
+  exit;
 }
 
 if ($infoLength < 20 || $infoLength > 100) {
-    alertAndBack("⚠️ 行程簡介需填寫20~100個字元");
-    exit;
+  alertAndBack("⚠️ 行程簡介需填寫20~100個字元");
+  exit;
 }
 
 if ($descriptionLength < 200 || $descriptionLength > 1000) {
-    alertAndBack("⚠️ 行程介紹需填寫200~1000個字元");
-    exit;
+  alertAndBack("⚠️ 行程介紹需填寫200~1000個字元");
+  exit;
 }
 
 if ($_FILES["tripFile"]["name"] == "") {
-    alertAndBack("⚠️ 行程封面需要選擇至少一張圖片");
-    exit;
+  alertAndBack("⚠️ 行程封面需要選擇至少一張圖片");
+  exit;
 }
 
 if ($notices < 1) {
-    alertAndBack("⚠️ 至少需填寫一項注意事項");
-    exit;
+  alertAndBack("⚠️ 至少需填寫一項注意事項");
+  exit;
 }
 
 // 以防萬一的時間判斷
-if ($startTime < $now) {
-    alertAndBack("⛔ 開始販售時間不能早於現在");
-    exit;
-}
 
-if ($endTime < $startTime) {
+if (isset($_POST["end-at"]) || isset($_POST["start-at"])) {
+  if ($endTime < $startTime) {
     alertAndBack("⛔ 結束販售時間不能早於開始販售時間");
     exit;
+  }
 }
 
-if ($publishedTime > $startTime) {
+
+if (isset($_POST["published-at"]) || isset($_POST["start-at"])) {
+  if ($publishedTime > $startTime) {
     alertAndBack("⛔ 上架時間不能晚於開始販售時間");
     exit;
+  }
 }
 
-if ($publishedTime > $endTime) {
-    alertAndBack("⛔ 上架時間不能大於開始販售時間");
+
+if (isset($_POST["start-at"]) || isset($_POST["end-at"])) {
+  if ($publishedTime > $endTime) {
+    alertAndBack("⛔ 上架時間不能晚於開始販售時間");
     exit;
+  }
 }
 
-if ($publishedTime < $now) {
-    alertAndBack("⚠️ 上架時間不能早於現在時間");
-    exit;
-}
 
 // 注意事項的修改與否判斷
 $noticeChanged = false;
@@ -207,9 +221,43 @@ if ($notices !== "") {
   }
 }
 
-if (count($notices)  < 1) {
-    alertAndBack("⚠️ 至少需填寫一項注意事項");
-    exit;
+if (!empty($noticesNew) || !empty($noticesDel)) {
+  $noticeChanged = true;
+}
+
+if (!empty($_POST["notice"])) {
+  foreach ($_POST["notice"] as $notice) {
+    $sql = "UPDATE notices SET text=? WHERE id=?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$notice["text"], $notice["id"]]);
+  }
+}
+
+if (!empty($_POST["notice_new"])) {
+  foreach ($_POST["notice_new"] as $noticeNew) {
+    if (trim($noticeNew) === "")
+      continue; // 空值略過
+    $sql = "INSERT INTO notices (trip_id, text) VALUES (?, ?)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id, $noticeNew]);
+  }
+}
+
+if (!empty($_POST["notice_delete"])) {
+  $idsToDelete = $_POST["notice_delete"];
+  $delIDs = implode(',', array_fill(0, count($idsToDelete), '?'));
+
+  $sql = "DELETE FROM notices WHERE id IN ($delIDs)";
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute($idsToDelete);
+}
+
+
+
+
+if ($totalNoticeCount < 1) {
+  alertAndBack("⚠️ 至少需填寫一項注意事項");
+  exit;
 }
 
 
@@ -241,7 +289,7 @@ if (isset($_FILES["tripFile"])) {
 
 // 欄位修改判斷
 if (count($set) == 0 && !$noticeChanged && !$imagesChanged) {
-  alertAndBack("沒有修改任何欄位");
+  alertAndBack("🌼 沒有修改任何欄位");
   exit;
 }
 

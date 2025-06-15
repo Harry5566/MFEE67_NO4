@@ -50,7 +50,7 @@ try {
 	<meta name="description" content="" />
 
 	<!-- Favicon -->
-	<link rel="icon" type="image/x-icon" href="../logo.png" />
+	<link rel="icon" type="image/x-icon" href="../assets/img/favicon/vnlogo-ic.ico" />
 
 	<!-- Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -92,7 +92,7 @@ try {
 	<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
 	<!-- custom 自定義 CSS -->
-	<link rel="stylesheet" href="../custom.css">
+	<link rel="stylesheet" href="../assets/css/custom.css">
 </head>
 
 <body>
@@ -105,7 +105,7 @@ try {
 				<div class="app-brand demo">
 					<a href="./index.php" class="app-brand-link">
 						<span>
-							<span><img class="w-40px h-40px" src="../logo.png" alt=""></span>
+							<span><img class="w-40px h-40px" src="../assets/img/favicon/vnlogo.png" alt=""></span>
 						</span>
 						<span class="fs-4 fw-bold ms-2 app-brand-text demo menu-text align-items-center">xin_chào</span>
 					</a>
@@ -118,105 +118,108 @@ try {
 				<div class="menu-divider mt-0"></div>
 
 				<div class="menu-inner-shadow"></div>
+				
+        <ul class="menu-inner py-1">
+          <!-- 會員管理 -->
+          <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle ">
+              <i class="fa-solid fa-users me-3 menu-text"></i>
+              <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">會員管理</div>
+            </a>
+            <ul class="menu-sub">
+              <li class="menu-item active">
+                <a href="../user/index.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Analytics">會員列表</div>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="../user/add.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Analytics">新增會員</div>
+                </a>
+              </li>
+            </ul>
+          </li>
 
-				<ul class="menu-inner py-1">
-					<!-- 會員管理 -->
-					<li class="menu-item">
-						<a href="#" class="menu-link menu-toggle">
-							<i class="fa-solid fa-users me-3 menu-text"></i>
-							<div class="menu-text fs-5" data-i18n="Dashboards">會員管理</div>
-						</a>
-						<ul class="menu-sub">
-							<li class="menu-item active">
-								<a href="#" class="menu-link">
-									<div class="menu-text fs-6" data-i18n="Analytics">會員列表</div>
-								</a>
-							</li>
-							<li class="menu-item">
-								<a href="#" class="menu-link">
-									<div class="menu-text fs-6" data-i18n="Analytics">停權會員帳號</div>
-								</a>
-							</li>
-						</ul>
-					</li>
+          <!-- 商品管理 -->
+          <li class="menu-item active open">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <i class="fa-solid fa-map-location-dot me-3 menu-text"></i>
+              <div class="menu-text fs-5 fw-bold" data-i18n="Layouts">商品管理</div>
+            </a>
 
-					<!-- 商品管理 -->
-					<li class="menu-item active open">
-						<a href="./index.php" class="menu-link menu-toggle">
-							<i class="fa-solid fa-map-location-dot me-3 menu-text"></i>
-							<div class="menu-text fs-5" data-i18n="Layouts">商品管理</div>
-						</a>
+            <ul class="menu-sub">
+              <li class="menu-item active">
+                <a href="./index.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Without menu">行程列表</div>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="./addTrip.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Without menu">新增行程</div>
+                </a>
+              </li>
+            </ul>
+          </li>
 
-						<ul class="menu-sub">
-							<li class="menu-item active">
-								<a href="./index.php" class="menu-link">
-									<div class="menu-text fw-bold" data-i18n="Without menu">行程列表</div>
-								</a>
-							</li>
-							<li class="menu-item">
-								<a href="./addTrip.php" class="menu-link">
-									<div class="menu-text fw-bold" data-i18n="Without menu">新增行程</div>
-								</a>
-							</li>
-						</ul>
-					</li>
+          <!-- 票券管理 -->
+          <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <i class="fa-solid fa-ticket me-3 menu-text"></i>
+              <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">票券管理</div>
+            </a>
+            <ul class="menu-sub">
+              <li class="menu-item active">
+                <a href="../ticket/ticketIndex.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Analytics">票券列表</div>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="../ticket/ticketAdd.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Analytics">新增票券</div>
+                </a>
+              </li>
+            </ul>
+          </li>
 
-					<!-- 票券管理 -->
-					<li class="menu-item">
-						<a href="#" class="menu-link menu-toggle">
-							<i class="fa-solid fa-ticket me-3 menu-text"></i>
-							<div class="menu-text fs-5" data-i18n="Dashboards">票券管理</div>
-						</a>
-						<ul class="menu-sub">
-							<li class="menu-item active">
-								<a href="#" class="menu-link">
-									<div class="menu-text fw-bold" data-i18n="Analytics">票券列表</div>
-								</a>
-							</li>
-							<li class="menu-item">
-								<a href="#" class="menu-link">
-									<div class="menu-text fw-bold" data-i18n="Analytics">新增票券</div>
-								</a>
-							</li>
-						</ul>
-					</li>
+          <!-- 優惠券管理 -->
+          <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <i class="fa-solid fa-tags me-3 menu-text"></i>
+              <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">優惠券管理</div>
+            </a>
+            <ul class="menu-sub">
+              <li class="menu-item active">
+                <a href="../coupons/index.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Analytics">優惠券列表</div>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="../coupons/add.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Analytics">新增優惠券</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- 登出 -->
+          <li class="menu-header small text-uppercase">
+            <span class="menu-text fw-bold">會員資訊</span>
+          </li>
+          <div class="container text-center">
 
-					<!-- 優惠券管理 -->
-					<li class="menu-item">
-						<a href="#" class="menu-link menu-toggle">
-							<i class="fa-solid fa-tags me-3 menu-text"></i>
-							<div class="menu-text fs-5" data-i18n="Dashboards">優惠券管理</div>
-						</a>
-						<ul class="menu-sub">
-							<li class="menu-item active">
-								<a href="#" class="menu-link">
-									<div class="menu-text fw-bold" data-i18n="Analytics">優惠券列表</div>
-								</a>
-							</li>
-							<li class="menu-item">
-								<a href="#" class="menu-link">
-									<div class="menu-text fw-bold" data-i18n="Analytics">新增優惠券</div>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<!-- 登出(要等建立帳號) -->
-					<!-- <li class="menu-header small text-uppercase">
-						<span class="menu-text fw-bold">會員資訊</span>
-					</li>
-					<div class="container text-center">
-						<div class="d-flex justify-content-center gap-3 mb-3">
-							<img class="head" src="../logo.png?>" alt="">
-							<div class="menu-text fw-bold align-self-center">suxing測試</div>
-						</div>
-						<li class="menu-item row justify-content-center">
-							<a href="../doLogout.php"
-								class="btn rounded-pill btn-gradient-success btn-ban col-10 justify-content-center">
-								<div class="menu-text fw-bold"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>登出</div>
-							</a>
-						</li>
-					</div> -->
-				</ul>
+            <div class="d-flex justify-content-center gap-3 mb-3">
+              <img class="head" src="./img/<?= $_SESSION["members"]["avatar"] ?>" alt="">
+              <div class="menu-text fw-bold align-self-center"><?= $_SESSION["members"]["name"] ?></div>
+            </div>
+
+            <li class="menu-item row justify-content-center">
+              <a href="./doLogout.php"
+                class="btn rounded-pill btn-gradient-success btn-ban col-10 justify-content-center">
+                <div class="menu-text fw-bold"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>登出</div>
+              </a>
+            </li>
+
+          </div>
+        </ul>
 			</aside>
 			<!-- / Menu -->
 
@@ -233,7 +236,7 @@ try {
 						<!-- 需要調整文字和active的顏色 -->
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item">
-								<a href="#" class="text-primary">Home</a>
+								<a href="../user/index.php" class="text-primary">Home</a>
 							</li>
 							<li class="breadcrumb-item">
 								<a href="./index.php" class="text-primary">商品管理</a>

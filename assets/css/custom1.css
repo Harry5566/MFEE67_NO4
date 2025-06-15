@@ -91,7 +91,6 @@
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
   backdrop-filter: blur(10px) !important;
-  min-height: 150px;
 }
 
 .layout-menu .app-brand-link {
@@ -176,7 +175,6 @@ a.layout-menu-toggle {
 }
 
 
-
 /* Layout Page 容器修正 */
 .layout-page {
   background-color: #f1e3d9 !important;
@@ -186,7 +184,6 @@ a.layout-menu-toggle {
 .layout-page * {
   transition: color 0.2s ease, background-color 0.2s ease !important;
 }
-
 
 /* App Brand Logo 區域 */
 .app-brand-link {
@@ -439,6 +436,14 @@ a.layout-menu-toggle {
   box-shadow: 0 0 0 0.2rem rgba(174, 67, 30, 0.25) !important;
 }
 
+/* 連結通用樣式 */
+/* a {
+  color: #ae431e !important;
+}
+
+a:hover {
+  color: #8d3519 !important;
+} */
 
 /* 警告框 */
 .alert-primary {
@@ -515,25 +520,17 @@ html .btn-primary:hover {
   border-color: #8d3519 !important;
 }
 
-
 /* 其他設定 */
+.w-40px {
+  width: 40PX;
+}
 
 .h-40px {
   height: 40px;
 }
 
-.fs-8px {
-  font-size: 8px;
-}
-
-.fs-14px {
-  font-size: 14px;
-}
-
-.logo {
-  max-height: 180px;
-  width: auto;
-  display: block;
+.fs-6px {
+  font-size: 6px;
 }
 
 .no-padding-container {
@@ -564,16 +561,6 @@ tbody tr:hover {
   color: var(--bs-warning) !important;
 }
 
-.del-notice:hover {
-  cursor: pointer;
-  color: var(--bs-success) !important;
-}
-
-.del-ori-notice:hover {
-  cursor: pointer;
-  color: var(--bs-success) !important;
-}
-
 .preview img {
   width: 100%;
   height: 100%;
@@ -581,40 +568,24 @@ tbody tr:hover {
 }
 
 /* 圓形按鈕組合 */
-.action-buttons .btn {
-  margin: 2px;
-  width: 35px;
-  height: 35px;
+.btn-circle {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  padding: 0;
 }
 
-/* 輪播圖片大小一致 */
-.carousel-inner img {
-  aspect-ratio: 16/9;
-  object-fit: cover;
+.btn-circle i {
+  font-size: 16px;
+  position: relative;
+  top: 1px;
+  left: 1.5px;
 }
-
-/* 新增、編輯、檢視頁的寬度設定 */
-.custom-width {
-  width: 90%;
-  margin: auto;
-}
-
-@media (width > 1400px) {
-
-  /* lg 以上視窗才套用 */
-  .custom-width {
-    width: 65%;
-  }
-}
-
-/* 檢視多段文字內容用 */
-.pre-wrap-text {
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
 
 /* 修正可能的 success RGB 值錯誤 */
-:root {
+:root[data-bs-theme="light"] {
   --bs-success-rgb: 138, 139, 53 !important;
 }
