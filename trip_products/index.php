@@ -30,7 +30,8 @@ $sTime = $_GET["sTime"] ?? null;
 $eTime = $_GET["eTime"] ?? null;
 $pDate = $_GET["pDate"] ?? null;
 
-$bfilter = $_GET["bfilter"] ?? null;
+$bonfilter = $_GET["bonfilter"] ?? null;
+$bofffilter = $_GET["bofffilter"] ?? null;
 $priceSort = $_GET["psort"] ?? null;
 $stockSort = $_GET["ssort"] ?? null;
 $viewSort = $_GET["vsort"] ?? null;
@@ -39,8 +40,8 @@ $queryParams = $_GET;
 unset($queryParams['page']);
 $queryString = http_build_query($queryParams);
 
-$linkBase = "./index.php?";
-$pageLink = $queryString ? "$linkBase?$queryString" : $linkBase;
+$linkBase = "./index.php";
+$pageLink = $queryString ? "$linkBase?$queryString" : "$linkBase?";
 
 $now = time();
 
@@ -116,13 +117,24 @@ if (!empty($pDate)) {
   $values["pDate"] = $pDate;
 }
 
-if (!empty($bfilter)) {
-  switch ($bfilter) {
+if (!empty($bonfilter)) {
+  switch ($bonfilter) {
     case "on":
       $conditions[] = "(t.booking_start_at < NOW()) AND (t.booking_end_at > NOW()) AND (t.unpublished_at IS NULL) AND (t.stock <> 0)";
       break;
     case "not-yet":
-      $conditions[] = "t.booking_start_at > NOW()";
+      $conditions[] = "t.booking_start_at > NOW() ";
+      break;
+    case 'off':
+      $conditions[] = "t.stock = 0";
+      break;
+  }
+}
+
+if (!empty($bofffilter)) {
+  switch ($bofffilter) {
+    case "not-soldout":
+      $conditions[] = "t.stock <> 0";
       break;
     case 'off':
       $conditions[] = "t.stock = 0";
@@ -276,7 +288,7 @@ $endPage = min($totalPage, $page + 2);
   <meta name="description" content="" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="../logo.png" />
+  <link rel="icon" type="image/x-icon" href="../assets/img/favicon/vnlogo-ic.ico" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -322,6 +334,14 @@ $endPage = min($totalPage, $page + 2);
 
   <!-- custom 自定義 CSS -->
   <link rel="stylesheet" href="../assets/css/custom.css">
+  <style>
+    /* 圓形按鈕組合 */
+    .action-buttons .btn {
+      margin: 0;
+      width: 25px;
+      height: 26px;
+    }
+  </style>
 </head>
 
 <body>
@@ -333,12 +353,12 @@ $endPage = min($totalPage, $page + 2);
       <!-- Menu -->
 
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-        <div class="app-brand demo">
+        <div class="app-brand demo d-flex justify-content-center align-items-center">
           <a href="./index.php" class="app-brand-link">
             <span>
-              <span><img class="w-40px h-40px" src="../logo.png" alt=""></span>
+              <span><img class="logo" src="../assets/img/favicon/vnlogo.png" alt=""></span>
             </span>
-            <span class="fs-4 fw-bold ms-2 app-brand-text demo menu-text align-items-center">xin_chào</span>
+            <span class="fs-4 fw-bold ms-2 app-brand-text demo menu-text align-items-center"></span>
           </a>
 
           <a href="javascript:void(0);" class="layout-menu-toggle menu-link ms-auto">
@@ -353,19 +373,19 @@ $endPage = min($totalPage, $page + 2);
         <ul class="menu-inner py-1">
           <!-- 會員管理 -->
           <li class="menu-item">
-            <a href="#" class="menu-link menu-toggle">
+            <a href="javascript:void(0);" class="menu-link menu-toggle ">
               <i class="fa-solid fa-users me-3 menu-text"></i>
-              <div class="menu-text fs-5" data-i18n="Dashboards">會員管理</div>
+              <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">會員管理</div>
             </a>
             <ul class="menu-sub">
               <li class="menu-item active">
-                <a href="#" class="menu-link">
-                  <div class="menu-text fs-6" data-i18n="Analytics">會員列表</div>
+                <a href="../user/index.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Analytics">會員列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="#" class="menu-link">
-                  <div class="menu-text fs-6" data-i18n="Analytics">停權會員帳號</div>
+                <a href="../user/add.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Analytics">新增會員</div>
                 </a>
               </li>
             </ul>
@@ -373,9 +393,9 @@ $endPage = min($totalPage, $page + 2);
 
           <!-- 商品管理 -->
           <li class="menu-item active open">
-            <a href=".index.php" class="menu-link menu-toggle">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
               <i class="fa-solid fa-map-location-dot me-3 menu-text"></i>
-              <div class="menu-text fs-5" data-i18n="Layouts">商品管理</div>
+              <div class="menu-text fs-5 fw-bold" data-i18n="Layouts">商品管理</div>
             </a>
 
             <ul class="menu-sub">
@@ -394,18 +414,18 @@ $endPage = min($totalPage, $page + 2);
 
           <!-- 票券管理 -->
           <li class="menu-item">
-            <a href="#" class="menu-link menu-toggle">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
               <i class="fa-solid fa-ticket me-3 menu-text"></i>
-              <div class="menu-text fs-5" data-i18n="Dashboards">票券管理</div>
+              <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">票券管理</div>
             </a>
             <ul class="menu-sub">
               <li class="menu-item active">
-                <a href="#" class="menu-link">
+                <a href="../ticket/ticketIndex.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Analytics">票券列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a href="../ticket/ticketAdd.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Analytics">新增票券</div>
                 </a>
               </li>
@@ -414,39 +434,42 @@ $endPage = min($totalPage, $page + 2);
 
           <!-- 優惠券管理 -->
           <li class="menu-item">
-            <a href="#" class="menu-link menu-toggle">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
               <i class="fa-solid fa-tags me-3 menu-text"></i>
-              <div class="menu-text fs-5" data-i18n="Dashboards">優惠券管理</div>
+              <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">優惠券管理</div>
             </a>
             <ul class="menu-sub">
               <li class="menu-item active">
-                <a href="#" class="menu-link">
+                <a href="../coupons/index.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Analytics">優惠券列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a href="../coupons/add.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Analytics">新增優惠券</div>
                 </a>
               </li>
             </ul>
           </li>
-          <!-- 登出(要等建立帳號) -->
-          <!-- <li class="menu-header small text-uppercase">
+          <!-- 登出 -->
+          <li class="menu-header small text-uppercase">
             <span class="menu-text fw-bold">會員資訊</span>
           </li>
           <div class="container text-center">
+
             <div class="d-flex justify-content-center gap-3 mb-3">
-              <img class="head" src="../logo.png?>" alt="">
-              <div class="menu-text fw-bold align-self-center">suxing測試</div>
+              <img class="head" src="./img/<?= $_SESSION["members"]["avatar"] ?>" alt="">
+              <div class="menu-text fw-bold align-self-center"><?= $_SESSION["members"]["name"] ?></div>
             </div>
+
             <li class="menu-item row justify-content-center">
-              <a href="../doLogout.php"
+              <a href="./doLogout.php"
                 class="btn rounded-pill btn-gradient-success btn-ban col-10 justify-content-center">
                 <div class="menu-text fw-bold"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>登出</div>
               </a>
             </li>
-          </div> -->
+
+          </div>
         </ul>
       </aside>
       <!-- / Menu -->
@@ -464,7 +487,7 @@ $endPage = min($totalPage, $page + 2);
             <!-- 需要調整文字和active的顏色 -->
             <ol class="breadcrumb">
               <li class="breadcrumb-item">
-                <a href="#" class="text-primary">Home</a>
+                <a href="../user/index.php" class="text-primary">Home</a>
               </li>
               <li class="breadcrumb-item">
                 <a href="./index.php" class="text-primary">商品管理</a>
@@ -498,7 +521,7 @@ $endPage = min($totalPage, $page + 2);
                   class="nav-link <?= $status == "off" ? "active" : "" ?>" role="tab" data-bs-toggle="tab"
                   data-bs-target="#navs-pills-top-messages" aria-controls="navs-pills-top-messages"
                   aria-selected="false">
-                  下架
+                  已下架
                 </button>
               </li>
             </ul>
@@ -521,9 +544,9 @@ $endPage = min($totalPage, $page + 2);
                   <!-- 主類別篩選 -->
                   <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6 mb-3">
                     <select class="form-select fw-bold text-primary" name="mainCate">
-                      <option selected disabled value="">主類別</option>
+                      <option selected disabled>主類別</option>
                       <?php foreach ($rowsMainCate as $rowMainCate): ?>
-                        <option value="<?= $rowMainCate["id"] ?>"><?= $rowMainCate["name"] ?>
+                        <option value="<?= $rowMainCate["id"] ?>" <?= (isset($_GET["mcid"]) && $_GET["mcid"] == $rowMainCate["id"]) ? "selected" : "" ?>><?= $rowMainCate["name"] ?>
                         </option>
                       <?php endforeach; ?>
                     </select>
@@ -539,9 +562,9 @@ $endPage = min($totalPage, $page + 2);
                   <!-- 地區篩選 -->
                   <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6 mb-3">
                     <select class="form-select fw-bold text-primary" name="region">
-                      <option selected disabled value="">地區</option>
+                      <option selected disabled>地區</option>
                       <?php foreach ($rowsRegion as $rowRegion): ?>
-                        <option value="<?= $rowRegion["id"] ?>"><?= $rowRegion["name"] ?>
+                        <option value="<?= $rowRegion["id"] ?>" <?= (isset($_GET["rid"]) && $_GET["rid"] == $rowRegion["id"]) ? "selected" : "" ?>><?= $rowRegion["name"] ?>
                         </option>
                       <?php endforeach; ?>
                     </select>
@@ -558,9 +581,9 @@ $endPage = min($totalPage, $page + 2);
                   <!-- 行程天數篩選 -->
                   <div class="col-xl-1 col-lg-4 col-md-4 col-sm-6 mb-3">
                     <select class="form-select fw-bold text-primary" name="days">
-                      <option selected disabled value="">天數</option>
+                      <option selected disabled>天數</option>
                       <?php foreach ($rowsDays as $rowDays): ?>
-                        <option value="<?= $rowDays["duration"] ?>"><?= $rowDays["duration"] ?>
+                        <option value="<?= $rowDays["duration"] ?>" <?= (isset($_GET["days"]) && $_GET["days"] == $rowDays["duration"]) ? "selected" : "" ?>><?= $rowDays["duration"] ?>
                         </option>
                       <?php endforeach; ?>
                     </select>
@@ -618,7 +641,7 @@ $endPage = min($totalPage, $page + 2);
 
             <!-- 商品列表 -->
             <div class="nav-align-top">
-              <div class="tab-content py-2 rounded-3">
+              <div class="tab-content py-2 px-5 rounded-3">
                 <div class="d-flex align-items-center justify-content-between mb-3">
                   <div class=" fw-bold fs-5 text-primary mb-3 mt-0"><i class="fa-solid fa-location-dot me-3"></i>行程列表
                   </div>
@@ -657,8 +680,13 @@ $endPage = min($totalPage, $page + 2);
                         <th class="text-primary text-center fs-6">
                           <div class="d-flex align-items-center justify-content-center">
                             <span>販售狀態</span>
-                            <?php if ($status !== "not-yet" && $status !== "off"): ?>
-                              <div class="d-flex flex-column bfilter-button ms-2" data-sort="" role="button">
+                            <?php if ($status == "" || $status == "on"): ?>
+                              <div class="d-flex flex-column bonfilter-button ms-2" data-sort="" role="button">
+                                <i class="fa-solid fa-caret-up fs-8px"></i>
+                                <i class="fa-solid fa-caret-down fs-8px"></i>
+                              </div>
+                            <?php elseif ($status == "off"): ?>
+                              <div class="d-flex flex-column bofffilter-button ms-2" data-sort="" role="button">
                                 <i class="fa-solid fa-caret-up fs-8px"></i>
                                 <i class="fa-solid fa-caret-down fs-8px"></i>
                               </div>
@@ -669,7 +697,7 @@ $endPage = min($totalPage, $page + 2);
                         <th class="text-primary text-center fs-6">主類別</th>
                         <th class="text-primary text-center fs-6">子類別</th>
                         <th class="text-primary text-center fs-6">地區</th>
-                        <th class="text-primary text-center fs-6">城市</th>
+                        <th class="text-primary text-center fs-6">地點</th>
                         <th class="text-primary text-center fs-6">天數</th>
                         <th class="text-primary text-center fs-6">
                           <div class="d-flex align-items-center justify-content-center">
@@ -719,8 +747,8 @@ $endPage = min($totalPage, $page + 2);
                               <span class="badge bg-label-warning rounded-pill me-1">販售中</span>
                             <?php elseif ($stock == 0): ?>
                               <span class="badge bg-label-primary rounded-pill me-1">售完</span>
-                            <?php elseif ($now > $endTime || $offTime !== null): ?>
-                              <span class="badge bg-label-success rounded-pill me-1">販售結束</span>
+                            <?php elseif ($now > $endTime || $offTime !== null && $stock !== 0): ?>
+                              <span class="badge bg-label-success rounded-pill me-1">未售完</span>
                             <?php endif; ?>
                           </td>
 
@@ -735,15 +763,15 @@ $endPage = min($totalPage, $page + 2);
                           <td class="text-center"><?= $row["views"] ?></td>
                           <td class="text-center">
                             <div class="action-buttons d-flex align-items-center gap-2">
-                              <a class="btn-circle btn btn-warning" href="./viewTrip.php?id=<?= $row["id"] ?>"><i
-                                  class="bx bx-show-alt me-1 text-white"></i></a>
+                              <a class="btn btn-sm rounded-pill btn-warning" href="./viewTrip.php?id=<?= $row["id"] ?>"
+                                alt="檢視行程"><i class="bx bx-show-alt"></i></a>
                               <?php if ($row["unpublished_at"] === null): ?>
-                                <a class="btn-circle btn btn-info" href="./updateTrip.php?id=<?= $row["id"] ?>"><i
-                                    class="bx bx-edit-alt me-1"></i></a>
+                                <a class="btn btn-sm rounded-pill btn-info" href="./updateTrip.php?id=<?= $row["id"] ?>"
+                                  alt="編輯行程"><i class="bx bx-edit-alt"></i></a>
                               <?php endif; ?>
-                              <button type="button" class="btn-circle btn-del btn btn-success" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal" data-id="<?= $row["id"] ?>"
-                                data-name="<?= $row["name"] ?>"><i class="bx bx-trash"></i></button>
+                              <button type="button" class="btn btn-sm rounded-pill btn-success btn-del"
+                                data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="<?= $row["id"] ?>"
+                                title="刪除行程" data-name="<?= $row["name"] ?>"><i class="bx bx-trash"></i></button>
                             </div>
                           </td>
                         </tr>
@@ -885,17 +913,22 @@ $endPage = min($totalPage, $page + 2);
     const searchEndTime = document.querySelector("input[name='end-at']")
     const searchPublishedTime = document.querySelector("input[name='published-at']")
     const btnSearch = document.querySelector(".btn-search");
-    const bFilterBtn = document.querySelector(".bfilter-button");
+    const bOnFilterBtn = document.querySelector(".bonfilter-button");
+    const bOffFilterBtn = document.querySelector(".bofffilter-button");
     const psortBtn = document.querySelector(".psort-button");
     const ssortBtn = document.querySelector(".ssort-button");
     const vsortBtn = document.querySelector(".vsort-button");
 
-    //主/子選單製作
     let subs = [];
     let cities = [];
 
     subs = <?php echo json_encode($rowsSubCate) ?>;
     cities = <?php echo json_encode($rowsCity) ?>;
+
+    const selectedMainId = "<?= $_GET["mcid"] ?? "" ?>";
+    const selectedSubId = "<?= $_GET["scid"] ?? "" ?>";
+    const selectedRegionId = "<?= $_GET["rid"] ?? "" ?>";
+    const selectedCityId = "<?= $_GET["cid"] ?? "" ?>";
 
     const selectMain = document.querySelector("select[name=mainCate]");
     const selectSub = document.querySelector("select[name=subCate]");
@@ -913,6 +946,8 @@ $endPage = min($totalPage, $page + 2);
     const btnConfirmDels = document.querySelector("#confirmDelete");
 
     const deleteModal = new bootstrap.Modal(deleteModalElement);
+
+
 
 
     //上下架狀態判斷功能
@@ -963,29 +998,52 @@ $endPage = min($totalPage, $page + 2);
     }
 
     // 販售狀態的分類篩選
-    if (bFilterBtn) {
-      bFilterBtn.addEventListener("click", () => {
+    if (bOnFilterBtn) {
+      bOnFilterBtn.addEventListener("click", () => {
         const urlParams = new URLSearchParams(window.location.search);
-        const currentFilter = urlParams.get("bfilter") || "";
-        let newFilter = setFilterData(currentFilter);
+        const currentFilter = urlParams.get("bonfilter") || "";
+        let newFilter = setOnFilterData(currentFilter);
 
         urlParams.delete("psort");
         urlParams.delete("ssort");
         urlParams.delete("vsort");
 
-        urlParams.set("bfilter", newFilter);
+        urlParams.set("bonfilter", newFilter);
         urlParams.set("page", 1);
         window.location.href = `./index.php?${urlParams.toString()}`;
       })
     }
 
+    if (bOffFilterBtn) {
+      bOffFilterBtn.addEventListener("click", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentFilter = urlParams.get("bofffilter") || "";
+        let newFilter = setOffFilterData(currentFilter);
 
-    function setFilterData(current) {
+        urlParams.delete("psort");
+        urlParams.delete("ssort");
+        urlParams.delete("vsort");
+
+        urlParams.set("bofffilter", newFilter);
+        urlParams.set("page", 1);
+        window.location.href = `./index.php?${urlParams.toString()}`;
+      })
+    }
+
+    function setOnFilterData(current) {
       if (current === "" || current === "off") {
         return "on";
       } else if (current === "on") {
         return "not-yet";
       } else if (current === "not-yet") {
+        return "off";
+      }
+    }
+
+    function setOffFilterData(current) {
+      if (current === "" || current === "off") {
+        return "not-soldout";
+      } else {
         return "off";
       }
     }
@@ -1026,32 +1084,58 @@ $endPage = min($totalPage, $page + 2);
       }
     }
 
+
+    //主/子選單製作
+    if (selectedMainId) {
+      selectMain.value = selectedMainId;
+      setSubMenu(selectedMainId);
+    }
+
     selectMain.addEventListener("change", function () {
       setSubMenu(this.value);
     })
+
+
+    if (selectedRegionId) {
+      selectRegion.value = selectedRegionId;
+      setCityMenu(selectedRegionId);
+    }
 
     selectRegion.addEventListener("change", function () {
       setCityMenu(this.value);
     })
 
+
+    // 主子選單function
     function setSubMenu(id) {
       const ary = subs.filter(sub => sub.main_cate_id == id);
-      selectSub.innerHTML = "<option value selected disabled>子分類</option>";
+      selectSub.innerHTML = "<option value='' selected disabled>子分類</option>";
+
       ary.forEach(sub => {
         const option = document.createElement("option");
         option.value = sub.id;
-        option.innerHTML = sub.name;
+        option.textContent = sub.name;
+        if (String(sub.id) === selectedSubId) {
+          option.selected = true;
+        }
+
         selectSub.append(option);
       });
     }
 
     function setCityMenu(id) {
       const ary = cities.filter(city => city.region_id == id);
-      selectCity.innerHTML = "<option value selected disabled>城市</option>";
+      selectCity.innerHTML = "<option value='' selected disabled>城市</option>";
+
       ary.forEach(city => {
         const option = document.createElement("option");
         option.value = city.id;
         option.innerHTML = city.name;
+
+        if (String(city.id) == selectedCityId) {
+          option.selected = true;
+        }
+
         selectCity.append(option);
       });
     }

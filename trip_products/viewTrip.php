@@ -9,6 +9,8 @@ if (!isset($_GET["id"])) {
 
 date_default_timezone_set("Asia/Taipei");
 $now = time();
+$nowDateTime = new DateTime();
+
 
 $id = $_GET["id"];
 $sql = "SELECT 
@@ -97,11 +99,15 @@ $publishedAt = new DateTime($row["published_at"]);
 $publishedDate = $publishedAt->format("Y-m-d");
 $publishedTime = $publishedAt->format("H:i");
 
+$unpublishedAt = null;
+if (isset($row["unpublished_at"])) {
+  $unpublishedAt = new DateTime($row["unpublished_at"]);
+}
 $createdAt = new DateTime($row["created_at"]);
-$createdDate = $publishedAt->format("Y-m-d");
+$createdDate = $createdAt->format("Y-m-d");
 
 $updatedAt = new DateTime($row["updated_at"]);
-$updatedDate = $publishedAt->format("Y-m-d");
+$updatedDate = $updatedAt->format("Y-m-d");
 
 
 ?>
@@ -121,7 +127,7 @@ $updatedDate = $publishedAt->format("Y-m-d");
 	<meta name="description" content="" />
 
 	<!-- Favicon -->
-	<link rel="icon" type="image/x-icon" href="../vnlogo.png" />
+	<link rel="icon" type="image/x-icon" href="../assets/img/favicon/vnlogo-ic.ico" />
 
 	<!-- Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -163,7 +169,7 @@ $updatedDate = $publishedAt->format("Y-m-d");
 	<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
 	<!-- custom 自定義 CSS -->
-	<link rel="stylesheet" href="../custom.css">
+	<link rel="stylesheet" href="../assets/css/custom.css">
 </head>
 
 <body>
@@ -176,7 +182,7 @@ $updatedDate = $publishedAt->format("Y-m-d");
 				<div class="app-brand demo">
 					<a href="./index.php" class="app-brand-link">
 						<span>
-							<span><img class="w-40px h-40px" src="../vnlogo.png" alt=""></span>
+							<span><img class="w-40px h-40px" src="../assets/img/favicon/vnlogo.png" alt=""></span>
 						</span>
 						<span class="fs-4 fw-bold ms-2 app-brand-text demo menu-text align-items-center">xin_chào</span>
 					</a>
@@ -190,104 +196,107 @@ $updatedDate = $publishedAt->format("Y-m-d");
 
 				<div class="menu-inner-shadow"></div>
 
-				<ul class="menu-inner py-1">
-					<!-- 會員管理 -->
-					<li class="menu-item">
-						<a href="#" class="menu-link menu-toggle">
-							<i class="fa-solid fa-users me-3 menu-text"></i>
-							<div class="menu-text fs-5" data-i18n="Dashboards">會員管理</div>
-						</a>
-						<ul class="menu-sub">
-							<li class="menu-item active">
-								<a href="#" class="menu-link">
-									<div class="menu-text fs-6" data-i18n="Analytics">會員列表</div>
-								</a>
-							</li>
-							<li class="menu-item">
-								<a href="#" class="menu-link">
-									<div class="menu-text fs-6" data-i18n="Analytics">停權會員帳號</div>
-								</a>
-							</li>
-						</ul>
-					</li>
+        <ul class="menu-inner py-1">
+          <!-- 會員管理 -->
+          <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle ">
+              <i class="fa-solid fa-users me-3 menu-text"></i>
+              <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">會員管理</div>
+            </a>
+            <ul class="menu-sub">
+              <li class="menu-item active">
+                <a href="../user/index.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Analytics">會員列表</div>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="../user/add.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Analytics">新增會員</div>
+                </a>
+              </li>
+            </ul>
+          </li>
 
-					<!-- 商品管理 -->
-					<li class="menu-item active open">
-						<a href="./index.php" class="menu-link menu-toggle">
-							<i class="fa-solid fa-map-location-dot me-3 menu-text"></i>
-							<div class="menu-text fs-5" data-i18n="Layouts">商品管理</div>
-						</a>
+          <!-- 商品管理 -->
+          <li class="menu-item active open">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <i class="fa-solid fa-map-location-dot me-3 menu-text"></i>
+              <div class="menu-text fs-5 fw-bold" data-i18n="Layouts">商品管理</div>
+            </a>
 
-						<ul class="menu-sub">
-							<li class="menu-item active">
-								<a href="./index.php" class="menu-link">
-									<div class="menu-text fw-bold" data-i18n="Without menu">行程列表</div>
-								</a>
-							</li>
-							<li class="menu-item">
-								<a href="./addTrip.php" class="menu-link">
-									<div class="menu-text fw-bold" data-i18n="Without menu">新增行程</div>
-								</a>
-							</li>
-						</ul>
-					</li>
+            <ul class="menu-sub">
+              <li class="menu-item active">
+                <a href="./index.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Without menu">行程列表</div>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="./addTrip.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Without menu">新增行程</div>
+                </a>
+              </li>
+            </ul>
+          </li>
 
-					<!-- 票券管理 -->
-					<li class="menu-item">
-						<a href="#" class="menu-link menu-toggle">
-							<i class="fa-solid fa-ticket me-3 menu-text"></i>
-							<div class="menu-text fs-5" data-i18n="Dashboards">票券管理</div>
-						</a>
-						<ul class="menu-sub">
-							<li class="menu-item active">
-								<a href="#" class="menu-link">
-									<div class="menu-text fw-bold" data-i18n="Analytics">票券列表</div>
-								</a>
-							</li>
-							<li class="menu-item">
-								<a href="#" class="menu-link">
-									<div class="menu-text fw-bold" data-i18n="Analytics">新增票券</div>
-								</a>
-							</li>
-						</ul>
-					</li>
+          <!-- 票券管理 -->
+          <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <i class="fa-solid fa-ticket me-3 menu-text"></i>
+              <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">票券管理</div>
+            </a>
+            <ul class="menu-sub">
+              <li class="menu-item active">
+                <a href="../ticket/ticketIndex.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Analytics">票券列表</div>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="../ticket/ticketAdd.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Analytics">新增票券</div>
+                </a>
+              </li>
+            </ul>
+          </li>
 
-					<!-- 優惠券管理 -->
-					<li class="menu-item">
-						<a href="#" class="menu-link menu-toggle">
-							<i class="fa-solid fa-tags me-3 menu-text"></i>
-							<div class="menu-text fs-5" data-i18n="Dashboards">優惠券管理</div>
-						</a>
-						<ul class="menu-sub">
-							<li class="menu-item active">
-								<a href="#" class="menu-link">
-									<div class="menu-text fw-bold" data-i18n="Analytics">優惠券列表</div>
-								</a>
-							</li>
-							<li class="menu-item">
-								<a href="#" class="menu-link">
-									<div class="menu-text fw-bold" data-i18n="Analytics">新增優惠券</div>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<!-- 登出(要等建立帳號) -->
-					<!-- <li class="menu-header small text-uppercase">
-						<span class="menu-text fw-bold">會員資訊</span>
-					</li>
-					<div class="container text-center">
-						<div class="d-flex justify-content-center gap-3 mb-3">
-							<img class="head" src="../logo.png?>" alt="">
-							<div class="menu-text fw-bold align-self-center">suxing測試</div>
-						</div>
-						<li class="menu-item row justify-content-center">
-							<a href="../doLogout.php"
-								class="btn rounded-pill btn-gradient-success btn-ban col-10 justify-content-center">
-								<div class="menu-text fw-bold"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>登出</div>
-							</a>
-						</li>
-					</div> -->
-				</ul>
+          <!-- 優惠券管理 -->
+          <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <i class="fa-solid fa-tags me-3 menu-text"></i>
+              <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">優惠券管理</div>
+            </a>
+            <ul class="menu-sub">
+              <li class="menu-item active">
+                <a href="../coupons/index.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Analytics">優惠券列表</div>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="../coupons/add.php" class="menu-link">
+                  <div class="menu-text fw-bold" data-i18n="Analytics">新增優惠券</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- 登出 -->
+          <li class="menu-header small text-uppercase">
+            <span class="menu-text fw-bold">會員資訊</span>
+          </li>
+          <div class="container text-center">
+
+            <div class="d-flex justify-content-center gap-3 mb-3">
+              <img class="head" src="./img/<?= $_SESSION["members"]["avatar"] ?>" alt="">
+              <div class="menu-text fw-bold align-self-center"><?= $_SESSION["members"]["name"] ?></div>
+            </div>
+
+            <li class="menu-item row justify-content-center">
+              <a href="./doLogout.php"
+                class="btn rounded-pill btn-gradient-success btn-ban col-10 justify-content-center">
+                <div class="menu-text fw-bold"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>登出</div>
+              </a>
+            </li>
+
+          </div>
+        </ul>
 			</aside>
 			<!-- / Menu -->
 
@@ -304,7 +313,7 @@ $updatedDate = $publishedAt->format("Y-m-d");
 						<!-- 需要調整文字和active的顏色 -->
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item">
-								<a href="#" class="text-primary">Home</a>
+								<a href="../user/index.php" class="text-primary">Home</a>
 							</li>
 							<li class="breadcrumb-item">
 								<a href="./index.php" class="text-primary">商品管理</a>
@@ -348,17 +357,17 @@ $updatedDate = $publishedAt->format("Y-m-d");
 											$stock = intval($row["stock"]);
 											if ($startAt > $now): ?>
 												<span class="badge bg-label-info rounded-pill me-2 fs-6">尚未販售</span>
-											<?php elseif ($startAt < $now && $now < $endAt && $offAt == null & $stock !== 0): ?>
+											<?php elseif ($startAt < $now && $now < $endAt && $offAt == null && $stock !== 0): ?>
 												<span class="badge bg-label-warning rounded-pill me-2 fs-6">販售中</span>
 											<?php elseif ($stock == 0): ?>
 												<span class="badge bg-label-primary rounded-pill me-2 fs-6">售完</span>
-											<?php elseif ($now > $endTime || $offTime !== null): ?>
-												<span class="badge bg-label-success rounded-pill me-2 fs-6">販售結束</span>
+											<?php elseif ($offAt !== null && $stock !== 0): ?>
+												<span class="badge bg-label-success rounded-pill me-2 fs-6">未售完</span>
 											<?php endif; ?>
 											<?php
 											$onAt = strtotime($row["published_at"]);
 											$offAt = strtotime($row["unpublished_at"]);
-											if ($onAt <= $now): ?>
+											if ($onAt <= $now && $offAt == null): ?>
 												<span class="badge bg-label-warning rounded-pill me-2 fs-6">上架中</span>
 											<?php elseif ($onAt > $now): ?>
 												<span class="badge bg-label-info rounded-pill me-2 fs-6">未上架</span>
@@ -502,9 +511,13 @@ $updatedDate = $publishedAt->format("Y-m-d");
 
 										<div class="row mt-6">
 											<div class="col-sm-12 d-flex justify-content-end">
-												<button type="submit" class="btn btn-gradient-warning"><a class="text-white"
-														href="./updateTrip.php?id=<?= $row["id"] ?>">進行編輯</a></button>
-												<a class="btn btn-gradient-info ms-2" href="./index.php">返回商品列表</a>
+												<?php if ($unpublishedAt == null): ?>
+													<button type="submit" class="btn btn-gradient-warning"><a class="text-white"
+															href="./updateTrip.php?id=<?= $row["id"] ?>">進行編輯</a></button>
+													<a class="btn btn-gradient-info ms-2" href="./index.php">返回商品列表</a>
+												<?php elseif ($unpublishedAt !== null): ?>
+													<a class="btn btn-gradient-info ms-2 ms-auto" href="./index.php">返回商品列表</a>
+												<?php endif; ?>
 											</div>
 										</div>
 										</form>
