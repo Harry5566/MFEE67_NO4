@@ -97,7 +97,7 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>Xin Chào心橋</title>
+  <title>優惠券管理</title>
 
   <meta name="description" content="" />
 
@@ -110,6 +110,9 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
   <link
     href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
     rel="stylesheet" />
+
+  <link rel="stylesheet" href="../assets/vendor/fonts/iconify-icons.css" />
+
 
   <link rel="stylesheet" href="../assets/vendor/fonts/iconify-icons.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -145,14 +148,13 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
   <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
 
+
+
       <!-- Menu -->
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-        <div class="app-brand demo">
-          <a href="index.php" class="app-brand-link">
-            <span>
-              <span><img class="w-40px h-40px" src="../logo.png" alt=""></span>
-            </span>
-            <span class="fs-4 fw-bold ms-2 app-brand-text demo menu-text align-items-center">心橋</span>
+        <div class="app-brand demo d-flex justify-content-center align-items-center">
+          <a href="index.html" class="app-brand-link">
+            <img class="logo" src="../assets/img/favicon/vnlogo.png" alt="">
           </a>
 
           <a href="javascript:void(0);" class="layout-menu-toggle menu-link ms-auto">
@@ -207,7 +209,7 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
                 </a>
               </li>
               <li class="menu-item">
-                <a href="./addTrip.php" class="menu-link">
+                <a href="#" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Without menu">新增行程</div>
                 </a>
               </li>
@@ -236,7 +238,7 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
 
           <!-- 優惠券管理 -->
           <li class="menu-item">
-            <a href="#" class="menu-link menu-toggle">
+            <a href="index.php" class="menu-link menu-toggle">
               <i class="fa-solid fa-tags me-2 menu-text"></i>
               <div class="menu-text fw-bold" data-i18n="Dashboards">優惠券管理</div>
             </a>
@@ -366,7 +368,7 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
                               <option value="3" <?= (isset($_GET['usage_scope_id']) && $_GET['usage_scope_id'] == 3) ? 'selected' : '' ?>>各式票卷</option>
                             </select>
                           </form>
-                          
+
                         </th>
                         <th class="text-primary text-center">
                           <div class="d-flex justify-content-center align-items-center">
@@ -430,132 +432,132 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
                     </tbody>
                   </table>
                   <?php
-// 保留現有 GET 參數（除了 page）
-$queryParams = $_GET;
-unset($queryParams['page']);
-$baseQuery = http_build_query($queryParams);
+                  // 保留現有 GET 參數（除了 page）
+                  $queryParams = $_GET;
+                  unset($queryParams['page']);
+                  $baseQuery = http_build_query($queryParams);
 
-// 安全限制：頁碼不得超出範圍
-$prevPage = max($page - 1, 1);
-$nextPage = min($page + 1, $totalPage);
-?>
+                  // 安全限制：頁碼不得超出範圍
+                  $prevPage = max($page - 1, 1);
+                  $nextPage = min($page + 1, $totalPage);
+                  ?>
 
-<nav aria-label="Page navigation" class="mt-4">
-  <ul class="pagination justify-content-center">
-  
+                  <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
 
-    <?php for ($i = 1; $i <= $totalPage; $i++): ?>
-      <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
-        <a class="page-link" href="?<?= $baseQuery ?>&page=<?= $i ?>"><?= $i ?></a>
-      </li>
-    <?php endfor; ?>
 
-   
-  </ul>
-</nav>
+                      <?php for ($i = 1; $i <= $totalPage; $i++): ?>
+                        <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
+                          <a class="page-link" href="?<?= $baseQuery ?>&page=<?= $i ?>"><?= $i ?></a>
+                        </li>
+                      <?php endfor; ?>
 
-   
-               
-        <!-- Footer -->
-        <footer class="content-footer footer bg-footer-theme">
-          <div class="container-fluid">
-            <div
-              class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
-              <div class="mb-2 mb-md-0">
-                Copyright ©
-                <script>
-                  document.write(new Date().getFullYear());
-                </script>
-                <a href="./index.php" target="_blank" class="footer-link">心橋❤️</a>
-                by 前端67-第四組
+
+                    </ul>
+                  </nav>
+
+
+
+                  <!-- Footer -->
+                  <footer class="content-footer footer bg-footer-theme">
+                    <div class="container-fluid">
+                      <div
+                        class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                        <div class="mb-2 mb-md-0">
+                          Copyright ©
+                          <script>
+                            document.write(new Date().getFullYear());
+                          </script>
+                          <a href="./index.php" target="_blank" class="footer-link">心橋❤️</a>
+                          by 前端67-第四組
+                        </div>
+                        <div class="d-none d-lg-inline-block">
+                          <a href="./index.php" target="_blank" class="footer-link me-4">關於我們</a>
+                          <a href="./index.php" class="footer-link me-4" target="_blank">相關服務</a>
+                          <a href="./index.php" target="_blank" class="footer-link">進階設定</a>
+                        </div>
+                      </div>
+                    </div>
+                  </footer>
+                  <!-- / Footer -->
+
+                  <div class="content-backdrop fade"></div>
+                </div>
+                <!-- Content wrapper -->
               </div>
-              <div class="d-none d-lg-inline-block">
-                <a href="./index.php" target="_blank" class="footer-link me-4">關於我們</a>
-                <a href="./index.php" class="footer-link me-4" target="_blank">相關服務</a>
-                <a href="./index.php" target="_blank" class="footer-link">進階設定</a>
-              </div>
+              <!-- / Layout page -->
             </div>
-          </div>
-        </footer>
-        <!-- / Footer -->
 
-        <div class="content-backdrop fade"></div>
-      </div>
-      <!-- Content wrapper -->
-    </div>
-    <!-- / Layout page -->
-  </div>
+            <!-- Overlay -->
+            <div class="layout-overlay layout-menu-toggle"></div>
+            </>
+            <!-- / Layout wrapper -->
 
-  <!-- Overlay -->
-  <div class="layout-overlay layout-menu-toggle"></div>
-  </>
-  <!-- / Layout wrapper -->
+            <!-- Core JS -->
+            <script src="../assets/vendor/libs/jquery/jquery.js"></script>
+            <script src="../assets/vendor/libs/popper/popper.js"></script>
+            <script src="../assets/vendor/js/bootstrap.js"></script>
+            <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+            <script src="../assets/vendor/js/menu.js"></script>
 
-  <!-- Core JS -->
-  <script src="../assets/vendor/libs/jquery/jquery.js"></script>
-  <script src="../assets/vendor/libs/popper/popper.js"></script>
-  <script src="../assets/vendor/js/bootstrap.js"></script>
-  <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-  <script src="../assets/vendor/js/menu.js"></script>
+            <!-- Main JS -->
+            <script src="../assets/js/main.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+              integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+              crossorigin="anonymous"></script>
+            <script>
+              document.addEventListener('DOMContentLoaded', function () {
+                // 排序函式，這個可以全域用，但放在這也可以
+                window.applyColumnSort = function (field, order) {
+                  const url = new URL(window.location.href);
+                  url.searchParams.set('sort_field', field);
+                  url.searchParams.set('sort_order', order);
+                  url.searchParams.set('page', 1);
+                  window.location.href = url.toString();
+                };
 
-  <!-- Main JS -->
-  <script src="../assets/js/main.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
-    crossorigin="anonymous"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      // 排序函式，這個可以全域用，但放在這也可以
-      window.applyColumnSort = function (field, order) {
-        const url = new URL(window.location.href);
-        url.searchParams.set('sort_field', field);
-        url.searchParams.set('sort_order', order);
-        url.searchParams.set('page', 1);
-        window.location.href = url.toString();
-      };
+                // 綁定刪除按鈕事件
+                const btnDels = document.querySelectorAll(".btn-del");
+                btnDels.forEach((btn) => {
+                  btn.addEventListener("click", function () {
+                    if (confirm("確定要刪除嗎?")) {
+                      window.location.href = `doDelete.php?id=${btn.dataset.id}`;
+                    }
+                  });
+                });
 
-      // 綁定刪除按鈕事件
-      const btnDels = document.querySelectorAll(".btn-del");
-      btnDels.forEach((btn) => {
-        btn.addEventListener("click", function () {
-          if (confirm("確定要刪除嗎?")) {
-            window.location.href = `doDelete.php?id=${btn.dataset.id}`;
-          }
-        });
-      });
+                // 這裡一定要確定你有 HTML 元素存在
+                const trigger = document.querySelector('.select-trigger');  // 依你實際 class 或 id 改名
+                const options = document.querySelector('.select-options');
+                const hiddenInput = document.querySelector('input[name="your-hidden-input-name"]');
+                const select = document.querySelector('.custom-select');
 
-      // 這裡一定要確定你有 HTML 元素存在
-      const trigger = document.querySelector('.select-trigger');  // 依你實際 class 或 id 改名
-      const options = document.querySelector('.select-options');
-      const hiddenInput = document.querySelector('input[name="your-hidden-input-name"]');
-      const select = document.querySelector('.custom-select');
+                if (trigger && options && hiddenInput && select) {
+                  trigger.addEventListener('click', () => {
+                    options.classList.toggle('active');
+                  });
 
-      if (trigger && options && hiddenInput && select) {
-        trigger.addEventListener('click', () => {
-          options.classList.toggle('active');
-        });
+                  options.querySelectorAll('.custom-option').forEach(option => {
+                    option.addEventListener('click', () => {
+                      const value = option.getAttribute('data-value');
+                      const text = option.textContent;
+                      trigger.textContent = text;
+                      hiddenInput.value = value;
+                      options.classList.remove('active');
+                      console.log('選擇了：', value, text);
+                    });
+                  });
 
-        options.querySelectorAll('.custom-option').forEach(option => {
-          option.addEventListener('click', () => {
-            const value = option.getAttribute('data-value');
-            const text = option.textContent;
-            trigger.textContent = text;
-            hiddenInput.value = value;
-            options.classList.remove('active');
-            console.log('選擇了：', value, text);
-          });
-        });
-
-        document.addEventListener('click', (e) => {
-          if (!select.contains(e.target)) {
-            options.classList.remove('active');
-          }
-        });
-      } else {
-        console.warn('某些下拉元素未找到，請檢查 HTML');
-      }
-    });
-  </script>
+                  document.addEventListener('click', (e) => {
+                    if (!select.contains(e.target)) {
+                      options.classList.remove('active');
+                    }
+                  });
+                } else {
+                  console.warn('某些下拉元素未找到，請檢查 HTML');
+                }
+              });
+            </script>
 
 
 
