@@ -267,23 +267,32 @@ $imagesChanged = false;
 $sqlImg = "SELECT `file_name` FROM `trip_images` WHERE `trip_id` = ?;";
 
 
-// 修改前先刪除全部資料庫中的圖片
+$stmtImg = $pdo->prepare($sqlImg);
+$stmtImg->execute([$id]);
+$oldImages = array_column($stmtImg->fetchAll(PDO::FETCH_ASSOC), "file_name");
+
 if (isset($_FILES["tripFile"])) {
   $countFile = count($_FILES["tripFile"]["name"]);
   $timestamp = time();
+
   for ($i = 0; $i < $countFile; $i++) {
-    if ($_FILES["tripFile"]["error"][$i] == 0 && $_FILES["tripFile"]["name"][$i] !== "") {
-      $ext = pathinfo($_FILES["tripFile"]["name"][$i], PATHINFO_EXTENSION);
+    $originalName = $_FILES["tripFile"]["name"][$i];
+
+    if ($_FILES["tripFile"]["error"][$i] == 0 && $originalName !== "") {
+      // 檢查是否為舊圖（只比檔名）
+      $isOld = in_array($originalName, $oldImages);
+      if ($isOld)
+        continue; // 跳過原圖
+
+      $ext = pathinfo($originalName, PATHINFO_EXTENSION);
       $newFile = ($timestamp + $i) . ".{$ext}";
       $file = "./images/{$newFile}";
 
       if (move_uploaded_file($_FILES["tripFile"]["tmp_name"][$i], $file)) {
-        array_push($imgs, $newFile);
+        $imgs[] = $newFile;
+        $imagesChanged = true; 
       }
     }
-  }
-  if (count($imgs) > 0) {
-    $imagesChanged = true;
   }
 }
 
