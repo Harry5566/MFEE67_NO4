@@ -1,4 +1,11 @@
 <?php
+// 登入驗證及會員資訊
+session_start();
+if (!isset($_SESSION["members"])) {
+	header("location: ./login.php");
+	exit;
+}
+
 require_once "./connect.php";
 require_once "./utilities.php";
 
@@ -146,107 +153,107 @@ $disablePublished = $publishedAt < $now ? "disabled" : "";
 
 				<div class="menu-inner-shadow"></div>
 
-        <ul class="menu-inner py-1">
-          <!-- 會員管理 -->
-          <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle ">
-              <i class="fa-solid fa-users me-3 menu-text"></i>
-              <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">會員管理</div>
-            </a>
-            <ul class="menu-sub">
-              <li class="menu-item active">
-                <a href="../user/index.php" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Analytics">會員列表</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="../user/add.php" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Analytics">新增會員</div>
-                </a>
-              </li>
-            </ul>
-          </li>
+				<ul class="menu-inner py-1">
+					<!-- 會員管理 -->
+					<li class="menu-item">
+						<a href="javascript:void(0);" class="menu-link menu-toggle ">
+							<i class="fa-solid fa-users me-3 menu-text"></i>
+							<div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">會員管理</div>
+						</a>
+						<ul class="menu-sub">
+							<li class="menu-item active">
+								<a href="../user/index.php" class="menu-link">
+									<div class="menu-text fw-bold" data-i18n="Analytics">會員列表</div>
+								</a>
+							</li>
+							<li class="menu-item">
+								<a href="../user/add.php" class="menu-link">
+									<div class="menu-text fw-bold" data-i18n="Analytics">新增會員</div>
+								</a>
+							</li>
+						</ul>
+					</li>
 
-          <!-- 商品管理 -->
-          <li class="menu-item active open">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="fa-solid fa-map-location-dot me-3 menu-text"></i>
-              <div class="menu-text fs-5 fw-bold" data-i18n="Layouts">商品管理</div>
-            </a>
+					<!-- 商品管理 -->
+					<li class="menu-item active open">
+						<a href="javascript:void(0);" class="menu-link menu-toggle">
+							<i class="fa-solid fa-map-location-dot me-3 menu-text"></i>
+							<div class="menu-text fs-5 fw-bold" data-i18n="Layouts">商品管理</div>
+						</a>
 
-            <ul class="menu-sub">
-              <li class="menu-item active">
-                <a href="./index.php" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Without menu">行程列表</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="./addTrip.php" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Without menu">新增行程</div>
-                </a>
-              </li>
-            </ul>
-          </li>
+						<ul class="menu-sub">
+							<li class="menu-item active">
+								<a href="./index.php" class="menu-link">
+									<div class="menu-text fw-bold" data-i18n="Without menu">行程列表</div>
+								</a>
+							</li>
+							<li class="menu-item">
+								<a href="./addTrip.php" class="menu-link">
+									<div class="menu-text fw-bold" data-i18n="Without menu">新增行程</div>
+								</a>
+							</li>
+						</ul>
+					</li>
 
-          <!-- 票券管理 -->
-          <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="fa-solid fa-ticket me-3 menu-text"></i>
-              <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">票券管理</div>
-            </a>
-            <ul class="menu-sub">
-              <li class="menu-item active">
-                <a href="../ticket/ticketIndex.php" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Analytics">票券列表</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="../ticket/ticketAdd.php" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Analytics">新增票券</div>
-                </a>
-              </li>
-            </ul>
-          </li>
+					<!-- 票券管理 -->
+					<li class="menu-item">
+						<a href="javascript:void(0);" class="menu-link menu-toggle">
+							<i class="fa-solid fa-ticket me-3 menu-text"></i>
+							<div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">票券管理</div>
+						</a>
+						<ul class="menu-sub">
+							<li class="menu-item active">
+								<a href="../ticket/ticketIndex.php" class="menu-link">
+									<div class="menu-text fw-bold" data-i18n="Analytics">票券列表</div>
+								</a>
+							</li>
+							<li class="menu-item">
+								<a href="../ticket/ticketAdd.php" class="menu-link">
+									<div class="menu-text fw-bold" data-i18n="Analytics">新增票券</div>
+								</a>
+							</li>
+						</ul>
+					</li>
 
-          <!-- 優惠券管理 -->
-          <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="fa-solid fa-tags me-3 menu-text"></i>
-              <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">優惠券管理</div>
-            </a>
-            <ul class="menu-sub">
-              <li class="menu-item active">
-                <a href="../coupons/index.php" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Analytics">優惠券列表</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="../coupons/add.php" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Analytics">新增優惠券</div>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <!-- 登出 -->
-          <li class="menu-header small text-uppercase">
-            <span class="menu-text fw-bold">會員資訊</span>
-          </li>
-          <div class="container text-center">
+					<!-- 優惠券管理 -->
+					<li class="menu-item">
+						<a href="javascript:void(0);" class="menu-link menu-toggle">
+							<i class="fa-solid fa-tags me-3 menu-text"></i>
+							<div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">優惠券管理</div>
+						</a>
+						<ul class="menu-sub">
+							<li class="menu-item active">
+								<a href="../coupons/index.php" class="menu-link">
+									<div class="menu-text fw-bold" data-i18n="Analytics">優惠券列表</div>
+								</a>
+							</li>
+							<li class="menu-item">
+								<a href="../coupons/add.php" class="menu-link">
+									<div class="menu-text fw-bold" data-i18n="Analytics">新增優惠券</div>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<!-- 登出 -->
+					<li class="menu-header small text-uppercase">
+						<span class="menu-text fw-bold">會員資訊</span>
+					</li>
+					<div class="container text-center">
 
-            <div class="d-flex justify-content-center gap-3 mb-3">
-              <img class="head" src="./img/<?= $_SESSION["members"]["avatar"] ?>" alt="">
-              <div class="menu-text fw-bold align-self-center"><?= $_SESSION["members"]["name"] ?></div>
-            </div>
+						<div class="d-flex justify-content-center gap-3 mb-3">
+							<img class="head" src="../user/img/<?= $_SESSION["members"]["avatar"] ?>" alt="">
+							<div class="menu-text fw-bold align-self-center"><?= $_SESSION["members"]["name"] ?></div>
+						</div>
 
-            <li class="menu-item row justify-content-center">
-              <a href="./doLogout.php"
-                class="btn rounded-pill btn-gradient-success btn-ban col-10 justify-content-center">
-                <div class="menu-text fw-bold"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>登出</div>
-              </a>
-            </li>
+						<li class="menu-item row justify-content-center">
+							<a href="./doLogout.php"
+								class="btn rounded-pill btn-gradient-success btn-ban col-10 justify-content-center">
+								<div class="menu-text fw-bold"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>登出</div>
+							</a>
+						</li>
 
-          </div>
-        </ul>
+					</div>
+				</ul>
 			</aside>
 			<!-- / Menu -->
 
@@ -278,9 +285,16 @@ $disablePublished = $publishedAt < $now ? "disabled" : "";
 
 				<div class="content-wrapper">
 					<div class="flex-grow-1 container-p-y custom-width">
-						<div class="d-flex align-items-center ps-3">
-							<i class="fs-4 bx bx-edit-alt me-1 text-primary me-2 mb-4"></i>
-							<h4 class="text-primary ms-1">編輯行程</h4>
+						<div class="d-flex align-items-center justify-content-between">
+							<div class="d-flex align-items-center ps-3">
+								<i class="fs-4 bx bx-edit-alt me-1 text-primary me-2 mb-4"></i>
+								<h4 class="text-primary ms-1">編輯行程</h4>
+							</div>
+
+							<div>
+								<a class="btn btn-sm rounded-pill btn-warning me-3" href="./viewTrip.php?id=<?= $row["id"] ?>" alt="檢視行程"><i
+										class="bx bx-show-alt me-1"></i>檢視行程</a>
+							</div>
 						</div>
 
 						<div class="card">
@@ -338,7 +352,7 @@ $disablePublished = $publishedAt < $now ? "disabled" : "";
 													<?php endforeach; ?>
 												</select>
 											</div>
-											<label class="col-sm-1 col-form-label text-primary">城市</label>
+											<label class="col-sm-1 col-form-label text-primary">地點</label>
 											<div class="col-sm-5">
 												<select required id="citySelect" class="form-select" name="city">
 													<option selected disabled>請選擇</option>
@@ -355,21 +369,21 @@ $disablePublished = $publishedAt < $now ? "disabled" : "";
 										<div class="row mb-6">
 											<label class="col-sm-1 col-form-label text-primary">行程天數</label>
 											<div class="col-md-2">
-												<input required name="days" class="form-control" type="number" value="<?= $row["duration"] ?>"
-													id="html5-number-input" />
+												<input required name="days" class="form-control" type="number" min="1" step="1"
+													value="<?= $row["duration"] ?>" id="html5-number-input" />
 
 											</div>
-											<label class="col-sm-1 col-form-label text-primary">庫存量</label>
+											<label class="col-sm-1 col-form-label text-primary">名額</label>
 											<div class="col-md-2">
-												<input required name="stock" class="form-control" type="number" value="<?= $row["stock"] ?>"
-													id="html5-number-input" />
+												<input required name="stock" class="form-control" type="number" min="0" step="1"
+													value="<?= $row["stock"] ?>" id="html5-number-input" />
 											</div>
 											<label class="col-sm-1 col-form-label text-primary">價格</label>
 											<div class="col-md-4">
 												<div class="input-group">
-													<span class="input-group-text">NT</span>
-													<input required name="price" type="number" class="form-control" value="<?= $row["price"] ?>"
-														aria-label="Amount (to the nearest dollar)" />
+													<span class="input-group-text">NT$</span>
+													<input required name="price" type="number" class="form-control" min="0" step="1"
+														value="<?= $row["price"] ?>" aria-label="Amount (to the nearest dollar)" />
 													<span class="input-group-text">元</span>
 												</div>
 											</div>
@@ -419,7 +433,8 @@ $disablePublished = $publishedAt < $now ? "disabled" : "";
 																<i class="fa-solid fa-plus text-primary ms-3" id="add-notice"></i>
 															<?php elseif ($index >= 1): ?>
 																<input type="hidden" value="<?= $rowNotice["id"] ?>">
-																<i class="fa-regular fa-trash-can text-secondary ms-3 del-ori-notice" data-id="<?= $rowNotice['id'] ?>"></i>
+																<i class="fa-regular fa-trash-can text-secondary ms-3 del-ori-notice"
+																	data-id="<?= $rowNotice['id'] ?>"></i>
 															<?php endif; ?>
 														</div>
 

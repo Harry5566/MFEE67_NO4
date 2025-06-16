@@ -1,4 +1,11 @@
 <?php
+// 登入驗證及會員資訊
+session_start();
+if (!isset($_SESSION["members"])) {
+	header("location: ./login.php");
+	exit;
+}
+
 require_once "./connect.php";
 require_once "./utilities.php";
 
@@ -101,7 +108,7 @@ $publishedTime = $publishedAt->format("H:i");
 
 $unpublishedAt = null;
 if (isset($row["unpublished_at"])) {
-  $unpublishedAt = new DateTime($row["unpublished_at"]);
+	$unpublishedAt = new DateTime($row["unpublished_at"]);
 }
 $createdAt = new DateTime($row["created_at"]);
 $createdDate = $createdAt->format("Y-m-d");
@@ -196,107 +203,107 @@ $updatedDate = $updatedAt->format("Y-m-d");
 
 				<div class="menu-inner-shadow"></div>
 
-        <ul class="menu-inner py-1">
-          <!-- 會員管理 -->
-          <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle ">
-              <i class="fa-solid fa-users me-3 menu-text"></i>
-              <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">會員管理</div>
-            </a>
-            <ul class="menu-sub">
-              <li class="menu-item active">
-                <a href="../user/index.php" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Analytics">會員列表</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="../user/add.php" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Analytics">新增會員</div>
-                </a>
-              </li>
-            </ul>
-          </li>
+				<ul class="menu-inner py-1">
+					<!-- 會員管理 -->
+					<li class="menu-item">
+						<a href="javascript:void(0);" class="menu-link menu-toggle ">
+							<i class="fa-solid fa-users me-3 menu-text"></i>
+							<div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">會員管理</div>
+						</a>
+						<ul class="menu-sub">
+							<li class="menu-item active">
+								<a href="../user/index.php" class="menu-link">
+									<div class="menu-text fw-bold" data-i18n="Analytics">會員列表</div>
+								</a>
+							</li>
+							<li class="menu-item">
+								<a href="../user/add.php" class="menu-link">
+									<div class="menu-text fw-bold" data-i18n="Analytics">新增會員</div>
+								</a>
+							</li>
+						</ul>
+					</li>
 
-          <!-- 商品管理 -->
-          <li class="menu-item active open">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="fa-solid fa-map-location-dot me-3 menu-text"></i>
-              <div class="menu-text fs-5 fw-bold" data-i18n="Layouts">商品管理</div>
-            </a>
+					<!-- 商品管理 -->
+					<li class="menu-item active open">
+						<a href="javascript:void(0);" class="menu-link menu-toggle">
+							<i class="fa-solid fa-map-location-dot me-3 menu-text"></i>
+							<div class="menu-text fs-5 fw-bold" data-i18n="Layouts">商品管理</div>
+						</a>
 
-            <ul class="menu-sub">
-              <li class="menu-item active">
-                <a href="./index.php" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Without menu">行程列表</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="./addTrip.php" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Without menu">新增行程</div>
-                </a>
-              </li>
-            </ul>
-          </li>
+						<ul class="menu-sub">
+							<li class="menu-item active">
+								<a href="./index.php" class="menu-link">
+									<div class="menu-text fw-bold" data-i18n="Without menu">行程列表</div>
+								</a>
+							</li>
+							<li class="menu-item">
+								<a href="./addTrip.php" class="menu-link">
+									<div class="menu-text fw-bold" data-i18n="Without menu">新增行程</div>
+								</a>
+							</li>
+						</ul>
+					</li>
 
-          <!-- 票券管理 -->
-          <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="fa-solid fa-ticket me-3 menu-text"></i>
-              <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">票券管理</div>
-            </a>
-            <ul class="menu-sub">
-              <li class="menu-item active">
-                <a href="../ticket/ticketIndex.php" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Analytics">票券列表</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="../ticket/ticketAdd.php" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Analytics">新增票券</div>
-                </a>
-              </li>
-            </ul>
-          </li>
+					<!-- 票券管理 -->
+					<li class="menu-item">
+						<a href="javascript:void(0);" class="menu-link menu-toggle">
+							<i class="fa-solid fa-ticket me-3 menu-text"></i>
+							<div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">票券管理</div>
+						</a>
+						<ul class="menu-sub">
+							<li class="menu-item active">
+								<a href="../ticket/ticketIndex.php" class="menu-link">
+									<div class="menu-text fw-bold" data-i18n="Analytics">票券列表</div>
+								</a>
+							</li>
+							<li class="menu-item">
+								<a href="../ticket/ticketAdd.php" class="menu-link">
+									<div class="menu-text fw-bold" data-i18n="Analytics">新增票券</div>
+								</a>
+							</li>
+						</ul>
+					</li>
 
-          <!-- 優惠券管理 -->
-          <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="fa-solid fa-tags me-3 menu-text"></i>
-              <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">優惠券管理</div>
-            </a>
-            <ul class="menu-sub">
-              <li class="menu-item active">
-                <a href="../coupons/index.php" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Analytics">優惠券列表</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="../coupons/add.php" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Analytics">新增優惠券</div>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <!-- 登出 -->
-          <li class="menu-header small text-uppercase">
-            <span class="menu-text fw-bold">會員資訊</span>
-          </li>
-          <div class="container text-center">
+					<!-- 優惠券管理 -->
+					<li class="menu-item">
+						<a href="javascript:void(0);" class="menu-link menu-toggle">
+							<i class="fa-solid fa-tags me-3 menu-text"></i>
+							<div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">優惠券管理</div>
+						</a>
+						<ul class="menu-sub">
+							<li class="menu-item active">
+								<a href="../coupons/index.php" class="menu-link">
+									<div class="menu-text fw-bold" data-i18n="Analytics">優惠券列表</div>
+								</a>
+							</li>
+							<li class="menu-item">
+								<a href="../coupons/add.php" class="menu-link">
+									<div class="menu-text fw-bold" data-i18n="Analytics">新增優惠券</div>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<!-- 登出 -->
+					<li class="menu-header small text-uppercase">
+						<span class="menu-text fw-bold">會員資訊</span>
+					</li>
+					<div class="container text-center">
 
-            <div class="d-flex justify-content-center gap-3 mb-3">
-              <img class="head" src="./img/<?= $_SESSION["members"]["avatar"] ?>" alt="">
-              <div class="menu-text fw-bold align-self-center"><?= $_SESSION["members"]["name"] ?></div>
-            </div>
+						<div class="d-flex justify-content-center gap-3 mb-3">
+							<img class="head" src="../user/img/<?= $_SESSION["members"]["avatar"] ?>" alt="">
+							<div class="menu-text fw-bold align-self-center"><?= $_SESSION["members"]["name"] ?></div>
+						</div>
 
-            <li class="menu-item row justify-content-center">
-              <a href="./doLogout.php"
-                class="btn rounded-pill btn-gradient-success btn-ban col-10 justify-content-center">
-                <div class="menu-text fw-bold"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>登出</div>
-              </a>
-            </li>
+						<li class="menu-item row justify-content-center">
+							<a href="./doLogout.php"
+								class="btn rounded-pill btn-gradient-success btn-ban col-10 justify-content-center">
+								<div class="menu-text fw-bold"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>登出</div>
+							</a>
+						</li>
 
-          </div>
-        </ul>
+					</div>
+				</ul>
 			</aside>
 			<!-- / Menu -->
 
@@ -343,13 +350,13 @@ $updatedDate = $updatedAt->format("Y-m-d");
 
 								<?php else: ?>
 									<input type="hidden" name="id" value="<?= $row["id"] ?>">
-									<div class="d-flex align-items-center justify-content-between">
-										<div class="d-flex align-items-center ms-3">
+									<div class="d-flex align-items-start justify-content-between">
+										<div class="d-flex align-items-start ms-3">
 											<a href="./index.php"><i
-													class="fa-solid fa-map-location-dot text-primary me-3 mb-4 menu-icon"></i></a>
+													class="fa-solid fa-map-location-dot text-primary me-3 mb-4 mt-2 menu-icon"></i></a>
 											<h4 class="trip-name text-primary"><?= $row["name"] ?></h4>
 										</div>
-										<div class="mb-3">
+										<div class="mb-3 mt-2 ms-2 d-flex justify-content-center">
 											<?php
 											$startAt = strtotime($row["booking_start_at"]);
 											$endAt = strtotime($row["booking_end_at"]);
@@ -422,11 +429,11 @@ $updatedDate = $updatedAt->format("Y-m-d");
 											</div>
 											<div class="col-md-3">
 												<span class="text-primary fw-bold me-3"><i
-														class="fa-solid fa-location-dot me-2"></i>區域：</span><?= $row["region_name"] ?>
+														class="fa-solid fa-location-dot me-2"></i>地區：</span><?= $row["region_name"] ?>
 											</div>
 											<div class="col-md-3">
 												<span class="text-primary fw-bold me-3"><i
-														class="fa-solid fa-location-dot me-2"></i>城市：</span><?= $row["city_name"] ?>
+														class="fa-solid fa-location-dot me-2"></i>地點：</span><?= $row["city_name"] ?>
 											</div>
 										</div>
 										<div class="row mb-3">
@@ -440,7 +447,7 @@ $updatedDate = $updatedAt->format("Y-m-d");
 											</div>
 											<div class="col-md-3">
 												<span class="text-primary fw-bold me-3"><i
-														class="fa-solid fa-dollar-sign me-2"></i>價格：</span>NT$&nbsp;<?= $row["price"] ?>&nbsp;
+														class="fa-solid fa-dollar-sign me-2"></i>價格：</span>NT$&nbsp;<?= $row["price"] ?>&nbsp;元
 											</div>
 										</div>
 										<hr>

@@ -1,4 +1,11 @@
 <?php
+// 登入驗證及會員資訊
+session_start();
+if (!isset($_SESSION["members"])) {
+  header("location: ./login.php");
+  exit;
+}
+
 require_once "./connect.php";
 require_once "./utilities.php";
 
@@ -341,6 +348,7 @@ $endPage = min($totalPage, $page + 2);
       width: 25px;
       height: 26px;
     }
+    
   </style>
 </head>
 
@@ -372,8 +380,11 @@ $endPage = min($totalPage, $page + 2);
 
         <ul class="menu-inner py-1">
           <!-- 會員管理 -->
+          <li class="menu-header small text-uppercase">
+            <span class="menu-text fw-bold">後台功能</span>
+          </li>
           <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle ">
+            <a href="../user/index.php" class="menu-link menu-toggle ">
               <i class="fa-solid fa-users me-3 menu-text"></i>
               <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">會員管理</div>
             </a>
@@ -393,7 +404,7 @@ $endPage = min($totalPage, $page + 2);
 
           <!-- 商品管理 -->
           <li class="menu-item active open">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <a href="./index.php" class="menu-link menu-toggle">
               <i class="fa-solid fa-map-location-dot me-3 menu-text"></i>
               <div class="menu-text fs-5 fw-bold" data-i18n="Layouts">商品管理</div>
             </a>
@@ -414,7 +425,7 @@ $endPage = min($totalPage, $page + 2);
 
           <!-- 票券管理 -->
           <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <a href="../ticket/ticketIndex.php" class="menu-link menu-toggle">
               <i class="fa-solid fa-ticket me-3 menu-text"></i>
               <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">票券管理</div>
             </a>
@@ -434,7 +445,7 @@ $endPage = min($totalPage, $page + 2);
 
           <!-- 優惠券管理 -->
           <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <a href="../coupons/index.php" class="menu-link menu-toggle">
               <i class="fa-solid fa-tags me-3 menu-text"></i>
               <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">優惠券管理</div>
             </a>
@@ -458,7 +469,7 @@ $endPage = min($totalPage, $page + 2);
           <div class="container text-center">
 
             <div class="d-flex justify-content-center gap-3 mb-3">
-              <img class="head" src="./img/<?= $_SESSION["members"]["avatar"] ?>" alt="">
+              <img class="head" src="../user/img/<?= $_SESSION["members"]["avatar"] ?>" alt="">
               <div class="menu-text fw-bold align-self-center"><?= $_SESSION["members"]["name"] ?></div>
             </div>
 
@@ -570,10 +581,10 @@ $endPage = min($totalPage, $page + 2);
                     </select>
                   </div>
 
-                  <!-- 城市篩選 -->
+                  <!-- 地點篩選 -->
                   <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6 mb-3">
                     <select class="form-select fw-bold text-primary" name="city">
-                      <option selected disabled value="">城市</option>
+                      <option selected disabled value="">地點</option>
                     </select>
                   </div>
 
@@ -674,7 +685,7 @@ $endPage = min($totalPage, $page + 2);
                 <div class="tab-pane fade show active table-responsive full-width-card" id="navs-pills-top-home"
                   role="tabpanel">
                   <table class="table align-middle text-nowrap w-100 mb-4">
-                    <thead>
+                    <thead class="table-header">
                       <tr>
                         <th class="text-primary text-center fs-6">#</th>
                         <th class="text-primary text-center fs-6">
@@ -1125,7 +1136,7 @@ $endPage = min($totalPage, $page + 2);
 
     function setCityMenu(id) {
       const ary = cities.filter(city => city.region_id == id);
-      selectCity.innerHTML = "<option value='' selected disabled>城市</option>";
+      selectCity.innerHTML = "<option value='' selected disabled>地點</option>";
 
       ary.forEach(city => {
         const option = document.createElement("option");
