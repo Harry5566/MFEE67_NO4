@@ -32,7 +32,7 @@ if (!$row) {
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>Xin Chào心橋</title>
+  <title>優惠券管理</title>
 
   <meta name="description" content="" />
 
@@ -78,12 +78,9 @@ if (!$row) {
 
       <!-- Menu -->
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-        <div class="app-brand demo">
-          <a href="index.php" class="app-brand-link">
-            <span>
-              <span><img class="w-40px h-40px" src="../logo.png" alt=""></span>
-            </span>
-            <span class="fs-4 fw-bold ms-2 app-brand-text demo menu-text align-items-center">心橋</span>
+         <div class="app-brand demo d-flex justify-content-center align-items-center">
+          <a href="index.html" class="app-brand-link">
+            <img class="logo" src="../assets/img/favicon/vnlogo.png" alt="">
           </a>
 
           <a href="javascript:void(0);" class="layout-menu-toggle menu-link ms-auto">
@@ -108,17 +105,17 @@ if (!$row) {
             </a>
             <ul class="menu-sub">
               <li class="menu-item active">
-                <a href="index.php" class="menu-link">
+                <a href="#" class="menu-link">
                   <div class="menu-text fw-bold">會員列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="add.php" class="menu-link">
+                <a href="#" class="menu-link">
                   <div class="menu-text fw-bold">新增會員</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="deletedMembers.php" class="menu-link">
+                <a href="#" class="menu-link">
                   <div class="menu-text fw-bold">已刪除會員</div>
                 </a>
               </li>
@@ -167,18 +164,18 @@ if (!$row) {
 
           <!-- 優惠券管理 -->
           <li class="menu-item">
-            <a href="#" class="menu-link menu-toggle">
+            <a href="index.php" class="menu-link menu-toggle">
               <i class="fa-solid fa-tags me-2 menu-text"></i>
               <div class="menu-text fw-bold" data-i18n="Dashboards">優惠券管理</div>
             </a>
             <ul class="menu-sub">
               <li class="menu-item active">
-                <a href="#" class="menu-link">
+                <a href="index.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Analytics">優惠券列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a href="add.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Analytics">新增優惠券</div>
                 </a>
               </li>

@@ -33,6 +33,8 @@ CREATE TABLE `cities` (
   `name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+SELECT * FROM `cities`;
 --
 -- 傾印資料表的資料 `cities`
 --
@@ -54,7 +56,7 @@ INSERT INTO `cities` (`id`, `region_id`, `name`) VALUES
 (14, 4, '富國島');
 
 -- --------------------------------------------------------
-
+show WARNINGS;
 --
 -- 資料表結構 `main_cate`
 --

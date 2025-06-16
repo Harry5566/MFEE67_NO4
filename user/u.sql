@@ -182,6 +182,10 @@ INSERT INTO members (account, password, name, phone, gender_id, birth_date, emai
 ('dodocat', '12345', '建亨', '0909182222', 1, '1999-01-22', 'dodocat@gmail.com', 4, '2025-06-14 19:18:00', '2025-06-14 19:19:00');
 
 
+INSERT INTO members (account, password, name, phone, gender_id, birth_date, email, status_id, created_at, updated_at) VALUES
+('tung01', '123456', '靖倫', '0983602968', 1, '1999-09-09', 'tung@gmail.com', 4, '2025-06-14 14:53:53', '2025-06-14 14:55:00');
+
+
 
 SELECT * FROM `members`;
 SELECT * FROM `member_ban`;
@@ -190,3 +194,4 @@ SELECT * FROM `genders`;
 
 SELECT * FROM `member_level`;
 
+SHOW WARNINGS;
