@@ -257,11 +257,6 @@ function getGenderIcon($gender)
                   <div class="menu-text fw-bold">新增會員</div>
                 </a>
               </li>
-              <li class="menu-item">
-                <a href="deletedMembers.php" class="menu-link">
-                  <div class="menu-text fw-bold">已刪除會員</div>
-                </a>
-              </li>
             </ul>
           </li>
 
