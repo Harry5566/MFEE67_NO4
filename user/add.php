@@ -169,7 +169,7 @@ $levels = $levelStmt->fetchAll(PDO::FETCH_ASSOC);
                   <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                     <input type="text" class="form-control placeholder-color" id="account" name="account"
-                      placeholder="帳號 *" required autofocus />
+                      placeholder="帳號 * (5-20字元)" minlength="5" maxlength="20" required autofocus />
                   </div>
                 </div>
                 <div class="form-group">
