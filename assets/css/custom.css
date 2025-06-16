@@ -88,10 +88,10 @@
 }
 
 .layout-menu .app-brand {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  /* background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important; */
   backdrop-filter: blur(10px) !important;
-  min-height: 150px;
+  /* min-height: 150px; */
 }
 
 .layout-menu .app-brand-link {
