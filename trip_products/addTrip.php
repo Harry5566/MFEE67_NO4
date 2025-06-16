@@ -219,7 +219,7 @@ try {
             </div>
 
             <li class="menu-item row justify-content-center">
-              <a href="./doLogout.php"
+              <a href="../user/doLogout.php"
                 class="btn rounded-pill btn-gradient-success btn-ban col-10 justify-content-center">
                 <div class="menu-text fw-bold"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>登出</div>
               </a>
