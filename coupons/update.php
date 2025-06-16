@@ -12,9 +12,15 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute([$id]);
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+
+
+
 if (!$row) {
   die("找不到資料");
 }
+
+
+
 ?>
 <!doctype html>
 
@@ -201,45 +207,19 @@ if (!$row) {
                 <a href="#" class="text-primary">Home</a>
               </li>
               <li class="breadcrumb-item">
-                <a href="productTrip-Index.php" class="text-primary">商品管理</a>
+                <a href="productTrip-Index.php" class="text-primary">優惠券管理</a>
               </li>
-              <li class="breadcrumb-item active" class="text-primary">商品列表</li>
+              <li class="breadcrumb-item active" class="text-primary">優惠券列表</li>
             </ol>
           </nav>
         </div>
         <!-- Content wrapper -->
         <div class="content-wrapper">
           <div class="container-fluid flex-grow-1 container-p-y">
-
             <div class="nav-align-top">
-              <ul class="nav nav-pills mb-4" role="tablist">
-                <li class="nav-item">
-                  <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
-                    data-bs-target="#navs-pills-top-home" aria-controls="navs-pills-top-home" aria-selected="true">
-                    上架中
-                  </button>
-                </li>
-                <li class="nav-item">
-                  <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                    data-bs-target="#navs-pills-top-profile" aria-controls="navs-pills-top-profile"
-                    aria-selected="false">
-                    未上架
-                  </button>
-                </li>
-                <li class="nav-item">
-                  <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                    data-bs-target="#navs-pills-top-messages" aria-controls="navs-pills-top-messages"
-                    aria-selected="false">
-                    下架
-                  </button>
-                </li>
-
-                <a class="btn btn-sm btn-gradient-success ms-auto" href="add.php"><i
-                    class="fa-solid fa-plus text-white me-2"></i>新增優惠券</a>
-              </ul>
+              <h4 class="text-primary text-start">修改優惠券</h4>
               <div class="container mt-3">
                 <div class="p-4 bg-white shadow rounded">
-                  <h4>修改優惠券</h4>
                   <form action="doUpdate.php" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="id" value="<?= $row["id"] ?>">
                     <div class="input-group mb-1">
@@ -291,16 +271,17 @@ if (!$row) {
                       <div class="form-control">
                         <div class="form-check form-check-inline">
                           <input class="form-check-input" type="radio" name="status_id" id="statusActive" value="1"
-                            <?= ($row["status_id"] == 2) ? "checked" : "" ?>>
-                          <label class="form-check-label" for="statusActive">啟用</label>
+                            <?= (isset($row["status_id"]) && $row["status_id"] == 1) ? "checked" : "" ?>>
+                          <label class="form-check-label" for="statusActive">未啟用</label>
                         </div>
                         <div class="form-check form-check-inline">
                           <input class="form-check-input" type="radio" name="status_id" id="statusInactive" value="2"
-                            <?= ($row["status_id"] == 1) ? "checked" : "" ?>>
-                          <label class="form-check-label" for="statusInactive">未啟用</label>
+                            <?= (isset($row["status_id"]) && $row["status_id"] == 2) ? "checked" : "" ?>>
+                          <label class="form-check-label" for="statusInactive">啟用</label>
                         </div>
                       </div>
                     </div>
+
                     <div class="input-group mb-1">
                       <span class="input-group-text">使用範圍</span>
                       <input value="<?= $row["usage_scope_id"] ?>" name="usage_scope_id" type="text"
