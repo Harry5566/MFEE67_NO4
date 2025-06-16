@@ -179,10 +179,7 @@ INSERT INTO members (account, password, name, phone, gender_id, birth_date, emai
 ('xiaoyan_sha', 'sha789012', '沙曉燕', '0912234567', 2, '1994-02-17', 'xiaoyan.sha@example.com', 1, '2024-04-24 17:10:00', '2024-04-24 17:10:00'),
 ('suxing410', 'su12345', '肅幸', '0917122344', 2, '1996-11-21', 'suxing@gmail.com', 4, '2025-06-14 19:18:00', '2025-06-14 19:19:00'),
 ('emmavn', 'a123456', '䕒心', '0953285082', 2, '1996-05-23', 'emma@gmail.com', 4, '2025-06-14 19:18:00', '2025-06-14 19:19:00'),
-('dodocat', '12345', '建亨', '0909182222', 1, '1999-01-22', 'dodocat@gmail.com', 4, '2025-06-14 19:18:00', '2025-06-14 19:19:00');
-
-
-INSERT INTO members (account, password, name, phone, gender_id, birth_date, email, status_id, created_at, updated_at) VALUES
+('dodocat', '12345', '建亨', '0909182222', 1, '1999-01-22', 'dodocat@gmail.com', 4, '2025-06-14 19:18:00', '2025-06-14 19:19:00'),
 ('tung01', '123456', '靖倫', '0983602968', 1, '1999-09-09', 'tung@gmail.com', 4, '2025-06-14 14:53:53', '2025-06-14 14:55:00');
 
 
