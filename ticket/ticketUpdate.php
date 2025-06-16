@@ -258,12 +258,12 @@ try {
             </a>
             <ul class="menu-sub">
               <li class="menu-item active">
-                <a href="#" class="menu-link">
+                <a href="../coupons/index.php" class="menu-link">
                   <div class="menu-text" data-i18n="Analytics">優惠券列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a href="../coupons/add.php" class="menu-link">
                   <div class="menu-text" data-i18n="Analytics">新增優惠券</div>
                 </a>
               </li>
