@@ -194,7 +194,7 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
           </li>
           <!-- 商品管理 -->
           <li class="menu-item">
-            <a href="../trip_products/index.php"  class="menu-link menu-toggle">
+            <a href="../trip_products/index.php" class="menu-link menu-toggle">
               <i class="fa-solid fa-map-location-dot me-2 menu-text"></i>
               <div class="menu-text fw-bold" data-i18n="Layouts">商品管理</div>
             </a>
@@ -252,8 +252,7 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
               </li>
             </ul>
           </li>
-        </ul>
-         <!-- 登出 -->
+          <!-- 登出 -->
           <li class="menu-header small text-uppercase">
             <span class="menu-text fw-bold">會員資訊</span>
           </li>
@@ -273,7 +272,6 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
 
           </div>
         </ul>
-
       </aside>
       <!-- / Menu -->
 
@@ -299,9 +297,9 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
               <li class="breadcrumb-item active" class="text-primary">優惠券列表</li>
             </ol>
           </nav>
-          
+
         </div>
-        
+
         <!-- Content wrapper -->
         <div class="content-wrapper">
           <div class="container-fluid flex-grow-1 container-p-y">
