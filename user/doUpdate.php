@@ -22,6 +22,7 @@ $gender_id = $_POST["gender_id"];
 $status_id = $_POST["status_id"];
 $password = $_POST["password"];
 
+
 // 如果有輸入密碼，檢查長度
 if (!empty($password)) {
   $passwordLength = strlen($password);
@@ -90,9 +91,24 @@ $values[":updated_at"] = date("Y-m-d H:i:s");
 
 $sql = "UPDATE `members` SET " . implode(", ", $set) . " WHERE `id` = :id";
 
+$sqlA = "SELECT * FROM `members` WHERE `id` = ?";
+
 try {
   $stmt = $pdo->prepare($sql);
   $stmt->execute($values);
+
+  $stmtA = $pdo->prepare($sqlA);
+  $stmtA->execute([$id]);
+  // 判斷有沒有抓到內容 再進行判斷
+  $row = $stmtA->fetch(PDO::FETCH_ASSOC);
+
+
+  $_SESSION["members"] = [
+    "id" => $row["id"],
+    "name" => $row["name"],
+    "email" => $row["email"],
+    "avatar" => $row["avatar"]
+  ];
 
 } catch (PDOException $e) {
   echo "錯誤: {{$e->getMessage()}}";

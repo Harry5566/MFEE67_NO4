@@ -1,14 +1,30 @@
 <?php
 // 登入驗證及會員資訊
 session_start();
+
+require_once "./connect.php";
+require_once "./Utilities.php";
+
 if (!isset($_SESSION["members"])) {
   header("location: ./login.php");
   exit;
 }
 
-// 會員詳情查看頁面
-require_once "./connect.php";
-require_once "./Utilities.php";
+$idU = $_SESSION["members"]["id"];
+
+$sqlU = "SELECT id, name, email, avatar FROM members WHERE id = ?";
+$stmtU = $pdo->prepare($sqlU);
+$stmtU->execute([$idU]);
+$rowU = $stmtU->fetch();
+
+// ✅ 更新 session 資料
+$_SESSION["members"] = [
+  "id" => $rowU["id"],
+  "name" => $rowU["name"],
+  "email" => $rowU["email"],
+  "avatar" => $rowU["avatar"]
+];
+
 
 date_default_timezone_set("Asia/Taipei");
 

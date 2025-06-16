@@ -1,14 +1,30 @@
 <?php
 // 登入驗證及會員資訊
 session_start();
-if (!isset($_SESSION["members"])) {
-    header("location: ./login.php");
-    exit;
-}
 
-// 修改會員主要程式
 require_once "./connect.php";
 require_once "./Utilities.php";
+
+if (!isset($_SESSION["members"])) {
+  header("location: ./login.php");
+  exit;
+}
+
+$idU = $_SESSION["members"]["id"];
+
+$sqlU = "SELECT id, name, email, avatar FROM members WHERE id = ?";
+$stmtU = $pdo->prepare($sqlU);
+$stmtU->execute([$idU]);
+$rowU = $stmtU->fetch();
+
+// ✅ 更新 session 資料
+$_SESSION["members"] = [
+  "id" => $rowU["id"],
+  "name" => $rowU["name"],
+  "email" => $rowU["email"],
+  "avatar" => $rowU["avatar"]
+];
+
 
 if (!isset($_GET["id"])) {
     alertGoTo("請從正常管道進入", "./index.php");
