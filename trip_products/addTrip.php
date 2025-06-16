@@ -1,4 +1,11 @@
 <?php
+// 登入驗證及會員資訊
+session_start();
+if (!isset($_SESSION["members"])) {
+  header("location: ./login.php");
+  exit;
+}
+
 require_once "./connect.php";
 require_once "./utilities.php";
 
@@ -107,7 +114,7 @@ try {
 						<span>
 							<span><img class="w-40px h-40px" src="../assets/img/favicon/vnlogo.png" alt=""></span>
 						</span>
-						<span class="fs-4 fw-bold ms-2 app-brand-text demo menu-text align-items-center">xin_chào</span>
+						<span class="fs-4 fw-bold ms-2 app-brand-text demo menu-text align-items-center"></span>
 					</a>
 
 					<a href="javascript:void(0);" class="layout-menu-toggle menu-link ms-auto">
@@ -207,7 +214,7 @@ try {
           <div class="container text-center">
 
             <div class="d-flex justify-content-center gap-3 mb-3">
-              <img class="head" src="./img/<?= $_SESSION["members"]["avatar"] ?>" alt="">
+              <img class="head" src="../user/img/<?= $_SESSION["members"]["avatar"] ?>" alt="">
               <div class="menu-text fw-bold align-self-center"><?= $_SESSION["members"]["name"] ?></div>
             </div>
 
@@ -293,7 +300,7 @@ try {
 												<?php endforeach; ?>
 											</select>
 										</div>
-										<label class="col-sm-1 col-form-label text-primary">城市</label>
+										<label class="col-sm-1 col-form-label text-primary">地點</label>
 										<div class="col-sm-5">
 											<select required id="citySelect" class="form-select" name="city">
 												<option selected disabled>請選擇</option>
@@ -305,20 +312,20 @@ try {
 									<div class="row mb-6">
 										<label class="col-sm-1 col-form-label text-primary">行程天數</label>
 										<div class="col-md-2">
-											<input required name="days" class="form-control" type="number" value="1"
+											<input required name="days" class="form-control" type="number" min="1" step="1" value="1"
 												id="html5-number-input" />
 
 										</div>
-										<label class="col-sm-1 col-form-label text-primary">庫存量</label>
+										<label class="col-sm-1 col-form-label text-primary">名額</label>
 										<div class="col-md-2">
-											<input required name="stock" class="form-control" type="number" value="1"
+											<input required name="stock" class="form-control" type="number" min="1" step="1" value="1"
 												id="html5-number-input" />
 										</div>
 										<label class="col-sm-1 col-form-label text-primary">價格</label>
 										<div class="col-md-4">
 											<div class="input-group">
-												<span class="input-group-text">NT</span>
-												<input required name="price" type="number" class="form-control" />
+												<span class="input-group-text">NT$</span>
+												<input required name="price" type="number" min="0" step="1" class="form-control" />
 												<span class="input-group-text">元</span>
 											</div>
 										</div>

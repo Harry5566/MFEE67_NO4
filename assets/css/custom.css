@@ -580,6 +580,15 @@ tbody tr:hover {
   object-fit: cover;
 }
 
+/* 使用者頭貼大小 */
+.head {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-right: 2px;
+  object-fit: cover;
+}
+
 /* 圓形按鈕組合 */
 .action-buttons .btn {
   margin: 2px;
