@@ -1,14 +1,14 @@
 SHOW DATABASES;
 
-CREATE DATABASE viet_tk;
+CREATE DATABASE `my_test_db`;
 
-USE viet_tk;
+USE `my_test_db`;
 
 SELECT DATABASE();
 
 DESC `status`;
-SELECT * FROM `products`;
-DROP TABLE `images`;
+SELECT * FROM `trips`;
+DROP TABLE `trips`;
 
 -- TABLE
 -- products  regions  cities  types  acts  status  images

@@ -1,4 +1,11 @@
 <?php
+// 驗證是否有登入會員
+session_start();
+if (!isset($_SESSION["members"])) {
+  header("location: ../user/login.php");
+  exit;
+}
+
 require_once "./connect.php";
 require_once "./utilities.php";
 
@@ -162,8 +169,22 @@ try {
 		}
 
 		.btn-back {
-			background-color: #f1e3d9;
-			color: #ae431e;
+			background-color: #ecd7b4;
+			color: #50402c;
+		}
+
+		.btn-back:hover {
+			background-color: #50402c;
+			color: #ecd7b4;
+		}
+
+		/* 登出區 */
+		.head {
+			width: 35px;
+			height: 35px;
+			border-radius: 50%;
+			margin-right: 2px;
+			object-fit: cover;
 		}
 	</style>
 </head>
@@ -271,6 +292,26 @@ try {
 							</li>
 						</ul>
 					</li>
+					<!-- menu登出 -->
+					<li class="menu-header small text-uppercase">
+						<span class="menu-text fw-bold">會員資訊</span>
+					</li>
+					<div class="container text-center">
+
+						<div class="d-flex justify-content-center gap-3 mb-3">
+							<img class="head" src="../user/img/<?= $_SESSION["members"]["avatar"] ?>" alt="">
+							<div class="menu-text fw-bold align-self-center"><?= $_SESSION["members"]["name"] ?></div>
+						</div>
+
+						<li class="menu-item row justify-content-center">
+							<a href="../user/doLogout.php"
+								class="btn rounded-pill btn-gradient-success btn-ban col-10 justify-content-center">
+								<div class="menu-text fw-bold"><i
+										class="fa-solid fa-arrow-right-from-bracket me-2"></i>登出</div>
+							</a>
+						</li>
+					</div>
+					<!-- /menu登出 -->
 				</ul>
 			</aside>
 			<!-- / Menu -->
@@ -306,8 +347,9 @@ try {
 					<div class="container-xxl flex-grow-1 container-p-y">
 						<div class="d-flex justify-content-between align-items-center">
 							<h4 class="text-primary mb-1">票券商品-資訊檢視 &nbsp; #<?= $row["id"] ?></h4>
-							<a class="btn btn-outline-back" href="./ticketIndex.php"><i class="fa-solid fa-ticket me-2 "></i>返回票券列表</a>
-						</div>			
+							<a class="btn btn-outline-back" href="./ticketIndex.php"><i
+									class="fa-solid fa-ticket me-2 "></i>返回票券列表</a>
+						</div>
 						<hr class="mb-5 mt-0  mb-8" style="color: #ae431e;" />
 
 						<div class="row g-4">
@@ -424,8 +466,7 @@ try {
 													<div class="col-sm-11">
 														<a class="btn btn-gradient-success ms-2"
 															href="./ticketUpdate.php?id=<?= $row["id"] ?>">編輯商品</a>
-														<a class="btn btn-back ms-2"
-															href="./ticketIndex.php">返回列表</a>
+														<a class="btn btn-back ms-2" href="./ticketIndex.php">返回列表</a>
 													</div>
 												</div>
 											</form>
