@@ -102,9 +102,9 @@ $uniqueCode = generateUniqueDiscountCode($pdo);
             <span class="menu-text fw-bold">後台功能</span>
           </li>
           <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class=" fa-solid fa-users me-4"></i>
-              <div class="menu-text fw-bold" data-i18n="Dashboards">會員管理</div>
+            <a href="../user/index.php" class="menu-link menu-toggle">
+              <i class=" fa-solid fa-users menu-text me-4"></i>
+              <div class="menu-text fw-bold fs-5" data-i18n="Dashboards">會員管理</div>
             </a>
             <ul class="menu-sub">
               <li class="menu-item">
