@@ -218,16 +218,9 @@ $uniqueCode = generateUniqueDiscountCode($pdo);
             <div class="nav-align-top">
               <h4 class="text-primary text-start">新增優惠券</h4>
               <div class="tab-content">
-
-
-
                 <form id="myForm" action="doAdd.php" method="post" enctype="multipart/form-data">
-
                   <div class="tab-pane fade show active table-responsive full-width-card" id="navs-pills-top-home"
                     role="tabpanel">
-
-
-
                     <table class="table align-middle text-nowrap w-100">
 
                       <div class="container mt-3">

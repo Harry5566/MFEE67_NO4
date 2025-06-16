@@ -2,7 +2,7 @@
 require_once "connect.php";
 require_once "Utilities.php";
 
-$perPage = 5;
+$perPage = 10;
 $page = intval($_GET["page"] ?? 1);
 $pageStart = ($page - 1) * $perPage;
 
@@ -242,12 +242,12 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
             </a>
             <ul class="menu-sub">
               <li class="menu-item active">
-                <a href="#" class="menu-link">
+                <a href="index.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Analytics">優惠券列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a href="add.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Analytics">新增優惠券</div>
                 </a>
               </li>
@@ -276,9 +276,9 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
                 <a href="#" class="text-primary">Home</a>
               </li>
               <li class="breadcrumb-item">
-                <a href="productTrip-Index.php" class="text-primary">商品管理</a>
+                <a href="productTrip-Index.php" class="text-primary">優惠券管理</a>
               </li>
-              <li class="breadcrumb-item active" class="text-primary">商品列表</li>
+              <li class="breadcrumb-item active" class="text-primary">優惠券列表</li>
             </ol>
           </nav>
         </div>
@@ -366,7 +366,7 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
                               <option value="3" <?= (isset($_GET['usage_scope_id']) && $_GET['usage_scope_id'] == 3) ? 'selected' : '' ?>>各式票卷</option>
                             </select>
                           </form>
-_
+                          
                         </th>
                         <th class="text-primary text-center">
                           <div class="d-flex justify-content-center align-items-center">
@@ -429,28 +429,33 @@ _
                       <?php endforeach; ?>
                     </tbody>
                   </table>
+                  <?php
+// 保留現有 GET 參數（除了 page）
+$queryParams = $_GET;
+unset($queryParams['page']);
+$baseQuery = http_build_query($queryParams);
 
-                  <!-- 分頁 -->
-                  <nav aria-label="Page navigation example">
-                    <ul class="pagination pagination-sm justify-content-center">
-                      <?php for ($i = 1; $i <= $totalPage; $i++): ?>
-                        <?php $link = "?page={$i}"; ?>
-                        <li class="page-item <?= $page == $i ? "active" : "" ?>">
-                          <a class="page-link" href="<?= $link ?>"><?= $i ?></a>
-                        </li>
-                      <?php endfor; ?>
-                    </ul>
-                  </nav>
-                </div>
+// 安全限制：頁碼不得超出範圍
+$prevPage = max($page - 1, 1);
+$nextPage = min($page + 1, $totalPage);
+?>
 
-                <!-- 其他頁籤（可擴充） -->
-                <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel"></div>
-                <div class="tab-pane fade" id="navs-pills-top-messages" role="tabpanel"></div>
-              </div>
-            </div>
+<nav aria-label="Page navigation" class="mt-4">
+  <ul class="pagination justify-content-center">
+  
 
-          </div>
-        </div>
+    <?php for ($i = 1; $i <= $totalPage; $i++): ?>
+      <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
+        <a class="page-link" href="?<?= $baseQuery ?>&page=<?= $i ?>"><?= $i ?></a>
+      </li>
+    <?php endfor; ?>
+
+   
+  </ul>
+</nav>
+
+   
+               
         <!-- Footer -->
         <footer class="content-footer footer bg-footer-theme">
           <div class="container-fluid">
@@ -499,67 +504,59 @@ _
     integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
     crossorigin="anonymous"></script>
   <script>
-    window.addEventListener('DOMContentLoaded', function () {
-      function applyColumnSort(field, order) {
+    document.addEventListener('DOMContentLoaded', function () {
+      // 排序函式，這個可以全域用，但放在這也可以
+      window.applyColumnSort = function (field, order) {
         const url = new URL(window.location.href);
         url.searchParams.set('sort_field', field);
         url.searchParams.set('sort_order', order);
         url.searchParams.set('page', 1);
         window.location.href = url.toString();
-      }
+      };
 
-      const select = document.getElementById('usageScopeSelect');
-      const trigger = document.getElementById('trigger');
-      const options = document.getElementById('options');
-      const hiddenInput = document.getElementById('usageScopeInput');
-
-      // 點擊主區，切換選項顯示
-      trigger.addEventListener('click', () => {
-        options.classList.toggle('active');
-      });
-
-      // 點擊選項，更新主顯示和隱藏欄位
-      options.querySelectorAll('.custom-option').forEach(option => {
-        option.addEventListener('click', () => {
-          const value = option.getAttribute('data-value');
-          const text = option.textContent;
-          trigger.textContent = text;
-          hiddenInput.value = value;
-          options.classList.remove('active');
-
-          // 這裡你可以做更多動作，例如觸發搜尋
-          console.log('選擇了：', value, text);
-        });
-      });
-
-      // 點擊頁面其他地方收合選單
-      document.addEventListener('click', (e) => {
-        if (!select.contains(e.target)) {
-          options.classList.remove('active');
-        }
-      });
-
-      function applyStatusFilter(value) {
-        const url = new URL(window.location.href);
-        if (value) {
-          url.searchParams.set('status', value);
-        } else {
-          url.searchParams.delete('status');
-        }
-        url.searchParams.set('page', 1);
-        window.location.href = url.toString();
-      }
-
+      // 綁定刪除按鈕事件
       const btnDels = document.querySelectorAll(".btn-del");
       btnDels.forEach((btn) => {
-        btn.addEventListener("click", function (e) {
+        btn.addEventListener("click", function () {
           if (confirm("確定要刪除嗎?")) {
             window.location.href = `doDelete.php?id=${btn.dataset.id}`;
           }
         });
       });
+
+      // 這裡一定要確定你有 HTML 元素存在
+      const trigger = document.querySelector('.select-trigger');  // 依你實際 class 或 id 改名
+      const options = document.querySelector('.select-options');
+      const hiddenInput = document.querySelector('input[name="your-hidden-input-name"]');
+      const select = document.querySelector('.custom-select');
+
+      if (trigger && options && hiddenInput && select) {
+        trigger.addEventListener('click', () => {
+          options.classList.toggle('active');
+        });
+
+        options.querySelectorAll('.custom-option').forEach(option => {
+          option.addEventListener('click', () => {
+            const value = option.getAttribute('data-value');
+            const text = option.textContent;
+            trigger.textContent = text;
+            hiddenInput.value = value;
+            options.classList.remove('active');
+            console.log('選擇了：', value, text);
+          });
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!select.contains(e.target)) {
+            options.classList.remove('active');
+          }
+        });
+      } else {
+        console.warn('某些下拉元素未找到，請檢查 HTML');
+      }
     });
   </script>
+
 
 
 </body>

@@ -8,7 +8,6 @@ require_once "Utilities.php";
 //   exit;
 // }
 
-
 $id = $_POST["id"];
 $name = $_POST["name"];
 $discount_code = $_POST["discount_code"];
@@ -22,9 +21,8 @@ $usage_scope_id = $_POST["usage_scope_id"];
 $created_at = $_POST["created_at"];
 $updated_at = $_POST["updated_at"];
 
-
 $set = [];
-$values = [":id"=>$id];
+$values = [":id" => $id];
 
 if ($name !== "") {
   $set[] = "`name` = :name";
@@ -54,7 +52,7 @@ if ($end_date !== "") {
   $set[] = "`end_date` = :end_date";
   $values[":end_date"] = $end_date;
 }
-if ($status_id !== "") {
+if (isset($_POST["status_id"])) {
   $set[] = "`status_id` = :status_id";
   $values[":status_id"] = $status_id;
 }
@@ -67,20 +65,25 @@ if ($updated_at !== "") {
   $values[":updated_at"] = $updated_at;
 }
 
-
-
-if(count($set) == 0){
+if (count($set) == 0) {
   alertAndBack("沒有修改任何欄位");
 }
 
-$sql = "UPDATE `coupons` SET " .implode(", ", $set) ." WHERE `id` = :id";
+$sql = "UPDATE `coupons` SET " . implode(", ", $set) . " WHERE `id` = :id";
 
 try {
   $stmt = $pdo->prepare($sql);
   $stmt->execute($values);
+
+  $affectedRows = $stmt->rowCount();
+
+  if ($affectedRows === 0) {
+    alertGoTo("⚠️ 沒有資料被修改，可能是你送出的值與原本資料相同。", "update.php?id={$id}");
+  }
+
+  alertGoTo("✅ 修改資料成功", "update.php?id={$id}");
+
 } catch (PDOException $e) {
-  echo "錯誤: {{$e->getMessage()}}";
+  echo "錯誤: " . $e->getMessage();
   exit;
 }
-
-alertGoTo("修改資料成功", "update.php?id={$id}");
