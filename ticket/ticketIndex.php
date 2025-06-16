@@ -13,6 +13,7 @@ $regionId = intval($_GET["regionid"] ?? 0);
 $typeId = intval($_GET["typeid"] ?? 0);
 $search = trim($_GET["search"] ?? "");
 $idSort = $_GET["idsort"] ?? null;
+$priceSort = $_GET["psort"] ?? null;
 $stockSort = $_GET["ssort"] ?? null;
 $viewSort = $_GET["vsort"] ?? null;
 
@@ -56,6 +57,12 @@ if (!empty($idSort)) {
     $orderbySQL = "ORDER BY products.id ASC";
   } elseif ($idSort == "desc") {
     $orderbySQL = "ORDER BY products.id DESC";
+  }
+}elseif (!empty($priceSort)) {
+  if ($priceSort == "asc") {
+    $orderbySQL = "ORDER BY products.price ASC, products.id ASC";
+  } elseif ($priceSort == "desc") {
+    $orderbySQL = "ORDER BY products.price DESC, products.id ASC";
   }
 }elseif (!empty($stockSort)) {
   if ($stockSort == "asc") {
@@ -159,6 +166,8 @@ if ($typeId != 0)
 
 if ($idSort !== null)
   $base_pagination_params['idsort'] = $idSort;
+if ($priceSort !== null)
+  $base_pagination_params['psort'] = $priceSort;
 if ($stockSort !== null)
   $base_pagination_params['ssort'] = $stockSort;
 if ($viewSort !== null)
@@ -399,6 +408,10 @@ $all_link = "./ticketIndex.php";
       border-radius: 50%;
       margin-right: 2px;
       object-fit: cover;
+    }
+
+    .pd-name {
+      color: #4a403c !important;
     }
   </style>
 </head>
@@ -690,6 +703,16 @@ $all_link = "./ticketIndex.php";
                         <th class="city text-primary text-center fw-bold fs-6">城市</th>
                         <th class="type text-primary text-center fw-bold fs-6">類型1</th>
                         <th class="act text-primary text-center fw-bold fs-6">類型2</th>
+                        <!-- 價格加順序按鈕 -->
+                        <th class="price text-primary text-center fw-bold fs-6">
+                          <div class="d-flex align-items-center justify-content-center fs-6">
+                            <span class="text-primary text-center fw-bold fs-6">價格</span>
+                            <div class="d-flex flex-column price-up-down ms-1" data-sort="" role="button">
+                              <i class="fa-solid fa-caret-up fs-8px"></i>
+                              <i class="fa-solid fa-caret-down fs-8px"></i>
+                            </div>
+                          </div>
+                        </th>
                         <!-- 庫存加順序按鈕 -->
                         <th class="stock text-primary text-center fw-bold fs-6">
                           <div class="d-flex align-items-center justify-content-center fs-6">
@@ -737,11 +760,13 @@ $all_link = "./ticketIndex.php";
                             ?>
                             <span class="badge <?= $badge_class ?> me-1"><?= htmlspecialchars($status_name) ?></span>
                           </td>
-                          <td class="name fw-bold" id="tkname"><?= $row["name"] ?></td>
+                          
+                          <td class="name fw-bold" id="tkname" ><a class="pd-name" href="./ticketView.php?id=<?= $row["id"] ?>"><?= $row["name"] ?></a></td>
                           <td class="region text-center"><?= $row["region_name"] ?? 'N/A' ?></td>
                           <td class="city text-center"><?= $row["city_name"] ?? 'N/A' ?></td>
                           <td class="type text-center"><?= $row["type_name"] ?? 'N/A' ?></td>
                           <td class="act text-center"><?= $row["act_name"] ?? 'N/A' ?></td>
+                          <td class="price text-center">$<?= $row["price"] ?></td>
                           <td class="stock text-center"><?= $row["stock"] ?></td>
                           <td class="text-center"><?= $row["view_count"] ?></td>
                           <td class="text-center"> <!-- 操作區三按鈕 -->
@@ -913,6 +938,7 @@ $all_link = "./ticketIndex.php";
       const btnConfirmDels = document.querySelector("#confirmDelete");
       const deleteModal = new bootstrap.Modal(deleteModalElement);
       const idBtn = document.querySelector(".id-up-down");
+      const priceBtn = document.querySelector(".price-up-down");
       const stockBtn = document.querySelector(".stock-up-down");
       const viewBtn = document.querySelector(".view-up-down");
 
@@ -955,6 +981,10 @@ $all_link = "./ticketIndex.php";
         sorts("idsort");
       });
 
+      priceBtn.addEventListener("click", () => {
+        sorts("psort");
+      });
+
       stockBtn.addEventListener("click", () => {
         sorts("ssort");
       });
@@ -970,6 +1000,7 @@ $all_link = "./ticketIndex.php";
         let newSort = setSortData(currentSort);
 
         urlParams.delete("idsort");
+        urlParams.delete("psort");
         urlParams.delete("ssort");
         urlParams.delete("vsort");
 
