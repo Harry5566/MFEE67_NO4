@@ -160,6 +160,11 @@ try {
 			width: auto;
 			display: block;
 		}
+
+		.btn-back {
+			background-color: #f1e3d9;
+			color: #ae431e;
+		}
 	</style>
 </head>
 
@@ -419,7 +424,7 @@ try {
 													<div class="col-sm-11">
 														<a class="btn btn-gradient-success ms-2"
 															href="./ticketUpdate.php?id=<?= $row["id"] ?>">編輯商品</a>
-														<a class="btn btn-gradient-info ms-2"
+														<a class="btn btn-back ms-2"
 															href="./ticketIndex.php">返回列表</a>
 													</div>
 												</div>
