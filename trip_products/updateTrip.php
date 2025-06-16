@@ -136,12 +136,11 @@ $disablePublished = $publishedAt < $now ? "disabled" : "";
 		<div class="layout-container">
 			<!-- Menu -->
 			<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-				<div class="app-brand demo">
+				<div class="app-brand demo d-flex justify-content-center align-items-center">
 					<a href="./index.php" class="app-brand-link">
 						<span>
-							<span><img class="w-40px h-40px" src="../assets/img/favicon/vnlogo.png" alt=""></span>
+							<span><img class="logo" src="../assets/img/favicon/vnlogo.png" alt=""></span>
 						</span>
-						<span class="fs-4 fw-bold ms-2 app-brand-text demo menu-text align-items-center">xin_chào</span>
 					</a>
 
 					<a href="javascript:void(0);" class="layout-menu-toggle menu-link ms-auto">
@@ -246,7 +245,7 @@ $disablePublished = $publishedAt < $now ? "disabled" : "";
 						</div>
 
 						<li class="menu-item row justify-content-center">
-							<a href="./doLogout.php"
+							<a href="../user/doLogout.php"
 								class="btn rounded-pill btn-gradient-success btn-ban col-10 justify-content-center">
 								<div class="menu-text fw-bold"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>登出</div>
 							</a>

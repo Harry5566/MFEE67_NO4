@@ -366,7 +366,6 @@ $endPage = min($totalPage, $page + 2);
             <span>
               <span><img class="logo" src="../assets/img/favicon/vnlogo.png" alt=""></span>
             </span>
-            <span class="fs-4 fw-bold ms-2 app-brand-text demo menu-text align-items-center"></span>
           </a>
 
           <a href="javascript:void(0);" class="layout-menu-toggle menu-link ms-auto">
@@ -474,7 +473,7 @@ $endPage = min($totalPage, $page + 2);
             </div>
 
             <li class="menu-item row justify-content-center">
-              <a href="./doLogout.php"
+              <a href="../user/doLogout.php"
                 class="btn rounded-pill btn-gradient-success btn-ban col-10 justify-content-center">
                 <div class="menu-text fw-bold"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>登出</div>
               </a>

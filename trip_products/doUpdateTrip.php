@@ -267,10 +267,7 @@ $imagesChanged = false;
 $sqlImg = "SELECT `file_name` FROM `trip_images` WHERE `trip_id` = ?;";
 
 
-$stmtImg = $pdo->prepare($sqlImg);
-$stmtImg->execute([$id]);
-$oldImages = array_column($stmtImg->fetchAll(PDO::FETCH_ASSOC), "file_name");
-
+// 修改前先刪除全部資料庫中的圖片
 if (isset($_FILES["tripFile"])) {
   $countFile = count($_FILES["tripFile"]["name"]);
   $timestamp = time();
