@@ -24,9 +24,9 @@ if ($typeId != 0) {
 }
 
 if ($search !== "") {
-    $search_condition = "(products.name LIKE :search OR regions.name LIKE :search OR cities.name LIKE :search OR types.name LIKE :search OR acts.name LIKE :search)";
-    $conditions[] = $search_condition;
-    $params[":search"] = "%" . $search . "%";
+  $search_condition = "(products.name LIKE :search OR regions.name LIKE :search OR cities.name LIKE :search OR types.name LIKE :search OR acts.name LIKE :search)";
+  $conditions[] = $search_condition;
+  $params[":search"] = "%" . $search . "%";
 }
 
 $whereClause = "";
@@ -93,33 +93,38 @@ try {
 $pageLenght = count($rows); //算當頁有幾筆
 $totalPage = ceil($totalLength / $perPage); //算總頁數
 
-function generate_filter_link($param_name, $param_value) {
-    $current_params = $_GET; // Get all current GET parameters
-    $new_params = [];
+function generate_filter_link($param_name, $param_value)
+{
+  $current_params = $_GET; // Get all current GET parameters
+  $new_params = [];
 
-    if (isset($current_params['search']) && trim($current_params['search']) !== '') {
-        $new_params['search'] = trim($current_params['search']);
-    }
+  if (isset($current_params['search']) && trim($current_params['search']) !== '') {
+    $new_params['search'] = trim($current_params['search']);
+  }
 
-    // If param_value is 0, it means "All" for this category, so remove the parameter
-    if ($param_value == 0 || $param_value === '') {
-        
-    } else {
-        // Otherwise, set/update the parameter
-        $new_params[$param_name] = $param_value;
-    }
+  // If param_value is 0, it means "All" for this category, so remove the parameter
+  if ($param_value == 0 || $param_value === '') {
 
-    if (empty($new_params)) {
-        return "./ticketIndex.php"; // No params, clean URL
-    }
-    return "./ticketIndex.php?" . http_build_query($new_params);
+  } else {
+    // Otherwise, set/update the parameter
+    $new_params[$param_name] = $param_value;
+  }
+
+  if (empty($new_params)) {
+    return "./ticketIndex.php"; // No params, clean URL
+  }
+  return "./ticketIndex.php?" . http_build_query($new_params);
 }
 
 $base_pagination_params = [];
-if ($staId != 0) $base_pagination_params['staid'] = $staId;
-if ($regionId != 0) $base_pagination_params['regionid'] = $regionId;
-if ($typeId != 0) $base_pagination_params['typeid'] = $typeId;
-if ($search !== "") $base_pagination_params['search'] = $search;
+if ($staId != 0)
+  $base_pagination_params['staid'] = $staId;
+if ($regionId != 0)
+  $base_pagination_params['regionid'] = $regionId;
+if ($typeId != 0)
+  $base_pagination_params['typeid'] = $typeId;
+if ($search !== "")
+  $base_pagination_params['search'] = $search;
 
 // For the "All" button link
 $all_link = "./ticketIndex.php";
@@ -141,7 +146,7 @@ $all_link = "./ticketIndex.php";
   <meta name="description" content="" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="../assets/img/favicon/vnlogo-ic.ico" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -161,7 +166,7 @@ $all_link = "./ticketIndex.php";
   <!-- Vendors CSS -->
 
   <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-  <link rel="stylesheet" href="./custom.css">
+  <link rel="stylesheet" href="../assets/css/custom.css">
 
   <!-- font awesom -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -248,10 +253,7 @@ $all_link = "./ticketIndex.php";
       text-align: center;
     }
 
-    img {
-      width: 100px;
-      height: 100px;
-    }
+
 
     .nvbar {
       background-color: #6e5432;
@@ -287,16 +289,16 @@ $all_link = "./ticketIndex.php";
 
     .top-btn:hover {
       background-color: #eac891;
-      color: #6e5432; 
+      color: #6e5432;
     }
 
     .tbact.active {
       background-color: #eac891;
-      color: #6e5432; 
+      color: #6e5432;
     }
 
     .nv-search {
-      border:2px solid #eac891;
+      border: 2px solid #eac891;
       background-color: #6e5432;
       display: block;
       width: 100%;
@@ -307,6 +309,7 @@ $all_link = "./ticketIndex.php";
       color: #eac891;
       appearance: none;
     }
+
     .nv-search::placeholder {
       color: #eac891;
       opacity: 1;
@@ -315,18 +318,43 @@ $all_link = "./ticketIndex.php";
     .nv-search:active,
     .nv-search:focus,
     .nv-search:focus-visible {
-      border-color: #eac891; 
-      outline: 0; /* 移除瀏覽器預設的 outline */
+      border-color: #eac891;
+      outline: 0;
+      /* 移除瀏覽器預設的 outline */
     }
 
-    .search-i { 
+    .search-i {
       margin-top: 5px;
       left: -0.5rem;
       color: #eac891;
+
     }
 
-    
+    .bx-show-alt {
+      margin-right: 3px;
+      margin-top: 3px;
 
+    }
+
+    .bx-edit-alt {
+      margin-right: 2px;
+      margin-top: 2px;
+    }
+
+    .bx-trash {
+      margin-left: 1px;
+      margin-bottom: 2px;
+    }
+
+    .app-brand {
+      min-height: 150px;
+    }
+
+    .logo {
+      max-height: 180px;
+      width: auto;
+      display: block;
+    }
   </style>
 </head>
 
@@ -337,9 +365,9 @@ $all_link = "./ticketIndex.php";
 
       <!-- Menu -->
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-        <div class="app-brand demo">
+        <div class="app-brand demo d-flex justify-content-center align-items-center">
           <a href="index.html" class="app-brand-link">
-            <img class="logo" src="./vnlogo.png" alt="">
+            <img class="logo" src="../assets/img/favicon/vnlogo.png" alt="">
           </a>
         </div>
 
@@ -349,42 +377,45 @@ $all_link = "./ticketIndex.php";
 
         <ul class="menu-inner py-1">
           <!-- Forms & Tables -->
-          <li class="menu-header small text-uppercase"><span class="menu-header-text">後台管理系統</span></li>
-          <!-- Forms -->
+          <li class="menu-header small text-uppercase">
+            <span class="menu-text fw-bold">後台功能</span>
+          </li>
+          <!-- 會員管理 -->
           <li class="menu-item">
-            <a href="#" class="menu-link menu-toggle">
-              <i class=" fa-solid fa-users me-4 menu-text"></i>
+            <a href="../user/index.php" class="menu-link menu-toggle">
+              <i class=" fa-solid fa-users me-4 text-white"></i>
               <div class="menu-text fw-bold fs-5" data-i18n="Dashboards">會員管理</div>
             </a>
             <ul class="menu-sub">
               <li class="menu-item">
-                <a href="#" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Analytics">會員列表</div>
+                <a href="../user/index.php" class="menu-link">
+                  <div class="menu-text fw-bold">會員列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="#" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Analytics">停權會員帳號</div>
+                <a href="../user/add.php" class="menu-link">
+                  <div class="menu-text fw-bold">新增會員</div>
                 </a>
               </li>
             </ul>
           </li>
 
+
           <!-- 商品管理 -->
           <li class="menu-item">
-            <a href="#" class="menu-link menu-toggle">
+            <a href="../trip_products/index.php" class="menu-link menu-toggle">
               <i class="fa-solid fa-map-location-dot me-2 menu-text "></i>
               <div class="menu-text fw-bold fs-5" data-i18n="Layouts">商品管理</div>
             </a>
 
             <ul class="menu-sub">
               <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a href="../trip_products/index.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Without menu">行程列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="./addTrip.php" class="menu-link">
+                <a href="../trip_products/addTrip.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Without menu">新增行程</div>
                 </a>
               </li>
@@ -445,7 +476,7 @@ $all_link = "./ticketIndex.php";
               </a>
             </span>
             <nav aria-label="breadcrumb" class="mt-4 m-xl-6">
-              
+
               <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                   <a href="#" class="text-primary">Home</a>
@@ -455,28 +486,32 @@ $all_link = "./ticketIndex.php";
             </nav>
           </div>
           <!-- Content -->
-          <div class="container-xxl flex-grow-1 container-p-y"> 
+          <div class="container-xxl flex-grow-1 container-p-y">
             <div>
-              <div class="d-flex align-items-center position-relative flex-nowrap justify-content-between filter-button-row nvbar">
-                <div class="filter-button-item filter-btn-up">                  
-                  <a class="top-btn fs-5  <?= ($staId == 0 && $regionId == 0 && $typeId == 0) ? "active" : "" ?>" href="<?= $all_link ?>">全部</a>
+              <h4 class="text-primary mb-1">票券列表</h4>
+              <hr class="mb-5 mt-0  mb-8" style="color: #ae431e;" />
+              <div
+                class="d-flex align-items-center position-relative flex-nowrap justify-content-between filter-button-row nvbar">
+                <div class="filter-button-item filter-btn-up">
+                  <a class="top-btn fs-5  <?= ($staId == 0 && $regionId == 0 && $typeId == 0) ? "active" : "" ?>"
+                    href="<?= $all_link ?>">全部</a>
                 </div>
                 <!-- 狀態分頁 -->
-                <?php foreach ($rowsSta as $rowSta): ?> 
+                <?php foreach ($rowsSta as $rowSta): ?>
                   <div class="filter-button-item filter-btn-up">
-                    <a class="top-btn tbact fs-5  <?= ($staId == $rowSta["id"]) ? "active" : "" ?>" 
-                    href="<?= generate_filter_link('staid', $rowSta["id"]) ?>">
-                        <?= htmlspecialchars($rowSta["name"]) ?>
+                    <a class="top-btn tbact fs-5  <?= ($staId == $rowSta["id"]) ? "active" : "" ?>"
+                      href="<?= generate_filter_link('staid', $rowSta["id"]) ?>">
+                      <?= htmlspecialchars($rowSta["name"]) ?>
                     </a>
-                  </div>  
+                  </div>
                 <?php endforeach; ?>
-                
+
                 <!-- 地區分頁 -->
                 <?php foreach ($rowsRegions as $rowRegion): ?>
                   <div class="filter-button-item filter-btn-up">
                     <a class="top-btn tbact fs-5  <?= ($regionId == $rowRegion["id"]) ? "active" : "" ?>"
-                       href="<?= generate_filter_link('regionid', $rowRegion["id"]) ?>">
-                        <?= htmlspecialchars($rowRegion["name"]) ?>
+                      href="<?= generate_filter_link('regionid', $rowRegion["id"]) ?>">
+                      <?= htmlspecialchars($rowRegion["name"]) ?>
                     </a>
                   </div>
                 <?php endforeach; ?>
@@ -485,36 +520,91 @@ $all_link = "./ticketIndex.php";
                 <?php foreach ($rowsTypes as $rowType): ?>
                   <div class="filter-button-item filter-btn-up">
                     <a class="top-btn tbact fs-5 <?= ($typeId == $rowType["id"]) ? "active" : "" ?>"
-                       href="<?= generate_filter_link('typeid', $rowType["id"]) ?>">
-                        <?= htmlspecialchars($rowType["name"]) ?>
+                      href="<?= generate_filter_link('typeid', $rowType["id"]) ?>">
+                      <?= htmlspecialchars($rowType["name"]) ?>
                     </a>
                   </div>
                 <?php endforeach; ?>
-                
+
                 <!-- search -->
                 <div class="position-relative w200px me-2 ms-2">
-                    <i class="btn btn-search fa-solid fa-magnifying-glass position-absolute search-i"></i>
-                    <input name="search" type="text" class="rounded-pill ps-8 nv-search" placeholder="| Search" value="<?= htmlspecialchars($search) ?>">
+                  <i class="btn btn-search fa-solid fa-magnifying-glass position-absolute search-i"></i>
+                  <input name="search" type="text" class="rounded-pill ps-8 nv-search" placeholder="| Search"
+                    value="<?= htmlspecialchars($search) ?>">
                 </div>
               </div>
-              
+
               <div class="nvbar-b d-flex justify-content-between align-items-center mt-6 mb-3">
-                <div class="d-flex justify-content-between align-items-end mb-1">
-                  <div class="litotal">目前顯示<?= $pageLenght ?>筆，總共<?= $totalLength ?>筆</div>
+                <div class="d-flex mb-1">
+                  <span class="ms-2 text-primary">顯示第&nbsp;<?= $pageStart + 1 ?> -
+                      <?= $pageLenght ?>&nbsp;筆資料，共&nbsp;<?= $totalLength ?>&nbsp;筆資料</span>
                 </div>
 
                 <!--/ navbar新增票券按鈕 -->
                 <div class="navbar-nav flex-row align-items-center ms-md-auto">
-                  <a class="btn btn-sm btn-gradient-success ms-auto" href="./ticketAdd.php"><i
+                  <a class="btn btn-sm btn-primary ms-auto" href="./ticketAdd.php"><i
                       class="fa-solid fa-plus text-white me-2"></i>新增票券</a>
                 </div>
               </div>
-            
-              
+
+
               <!-- Hoverable Table rows -->
               <div class="card mt-3">
                 <div class="table-responsive text-nowrap">
                   <table class="table table-hover">
+                    <!--頁數-->
+                    <div class="demo-inline-spacing">
+                      <nav aria-label="Page navigation">
+                        <ul class="pagination pagination-sm justify-content-center">
+
+                          <!--上一頁-->
+                          <li class="page-item prev <?= ($page <= 1) ? 'disabled' : '' ?>">
+                            <?php
+                            $prev_page_link_params = $base_pagination_params;
+                            if ($page > 1) {
+                              $prev_page_link_params['page'] = $page - 1;
+                              $prev_link = './ticketIndex.php?' . http_build_query($prev_page_link_params);
+                            } else {
+                              $prev_link = 'javascript:void(0);';
+                            }
+                            ?>
+                            <a class="page-link" href="<?= $prev_link ?>">
+                              <i class="icon-base bx bx-chevrons-left icon-xs"></i>
+                            </a>
+                          </li>
+                          <!--/上一頁-->
+
+                          <?php for ($i = 1; $i <= $totalPage; $i++): ?>
+                            <li class="page-item <?= $page == $i ? "active" : "" ?>">
+                              <?php
+                              $page_i_link_params = $base_pagination_params;
+                              $page_i_link_params['page'] = $i;
+                              $link = './ticketIndex.php?' . http_build_query($page_i_link_params);
+                              ?>
+                              <a class="page-link" href="<?= $link ?>"><?= $i ?></a>
+                            </li>
+                          <?php endfor; ?>
+
+                          <!--下一頁-->
+                          <li class="page-item next <?= ($page >= $totalPage) ? 'disabled' : '' ?>">
+                            <?php
+                            $next_page_link_params = $base_pagination_params;
+                            if ($page < $totalPage) {
+                              $next_page_link_params['page'] = $page + 1;
+                              $next_link = './ticketIndex.php?' . http_build_query($next_page_link_params);
+                            } else {
+                              $next_link = 'javascript:void(0);';
+                            }
+                            ?>
+                            <a class="page-link" href="<?= $next_link ?>">
+                              <i class="icon-base bx bx-chevrons-right icon-xs"></i>
+                            </a>
+                          </li>
+                          <!--/下一頁-->
+                        </ul>
+                      </nav>
+                    </div>
+                    <!--/頁數-->
                     <thead>
                       <tr>
                         <th class="id text-primary text-center fw-bold">#</th>
@@ -552,7 +642,7 @@ $all_link = "./ticketIndex.php";
                             ?>
                             <span class="badge <?= $badge_class ?> me-1"><?= htmlspecialchars($status_name) ?></span>
                           </td>
-                          <td class="name fw-bold"><?= $row["name"] ?></td>
+                          <td class="name fw-bold" id="tkname"><?= $row["name"] ?></td>
                           <td class="region text-center"><?= $row["region_name"] ?? 'N/A' ?></td>
                           <td class="city text-center"><?= $row["city_name"] ?? 'N/A' ?></td>
                           <td class="type text-center"><?= $row["type_name"] ?? 'N/A' ?></td>
@@ -561,11 +651,12 @@ $all_link = "./ticketIndex.php";
                           <td class="text-center"> <!-- 操作區三按鈕 -->
                             <div class="action-buttons">
                               <span class="btn-circle btn btn-warning"><a href="./ticketView.php?id=<?= $row["id"] ?>"><i
-                                    class="bx bx-show-alt me-1 mt-1 ms-1 text-white"></i></a></span>
+                                    class="bx bx-show-alt text-white"></i></a></span>
                               <span class="btn-circle btn btn-info"><a href="./ticketUpdate.php?id=<?= $row["id"] ?>"><i
-                                    class="bx bx-edit-alt me-1" style="color: #50402c;"></i></a></span>
-                              <button class="btn-circle btn-del btn btn-success" data-id="<?= $row["id"] ?>">
-                                <i class="bx bx-trash me-1 mb-1"></i>
+                                    class="bx bx-edit-alt " style="color: #50402c;"></i></a></span>
+                              <button class="btn-circle btn-del btn btn-success" data-id="<?= $row["id"] ?>"
+                                data-name="<?= htmlspecialchars($row["name"]) ?>">
+                                <i class="bx bx-trash me-1"></i>
                               </button>
                             </div>
                           </td>
@@ -582,14 +673,14 @@ $all_link = "./ticketIndex.php";
                         <!--上一頁-->
                         <li class="page-item prev <?= ($page <= 1) ? 'disabled' : '' ?>">
                           <?php
-                            $prev_page_link_params = $base_pagination_params;
-                            if ($page > 1) {
-                                $prev_page_link_params['page'] = $page - 1;
-                                $prev_link = './ticketIndex.php?' . http_build_query($prev_page_link_params);
-                            } else {
-                                $prev_link = 'javascript:void(0);';
-                            }
-                            ?>
+                          $prev_page_link_params = $base_pagination_params;
+                          if ($page > 1) {
+                            $prev_page_link_params['page'] = $page - 1;
+                            $prev_link = './ticketIndex.php?' . http_build_query($prev_page_link_params);
+                          } else {
+                            $prev_link = 'javascript:void(0);';
+                          }
+                          ?>
                           <a class="page-link" href="<?= $prev_link ?>">
                             <i class="icon-base bx bx-chevrons-left icon-xs"></i>
                           </a>
@@ -609,15 +700,15 @@ $all_link = "./ticketIndex.php";
 
                         <!--下一頁-->
                         <li class="page-item next <?= ($page >= $totalPage) ? 'disabled' : '' ?>">
-                           <?php
-                            $next_page_link_params = $base_pagination_params;
-                            if ($page < $totalPage) {
-                                $next_page_link_params['page'] = $page + 1;
-                                $next_link = './ticketIndex.php?' . http_build_query($next_page_link_params);
-                            } else {
-                                $next_link = 'javascript:void(0);';
-                            }
-                            ?>
+                          <?php
+                          $next_page_link_params = $base_pagination_params;
+                          if ($page < $totalPage) {
+                            $next_page_link_params['page'] = $page + 1;
+                            $next_link = './ticketIndex.php?' . http_build_query($next_page_link_params);
+                          } else {
+                            $next_link = 'javascript:void(0);';
+                          }
+                          ?>
                           <a class="page-link" href="<?= $next_link ?>">
                             <i class="icon-base bx bx-chevrons-right icon-xs"></i>
                           </a>
@@ -635,33 +726,24 @@ $all_link = "./ticketIndex.php";
 
             <!-- Footer -->
             <footer class="content-footer footer bg-footer-theme">
-              <div class="container-xxl">
+              <div class="container-fluid">
                 <div
                   class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
                   <div class="mb-2 mb-md-0">
-                    ©
+                    Copyright ©
                     <script>
                       document.write(new Date().getFullYear());
                     </script>
-                    , made with ❤️ by
-                    <a href="https://themeselection.com" target="_blank" class="footer-link">ThemeSelection</a>
+                    <a href="../user/index.php" target="_blank" class="footer-link">心橋❤️</a>
+                    by 前端67-第四組
                   </div>
                   <div class="d-none d-lg-inline-block">
-                    <a href="https://themeselection.com/item/category/admin-templates/" target="_blank"
-                      class="footer-link me-4">Admin Templates</a>
-
-                    <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
-                    <a href="https://themeselection.com/item/category/bootstrap-admin-templates/" target="_blank"
-                      class="footer-link me-4">Bootstrap Dashboard</a>
-
-                    <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/documentation/"
-                      target="_blank" class="footer-link me-4">Documentation</a>
-
-                    <a href="https://github.com/themeselection/sneat-bootstrap-html-admin-template-free/issues"
-                      target="_blank" class="footer-link">Support</a>
+                    <a href="../user/index.php" target="_blank" class="footer-link me-4">關於我們</a>
+                    <a href="../user/index.php" class="footer-link me-4" target="_blank">相關服務</a>
+                    <a href="../user/index.php" target="_blank" class="footer-link">進階設定</a>
                   </div>
                 </div>
-              </div>            
+              </div>
             </footer>
             <!-- / Footer -->
 
@@ -676,6 +758,31 @@ $all_link = "./ticketIndex.php";
       <div class="layout-overlay layout-menu-toggle"></div>
     </div>
     <!-- / Layout wrapper -->
+
+    <!-- 刪除Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header"></div>
+          <div class="modal-body">
+            <div class="text-center">
+              <i class="fa-solid fa-circle-exclamation" style="font-size: 2rem;"></i>
+
+              <h4 class="mt-3">確定要刪除此票券商品嗎？</h4>
+              <p class="text-muted text-warning">【 <span id="deltkName"></span> 】</p>
+            </div>
+            <input type="hidden" id="deletetkId">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-gradient-primary" id="confirmDelete">
+              <i class="fas fa-trash me-2"></i>確認刪除
+            </button>
+            <button type="button" class="btn btn-gradient-info" data-bs-dismiss="modal">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- / 刪除Modal -->
 
     <!-- Core JS -->
 
@@ -702,35 +809,50 @@ $all_link = "./ticketIndex.php";
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 
     <script>
+      //   刪除
       const btnDels = document.querySelectorAll(".btn-del");
+      const deleteModalElement = document.querySelector("#deleteModal");
+      const deletetkId = document.querySelector("#deletetkId");
+      const deletetkName = document.querySelector("#deltkName");
+      const btnConfirmDels = document.querySelector("#confirmDelete");
+      const deleteModal = new bootstrap.Modal(deleteModalElement);
+
+      btnDels.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          const tkId = this.dataset.id;
+          const tkName = this.dataset.name;
+
+          deletetkId.value = tkId;
+          deletetkName.textContent = tkName;
+
+          deleteModal.show();
+        })
+      })
+
+      btnConfirmDels.addEventListener("click", () => {
+        const tkId = deletetkId.value;
+        window.location.href = `./doDelete.php?id=${tkId}`;
+      });
+
+
       const btnSearch = document.querySelector(".btn-search");
       const inputText = document.querySelector("input[name=search]");
 
-      btnDels.forEach(function (btn) {
-        btn.addEventListener("click", delConfirm);
-      });
-
       btnSearch.addEventListener("click", function () {
-          const query = inputText.value;
-          window.location.href = `./ticketIndex.php?search=${encodeURIComponent(query)}`;
-        
+        const query = inputText.value;
+        window.location.href = `./ticketIndex.php?search=${encodeURIComponent(query)}`;
+
       });
 
-      inputText.addEventListener("keypress", function(event) {
+      inputText.addEventListener("keypress", function (event) {
         if (event.key === "Enter" || event.keyCode === 13) {
           event.preventDefault();
           btnSearch.click();
         }
       });
 
-      function delConfirm(event) {
-        const btn = event.currentTarget;
-        if (window.confirm("確定要刪除嗎?")) {
-          window.location.href = `./doDelete.php?id=${btn.dataset.id}`;
-        }
-      }
+
     </script>
 </body>
-
 
 </html>

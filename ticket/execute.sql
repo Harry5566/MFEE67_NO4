@@ -8,7 +8,7 @@ SELECT DATABASE();
 
 DESC `status`;
 SELECT * FROM `products`;
-DROP TABLE `products`;
+DROP TABLE `images`;
 
 -- TABLE
 -- products  regions  cities  types  acts  status  images
@@ -22,4 +22,5 @@ ALTER TABLE `products` CHANGE `created_at` `created_at` DATETIME NOT NULL DEFAUL
 
 -- 修改資料表內容
 UPDATE `products`  set status_id = 1 WHERE id = 7;
+
 

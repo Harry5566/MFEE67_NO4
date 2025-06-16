@@ -8,7 +8,21 @@ if (!isset($_GET["id"])) {
 }
 
 $id = $_GET["id"];
-$sql = "SELECT * FROM `products` WHERE `id` = ?";
+$sql = "SELECT
+				products.*,
+				regions.name AS region_name,
+				cities.name AS city_name,
+				types.name AS type_name,
+				acts.name AS act_name,
+				status.name AS status_name
+			FROM products
+			LEFT JOIN regions ON products.region_id = regions.id
+			LEFT JOIN cities ON products.city_id = cities.id
+			LEFT JOIN types ON products.type_id = types.id
+			LEFT JOIN acts ON products.act_id = acts.id
+			LEFT JOIN status ON products.status_id = status.id
+        WHERE products.id = ?
+		ORDER BY products.id ASC";
 $sqlRegion = "SELECT * FROM `regions`";
 $sqlCity = "SELECT * FROM `cities`";
 $sqlType = "SELECT * FROM `types`";
@@ -56,7 +70,7 @@ try {
 
 <!doctype html>
 
-<html lang="en" class="layout-menu-fixed layout-compact" data-assets-path="./assets/"
+<html lang="en" class="layout-menu-fixed layout-compact" data-assets-path="../assets/"
 	data-template="vertical-menu-template-free">
 
 <head>
@@ -64,12 +78,13 @@ try {
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-	<title>編輯行程商品</title>
+	<title>檢視票券商品</title>
 
 	<meta name="description" content="" />
 
 	<!-- Favicon -->
-	<link rel="icon" type="image/x-icon" href="./logo.png" />
+	<link rel="icon" type="image/x-icon" href="../assets/img/favicon/vnlogo-ic.ico" />
+
 
 	<!-- Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -78,22 +93,22 @@ try {
 		href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
 		rel="stylesheet" />
 
-	<link rel="stylesheet" href="./assets/vendor/fonts/iconify-icons.css" />
+	<link rel="stylesheet" href="../assets/vendor/fonts/iconify-icons.css" />
 
 	<!-- Core CSS -->
 	<!-- build:css assets/vendor/css/theme.css  -->
 
-	<link rel="stylesheet" href="./assets/vendor/css/core.css" />
-	<link rel="stylesheet" href="./assets/css/demo.css" />
+	<link rel="stylesheet" href="../assets/vendor/css/core.css" />
+	<link rel="stylesheet" href="../assets/css/demo.css" />
 
 	<!-- Vendors CSS -->
 
-	<link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-	<link rel="stylesheet" href="./custom.css">
+	<link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+	<link rel="stylesheet" href="../assets/css/custom.css">
 
 	<!-- endbuild -->
 
-	<link rel="stylesheet" href="./assets/vendor/libs/apex-charts/apex-charts.css" />
+	<link rel="stylesheet" href="../assets/vendor/libs/apex-charts/apex-charts.css" />
 
 	<!-- font awesome -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -101,7 +116,7 @@ try {
 		crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 	<!-- Helpers -->
-	<script src="./assets/vendor/js/helpers.js"></script>
+	<script src="../assets/vendor/js/helpers.js"></script>
 	<!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
 
 	<!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
@@ -112,7 +127,6 @@ try {
 	<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
 	<!-- custom 自定義 CSS -->
-	<link rel="stylesheet" href="./custom.css">
 	<style>
 		.col-form-label {
 			color: #D06224 !important;
@@ -121,6 +135,30 @@ try {
 		.pd-id {
 			color: #D06224;
 			font-size: 18px;
+		}
+
+		.form-label {
+			color: #D06224 !important;
+		}
+
+		.btn-outline-back {
+			border-color: #f1e3d9;
+			color: #ae431e;
+		}
+
+		.btn-outline-back:hover {
+			border-color: #ae431e;
+			color: #fff;
+		}
+
+		.app-brand {
+			min-height: 150px;
+		}
+
+		.logo {
+			max-height: 180px;
+			width: auto;
+			display: block;
 		}
 	</style>
 </head>
@@ -132,9 +170,9 @@ try {
 
 			<!-- Menu -->
 			<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-				<div class="app-brand demo">
+				<div class="app-brand demo d-flex justify-content-center align-items-center">
 					<a href="index.html" class="app-brand-link">
-						<!-- <img class="logo" src="./vnlogo.png" alt=""> -->
+						<img class="logo" src="../assets/img/favicon/vnlogo.png" alt="">
 					</a>
 				</div>
 
@@ -144,42 +182,45 @@ try {
 
 				<ul class="menu-inner py-1">
 					<!-- Forms & Tables -->
-					<li class="menu-header small text-uppercase"><span class="menu-header-text">後台管理系統</span></li>
-					<!-- Forms -->
+					<li class="menu-header small text-uppercase">
+						<span class="menu-text">後台功能</span>
+					</li>
+					<!-- 會員管理 -->
 					<li class="menu-item">
-						<a href="#" class="menu-link menu-toggle">
-							<i class="fa-solid fa-house-chimney-user me-2 menu-text "></i>
+						<a href="../user/index.php" class="menu-link menu-toggle">
+							<i class=" fa-solid fa-users me-4 text-white"></i>
 							<div class="menu-text fw-bold fs-5" data-i18n="Dashboards">會員管理</div>
 						</a>
 						<ul class="menu-sub">
 							<li class="menu-item">
-								<a href="#" class="menu-link">
-									<div class="menu-text fw-bold" data-i18n="Analytics">會員列表</div>
+								<a href="../user/index.php" class="menu-link">
+									<div class="menu-text fw-bold">會員列表</div>
 								</a>
 							</li>
 							<li class="menu-item">
-								<a href="#" class="menu-link">
-									<div class="menu-text fw-bold" data-i18n="Analytics">停權會員帳號</div>
+								<a href="../user/add.php" class="menu-link">
+									<div class="menu-text fw-bold">新增會員</div>
 								</a>
 							</li>
 						</ul>
 					</li>
 
+
 					<!-- 商品管理 -->
 					<li class="menu-item">
-						<a href="#" class="menu-link menu-toggle">
+						<a href="../trip_products/index.php" class="menu-link menu-toggle">
 							<i class="fa-solid fa-map-location-dot me-2 menu-text "></i>
 							<div class="menu-text fw-bold fs-5" data-i18n="Layouts">商品管理</div>
 						</a>
 
 						<ul class="menu-sub">
 							<li class="menu-item">
-								<a href="#" class="menu-link">
+								<a href="../trip_products/index.php" class="menu-link">
 									<div class="menu-text fw-bold" data-i18n="Without menu">行程列表</div>
 								</a>
 							</li>
 							<li class="menu-item">
-								<a href="./addTrip.php" class="menu-link">
+								<a href="../trip_products/addTrip.php" class="menu-link">
 									<div class="menu-text fw-bold" data-i18n="Without menu">新增行程</div>
 								</a>
 							</li>
@@ -258,7 +299,10 @@ try {
 				<div class="content-wrapper">
 
 					<div class="container-xxl flex-grow-1 container-p-y">
-						<h4 class="text-primary mb-1">票券商品-資訊檢視 &nbsp; #<?= $row["id"] ?></h4>
+						<div class="d-flex justify-content-between align-items-center">
+							<h4 class="text-primary mb-1">票券商品-資訊檢視 &nbsp; #<?= $row["id"] ?></h4>
+							<a class="btn btn-outline-back" href="./ticketIndex.php"><i class="fa-solid fa-ticket me-2 "></i>返回票券列表</a>
+						</div>			
 						<hr class="mb-5 mt-0  mb-8" style="color: #ae431e;" />
 
 						<div class="row g-4">
@@ -303,29 +347,14 @@ try {
 
 													<div class="col-md-6">
 														<label class="fs-6 form-label">地區</label>
-														<select required id="regionSelect" class="form-select"
-															name="region">
-															<option disabled selected>請選擇</option>
-															<?php foreach ($rowsRegion as $rowRegion): ?>
-																<option disabled value="<?= $rowRegion["id"] ?>"
-																	<?= ($rowRegion["id"] == $row["region_id"]) ? "selected" : "" ?>>
-																	<?= $rowRegion["name"] ?>
-																</option>
-															<?php endforeach; ?>
-														</select>
+														<input disabled name="region" type="text" class="form-control"
+															value="<?= $row["region_name"] ?>">
 													</div>
 
 													<div class="col-md-6">
 														<label class="fs-6 form-label">城市</label>
-														<select required id="citySelect" class="form-select" name="city">
-															<option selected disabled>請選擇</option>
-															<?php foreach ($rowsCity as $rowCity): ?>
-																<option disabled value="<?= $rowCity["id"] ?>"
-																	<?= ($rowCity["id"] == $row["region_id"]) ? "selected" : "" ?>>
-																	<?= $rowCity["name"] ?>
-																</option>
-															<?php endforeach; ?>
-														</select>
+														<input disabled name="city" type="text" class="form-control"
+															value="<?= $row["city_name"] ?>">
 													</div>
 												</div>
 
@@ -333,35 +362,22 @@ try {
 
 													<div class="col-md-6">
 														<label class="fs-6 form-label">活動類型</label>
-														<select required class="form-select" name="type">
-															<option selected disabled>請選擇</option>
-															<?php foreach ($rowsType as $rowType): ?>
-																<option disabled value="<?= $rowType["id"] ?>"
-																	<?= ($rowType["id"]) == $row["type_id"] ? "selected" : "" ?>>
-																	<?= $rowType["name"] ?>
-																</option>
-															<?php endforeach; ?>
-														</select>
+														<input disabled name="type" type="text" class="form-control"
+															value="<?= $row["type_name"] ?>">
 													</div>
 
 													<div class="col-md-6">
 														<label class="fs-6 form-label">活動子分類</label>
-														<select required class="form-select" name="act">
-															<option selected disabled>請選擇</option>
-															<?php foreach ($rowsAct as $rowAct): ?>
-																<option disabled value="<?= $rowAct["id"] ?>"
-																	<?= ($rowAct["id"] == $row["act_id"]) ? "selected" : "" ?>>
-																	<?= $rowAct["name"] ?>
-																</option>
-															<?php endforeach; ?>
-														</select>
+														<input disabled name="act" type="text" class="form-control"
+															value="<?= $row["act_name"] ?>">
 													</div>
 												</div>
 
 												<div class="row mb-6">
 													<div class="col-md-12">
-														<label for="exampleFormControlSelect1" class="fs-6 form-label">價格</label>
-														<div class="input-group">
+														<label for="exampleFormControlSelect1"
+															class="fs-6 form-label">價格</label>
+														<div class="input-group" disabled>
 															<span class="input-group-text">$</span>
 															<input disabled name="price" type="text" class="form-control"
 																aria-label="Dollar amount (with dot and two decimal places)"
@@ -382,16 +398,8 @@ try {
 												<div class="mb-6 row">
 													<div class="col-md-12">
 														<label for="" class="fs-6 form-label">商品狀態</label>
-														<select name="status" class="form-select" id="actSelect"
-															aria-label="活動選擇">
-															<option disabled selected>請選擇</option>
-															<?php foreach ($rowsSta as $rowSta): ?>
-																<option disabled value="<?= $rowSta["id"] ?>"
-																	<?= ($rowSta["id"] == $row["status_id"]) ? "selected" : "" ?>>
-																	<?= $rowSta["name"] ?>
-																</option>
-															<?php endforeach; ?>
-														</select>
+														<input disabled name="status" type="text" class="form-control"
+															value="<?= $row["status_name"] ?>">
 													</div>
 												</div>
 
@@ -410,9 +418,9 @@ try {
 												<div class="row justify-content-end text-end mt-10">
 													<div class="col-sm-11">
 														<a class="btn btn-gradient-success ms-2"
-															href="./ticketUpdate.php?id=<?= $row["id"] ?>">進行編輯</a>
+															href="./ticketUpdate.php?id=<?= $row["id"] ?>">編輯商品</a>
 														<a class="btn btn-gradient-info ms-2"
-															href="./ticketIndex.php">返回目錄</a>
+															href="./ticketIndex.php">返回列表</a>
 													</div>
 												</div>
 											</form>
@@ -426,6 +434,28 @@ try {
 
 
 					</div>
+					<!-- Footer -->
+					<footer class="content-footer footer bg-footer-theme">
+						<div class="container-fluid">
+							<div
+								class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+								<div class="mb-2 mb-md-0">
+									Copyright ©
+									<script>
+										document.write(new Date().getFullYear());
+									</script>
+									<a href="../user/index.php" target="_blank" class="footer-link">心橋❤️</a>
+									by 前端67-第四組
+								</div>
+								<div class="d-none d-lg-inline-block">
+									<a href="../user/index.php" target="_blank" class="footer-link me-4">關於我們</a>
+									<a href="../user/index.php" class="footer-link me-4" target="_blank">相關服務</a>
+									<a href="../user/index.php" target="_blank" class="footer-link">進階設定</a>
+								</div>
+							</div>
+						</div>
+					</footer>
+					<!-- / Footer -->
 				</div>
 			</div>
 			<!-- Content wrapper -->
@@ -434,38 +464,28 @@ try {
 			<div class="layout-overlay layout-menu-toggle"></div>
 		</div>
 
-		<!-- template 區域(用來新增notice) -->
-		<template id="inputs-notice">
-			<div class="row mb-2">
-				<div class="col-sm-11 mb-2 d-flex align-items-center">
-					<input required name="newNotice[]" type="text" class="form-control" id="basic-default-company"
-						placeholder="請列點說明注意事項" />
-				</div>
-			</div>
-		</template>
-
 		<!-- Core JS -->
 
-		<script src="./assets/vendor/libs/jquery/jquery.js"></script>
+		<script src="../assets/vendor/libs/jquery/jquery.js"></script>
 
-		<script src="./assets/vendor/libs/popper/popper.js"></script>
-		<script src="./assets/vendor/js/bootstrap.js"></script>
+		<script src="../assets/vendor/libs/popper/popper.js"></script>
+		<script src="../assets/vendor/js/bootstrap.js"></script>
 
-		<script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+		<script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-		<script src="./assets/vendor/js/menu.js"></script>
+		<script src="../assets/vendor/js/menu.js"></script>
 
 		<!-- endbuild -->
 
 		<!-- Vendors JS -->
-		<script src="./assets/vendor/libs/apex-charts/apexcharts.js"></script>
+		<script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
 		<!-- Main JS -->
 
-		<script src="./assets/js/main.js"></script>
+		<script src="../assets/js/main.js"></script>
 
 		<!-- Page JS -->
-		<script src="./assets/js/dashboards-analytics.js"></script>
+		<script src="../assets/js/dashboards-analytics.js"></script>
 
 		<!-- Place this tag before closing body tag for github widget button. -->
 		<script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -475,58 +495,23 @@ try {
 		</script>
 
 		<script>
-			let subs = [];
-			let cities = [];
+			// 活動介紹高度隨內容增高
+			document.addEventListener('DOMContentLoaded', function () {
+				const introTextarea = document.querySelector("#basic-default-message");
 
-			subs = <?php echo json_encode($rowsSubCate) ?>;
-			cities = <?php echo json_encode($rowsCity) ?>;
+				function adjustTextareaHeight(textarea) {
+					if (textarea) {
+						textarea.style.overflowY = 'hidden'; // 避免在高度重新計算時閃爍滾動條
+						textarea.style.height = 'auto'; // 重設高度以便正確計算 scrollHeight
+						textarea.style.height = textarea.scrollHeight + 'px'; // 設置為內容所需的高度
+					}
+				}
 
-			const selectMain = document.querySelector("select[name=mainCate]");
-			const selectSub = document.querySelector("select[name=subCate]");
-
-			const selectRegion = document.querySelector("select[name=region]");
-			const selectCity = document.querySelector("select[name=city]");
-
-			const noticeArea = document.querySelector(".notice-area");
-			const addNotice = document.querySelector("#add-notice");
-			const template = document.querySelector("#inputs-notice")
-
-
-			selectMain.addEventListener("change", function () {
-				setSubMenu(this.value)
-			})
-
-			selectRegion.addEventListener("change", function () {
-				setCityMenu(this.value)
-			})
-
-			function setSubMenu(id) {
-				const ary = subs.filter(sub => sub.main_cate_id == id);
-				selectSub.innerHTML = "<option value selected disabled>請選擇</option>";
-				ary.forEach(sub => {
-					const option = document.createElement("option");
-					option.value = sub.id;
-					option.innerHTML = sub.name;
-					selectSub.append(option);
-				});
-			}
-
-			function setCityMenu(id) {
-				const ary = cities.filter(city => city.region_id == id);
-				selectCity.innerHTML = "<option value selected disabled>請選擇</option>";
-				ary.forEach(city => {
-					const option = document.createElement("option");
-					option.value = city.id;
-					option.innerHTML = city.name;
-					selectCity.append(option);
-				});
-			}
-
-			addNotice.addEventListener("click", e => {
-				// e.preventDefault();
-				const node = template.content.cloneNode(true);
-				noticeArea.append(node);
-			})
+				if (introTextarea) {
+					// 頁面載入時調整textarea的高度以顯示所有內容
+					adjustTextareaHeight(introTextarea);
+				}
+			});
 
 		</script>
 </body>

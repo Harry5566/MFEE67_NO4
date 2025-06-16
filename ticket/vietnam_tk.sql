@@ -1,6 +1,7 @@
 CREATE DATABASE viet_tk;
 
-USE viet_tk;
+
+USE `viet_tk`;
 
 SELECT DATABASE();
 
@@ -118,9 +119,5 @@ CREATE TABLE images (
     product_id INT,
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
-
-
-
-
 
 

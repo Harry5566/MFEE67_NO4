@@ -60,12 +60,12 @@ try {
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>票券管理</title>
+  <title>票券商品編輯</title>
 
   <meta name="description" content="" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="../assets/img/favicon/vnlogo-ic.ico" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -85,7 +85,7 @@ try {
   <!-- Vendors CSS -->
 
   <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-  <link rel="stylesheet" href="./custom.css">
+  <link rel="stylesheet" href="../assets/css/custom.css">
 
   <!-- font awesom -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -150,6 +150,15 @@ try {
       background-color: #d44720;
       color: #accab2;
     }
+
+    .bx-trash {
+      margin-bottom: 1px;
+    }
+
+    .form-label {
+			color: #D06224 !important;
+	
+		}
   </style>
 </head>
 
@@ -159,9 +168,9 @@ try {
     <div class="layout-container">
       <!-- Menu -->
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-        <div class="app-brand demo">
+        <div class="app-brand demo d-flex justify-content-center align-items-center">
           <a href="index.html" class="app-brand-link">
-            <!-- <img class="logo" src="./vnlogo.png" alt=""> -->
+            <img class="logo" src="../assets/img/favicon/vnlogo.png" alt="">
           </a>
         </div>
 
@@ -171,42 +180,45 @@ try {
 
         <ul class="menu-inner py-1">
           <!-- Forms & Tables -->
-          <li class="menu-header small text-uppercase"><span class="menu-header-text">後台管理系統</span></li>
-          <!-- Forms -->
+          <li class="menu-header small text-uppercase">
+            <span class="menu-text fw-bold">後台功能</span>
+          </li>
+          <!-- 會員管理 -->
           <li class="menu-item">
-            <a href="#" class="menu-link menu-toggle">
-              <i class="fa-solid fa-house-chimney-user me-2 menu-text "></i>
+            <a href="../user/index.php" class="menu-link menu-toggle">
+              <i class=" fa-solid fa-users me-4 text-white"></i>
               <div class="menu-text fw-bold fs-5" data-i18n="Dashboards">會員管理</div>
             </a>
             <ul class="menu-sub">
               <li class="menu-item">
-                <a href="#" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Analytics">會員列表</div>
+                <a href="../user/index.php" class="menu-link">
+                  <div class="menu-text fw-bold">會員列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="#" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Analytics">停權會員帳號</div>
+                <a href="../user/add.php" class="menu-link">
+                  <div class="menu-text fw-bold">新增會員</div>
                 </a>
               </li>
             </ul>
           </li>
 
+
           <!-- 商品管理 -->
           <li class="menu-item">
-            <a href="#" class="menu-link menu-toggle">
+            <a href="../trip_products/index.php" class="menu-link menu-toggle">
               <i class="fa-solid fa-map-location-dot me-2 menu-text "></i>
               <div class="menu-text fw-bold fs-5" data-i18n="Layouts">商品管理</div>
             </a>
 
             <ul class="menu-sub">
               <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a href="../trip_products/index.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Without menu">行程列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="./addTrip.php" class="menu-link">
+                <a href="../trip_products/addTrip.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Without menu">新增行程</div>
                 </a>
               </li>
@@ -273,13 +285,23 @@ try {
 							<li class="breadcrumb-item">
 								<a href="ticketIndex.php" class="text-primary">票券管理</a>
 							</li>
+              <li class="breadcrumb-item">
+								<a href="ticketIndex.php" class="text-primary">票券列表</a>
+							</li>
 							<li class="breadcrumb-item active" class="text-primary">票券編輯</li>
 						</ol>
 					</nav>
 				</div>
 
         <div class="container flex-grow-1 container-p-y no-padding-container px-5">
-          <h4 class="text-primary mb-1">票券商品-編輯  &nbsp; #<?= $row["id"] ?></h4>
+          <div class="d-flex justify-content-between align-items-center">
+            <h4 class="text-primary mb-1">票券商品-編輯  &nbsp; #<?= $row["id"] ?></h4>
+            <div class="navbar-nav flex-row align-items-center ms-md-auto">
+                <a class="btn btn-del btn-sm btn-success ms-auto text-white" data-id="<?= $row["id"] ?>" data-name="<?= htmlspecialchars($row["name"]) ?>"><i class="bx bx-trash me-1"></i>刪除商品</a>
+            </div>
+            
+          </div>
+          
           <hr class="mb-5 mt-0" style="color: #ae431e;"/>
           <?php if (!$row): ?>
             資料不存在
@@ -416,12 +438,38 @@ try {
 
     <!-- Overlay -->
     <div class="layout-overlay layout-menu-toggle"></div>
+
+    <!-- 刪除Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header"></div>
+          <div class="modal-body">
+            <div class="text-center">
+              <i class="fa-solid fa-circle-exclamation" style="font-size: 2rem;"></i>
+              
+              <h4 class="mt-3">確定要刪除此票券商品嗎？</h4>
+              <p class="text-muted text-warning">【 <span id="deltkName"></span> 】</p>
+            </div>
+            <input type="hidden" id="deletetkId">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-gradient-primary" id="confirmDelete">
+              <i class="fas fa-trash me-2"></i>確認刪除
+            </button>
+            <button type="button" class="btn btn-gradient-info" data-bs-dismiss="modal">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+   <!-- / 刪除Modal -->  
+
+
   </div>
   <!-- / Layout wrapper -->
 
 
   <!-- Core JS -->
-
   <script src="../assets/vendor/libs/jquery/jquery.js"></script>
 
   <script src="../assets/vendor/libs/popper/popper.js"></script>
@@ -431,15 +479,8 @@ try {
 
   <script src="../assets/vendor/js/menu.js"></script>
 
-  <!-- endbuild -->
-
-  <!-- Vendors JS -->
-
   <!-- Main JS -->
-
   <script src="../assets/js/main.js"></script>
-
-  <!-- Page JS -->
 
   <!-- Place this tag before closing body tag for github widget button. -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -467,6 +508,33 @@ try {
         selectCity.append(option);
       });
     }
+
+    // 刪除
+      const btnDels = document.querySelectorAll(".btn-del");
+      const deleteModalElement = document.querySelector("#deleteModal");
+      const deletetkId = document.querySelector("#deletetkId");
+      const deletetkName = document.querySelector("#deltkName");
+      const btnConfirmDels = document.querySelector("#confirmDelete");
+      const deleteModal = new bootstrap.Modal(deleteModalElement);
+
+      btnDels.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+        const tkId = this.dataset.id;
+        const tkName = this.dataset.name;
+
+        deletetkId.value = tkId;
+        deletetkName.textContent = tkName;
+
+        deleteModal.show();
+        })
+      })
+
+      btnConfirmDels.addEventListener("click", () => {
+        const tkId = deletetkId.value;
+        window.location.href = `./doDelete.php?id=${tkId}`;
+    });
+
+    
   </script>
 
 </body>

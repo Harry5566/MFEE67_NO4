@@ -7,6 +7,7 @@ $sqlCity = "SELECT * FROM `cities`";
 $sqlType = "SELECT * FROM `types`";
 $sqlAct = "SELECT * FROM `acts`";
 $sqlSta = "SELECT * FROM `status`";
+$sqlImg = "SELECT * FROM `images` WHERE `product_id` = ?";
 
 try {
   $stmtRegion = $pdo->prepare($sqlRegion);
@@ -49,7 +50,7 @@ try {
   <meta name="description" content="" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="../assets/img/favicon/vnlogo-ic.ico" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -69,7 +70,7 @@ try {
   <!-- Vendors CSS -->
 
   <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-  <link rel="stylesheet" href="./custom.css">
+  <link rel="stylesheet" href="../assets/css/custom.css">
 
   <!-- font awesom -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -122,6 +123,11 @@ try {
       background-color: #d44720;
       color: #accab2;
     }
+
+    .form-label {
+			color: #D06224 !important;
+	
+		}
   </style>
 </head>
 
@@ -132,9 +138,9 @@ try {
 
       <!-- Menu -->
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-        <div class="app-brand demo">
+        <div class="app-brand demo d-flex justify-content-center align-items-center">
           <a href="index.html" class="app-brand-link">
-
+            <img class="logo" src="../assets/img/favicon/vnlogo.png" alt="">
           </a>
         </div>
 
@@ -144,42 +150,45 @@ try {
 
         <ul class="menu-inner py-1">
           <!-- Forms & Tables -->
-          <li class="menu-header small text-uppercase"><span class="menu-header-text">後台管理系統</span></li>
-          <!-- Forms -->
+          <li class="menu-header small text-uppercase">
+            <span class="menu-text fw-bold">後台功能</span>
+          </li>
+          <!-- 會員管理 -->
           <li class="menu-item">
-            <a href="#" class="menu-link menu-toggle">
-              <i class="fa-solid fa-house-chimney-user me-2 menu-text "></i>
+            <a href="../user/index.php" class="menu-link menu-toggle">
+              <i class=" fa-solid fa-users me-4 text-white"></i>
               <div class="menu-text fw-bold fs-5" data-i18n="Dashboards">會員管理</div>
             </a>
             <ul class="menu-sub">
               <li class="menu-item">
-                <a href="#" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Analytics">會員列表</div>
+                <a href="../user/index.php" class="menu-link">
+                  <div class="menu-text fw-bold">會員列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="#" class="menu-link">
-                  <div class="menu-text fw-bold" data-i18n="Analytics">停權會員帳號</div>
+                <a href="../user/add.php" class="menu-link">
+                  <div class="menu-text fw-bold">新增會員</div>
                 </a>
               </li>
             </ul>
           </li>
 
+
           <!-- 商品管理 -->
           <li class="menu-item">
-            <a href="#" class="menu-link menu-toggle">
+            <a href="../trip_products/index.php" class="menu-link menu-toggle">
               <i class="fa-solid fa-map-location-dot me-2 menu-text "></i>
               <div class="menu-text fw-bold fs-5" data-i18n="Layouts">商品管理</div>
             </a>
 
             <ul class="menu-sub">
               <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a href="../trip_products/index.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Without menu">行程列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="./addTrip.php" class="menu-link">
+                <a href="../trip_products/addTrip.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Without menu">新增行程</div>
                 </a>
               </li>
@@ -193,12 +202,12 @@ try {
               <div class="menu-text fw-bold fs-5" data-i18n="Dashboards">票券管理</div>
             </a>
             <ul class="menu-sub">
-              <li class="menu-item">
+              <li class="menu-item active">
                 <a href="ticketIndex.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Analytics">票券列表</div>
                 </a>
               </li>
-              <li class="menu-item active">
+              <li class="menu-item">
                 <a href="./ticketAdd.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Analytics">新增票券</div>
                 </a>
@@ -213,14 +222,14 @@ try {
               <div class="menu-text fw-bold fs-5" data-i18n="Dashboards">優惠券管理</div>
             </a>
             <ul class="menu-sub">
-              <li class="menu-item active">
+              <li class="menu-item">
                 <a href="#" class="menu-link">
                   <div class="menu-text" data-i18n="Analytics">優惠券列表</div>
                 </a>
               </li>
               <li class="menu-item">
                 <a href="#" class="menu-link">
-                  <div class="menu-text" data-i18n="Analytics">新增優惠券</div>
+                  <div class="menu-text " data-i18n="Analytics">新增優惠券</div>
                 </a>
               </li>
             </ul>
@@ -241,7 +250,7 @@ try {
           <nav aria-label="breadcrumb" class="mt-4 m-xl-6">
             <ol class="breadcrumb">
               <li class="breadcrumb-item">
-                <a href="#" class="text-primary">Home</a>
+                <a href="../user/index.php" class="text-primary">Home</a>
               </li>
               <li class="breadcrumb-item">
                 <a href="ticketIndex.php" class="text-primary">票券管理</a>
@@ -256,7 +265,7 @@ try {
           <div class="container-xxl flex-grow-1 container-p-y no-padding-container">
             <h4 class="text-primary ms-1">票券商品-新增</h4>
             <hr class="mb-5 mt-0  mb-8" style="color: #ae431e;" />
-            <form action="./doAdd.php" method="post">
+            <form action="./doAdd.php" method="post" enctype="multipart/form-data">
               <div class="row mb-6 gy-6">
                 <div class="col-xl">
                   <div class="card">
@@ -315,7 +324,7 @@ try {
                         <div class="col-md-4">
                           <label for="statusSelect" class="form-label fs-6">狀態</label>
                           <select name="status" class="form-select" id="statusSelect">
-                            <option selected>請選擇狀態</option>
+                            <option selected disabled>請選擇狀態</option>
                             <?php foreach ($rowsSta as $rowSta): ?>
                               <option value="<?= $rowSta["id"] ?>"><?= htmlspecialchars($rowSta["name"]) ?></option>
                             <?php endforeach; ?>
