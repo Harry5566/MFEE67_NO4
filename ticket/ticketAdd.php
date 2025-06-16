@@ -1,4 +1,10 @@
 <?php
+session_start();
+if (!isset($_SESSION["members"])) {
+  header("location: ../user/login.php");
+  exit;
+}
+
 require_once "./connect.php";
 require_once "./utilities.php";
 
@@ -128,6 +134,15 @@ try {
 			color: #D06224 !important;
 	
 		}
+
+    /* 登出區 */
+    .head {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      margin-right: 2px;
+      object-fit: cover;
+    }
   </style>
 </head>
 
@@ -234,6 +249,26 @@ try {
               </li>
             </ul>
           </li>
+
+          <!-- menu登出 -->
+          <li class="menu-header small text-uppercase">
+            <span class="menu-text fw-bold">會員資訊</span>
+          </li>
+          <div class="container text-center">
+
+            <div class="d-flex justify-content-center gap-3 mb-3">
+              <img class="head" src="../user/img/<?= $_SESSION["members"]["avatar"] ?>" alt="">
+              <div class="menu-text fw-bold align-self-center"><?= $_SESSION["members"]["name"] ?></div>
+            </div>
+
+            <li class="menu-item row justify-content-center">
+              <a href="../user/doLogout.php"
+                class="btn rounded-pill btn-gradient-success btn-ban col-10 justify-content-center">
+                <div class="menu-text fw-bold"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>登出</div>
+              </a>
+            </li>
+          </div>
+          <!-- /menu登出 -->
         </ul>
       </aside>
       <!-- / Menu -->
