@@ -99,7 +99,7 @@ CREATE TABLE products(
     act_id INT,
     is_valid TINYINT(1) DEFAULT 1,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    intro VARCHAR(1000),
+    intro VARCHAR(10000),
     FOREIGN KEY (status_id) REFERENCES status(id),
     FOREIGN KEY (region_id) REFERENCES regions(id),
     FOREIGN KEY (city_id) REFERENCES cities(id),
