@@ -1,10 +1,20 @@
 <?php
+// 登入驗證及會員資訊
+session_start();
+if (!isset($_SESSION["members"])) {
+  header("location: ../user/login.php");
+  exit;
+}
+
 require_once "./connect.php";
 // 類型頁數
 $staId = intval($_GET["staid"] ?? 0);
 $regionId = intval($_GET["regionid"] ?? 0);
 $typeId = intval($_GET["typeid"] ?? 0);
 $search = trim($_GET["search"] ?? "");
+$idSort = $_GET["idsort"] ?? null;
+$stockSort = $_GET["ssort"] ?? null;
+$viewSort = $_GET["vsort"] ?? null;
 
 $conditions = [];
 $params = [];
@@ -39,6 +49,28 @@ $perPage = 25;
 $page = intval($_GET["page"] ?? 1);
 $pageStart = ($page - 1) * $perPage;
 
+// id庫存瀏覽人次排序
+$orderbySQL = "ORDER BY products.id ASC";
+if (!empty($idSort)) {
+  if ($idSort == "asc") {
+    $orderbySQL = "ORDER BY products.id ASC";
+  } elseif ($idSort == "desc") {
+    $orderbySQL = "ORDER BY products.id DESC";
+  }
+}elseif (!empty($stockSort)) {
+  if ($stockSort == "asc") {
+    $orderbySQL = "ORDER BY products.stock ASC, products.id ASC";
+  } elseif ($stockSort == "desc") {
+    $orderbySQL = "ORDER BY products.stock DESC, products.id ASC";
+  }
+}elseif (!empty($viewSort)) {
+  if ($viewSort == "asc") {
+    $orderbySQL = "ORDER BY products.view_count ASC, products.id ASC";
+  } elseif ($viewSort == "desc") {
+    $orderbySQL = "ORDER BY products.view_count DESC, products.id ASC";
+  }
+}
+
 $sql = "SELECT
             products.*,
             regions.name AS region_name,
@@ -52,7 +84,7 @@ $sql = "SELECT
         LEFT JOIN types ON products.type_id = types.id
         LEFT JOIN acts ON products.act_id = acts.id
         LEFT JOIN status ON products.status_id = status.id {$whereClause}
-        ORDER BY products.id ASC
+        {$orderbySQL}
         LIMIT {$pageStart}, {$perPage}";
 $sqlCount = "SELECT COUNT(products.id) as total_count 
              FROM products
@@ -64,6 +96,8 @@ $sqlCount = "SELECT COUNT(products.id) as total_count
 $sqlSta = "SELECT * FROM `status` ORDER BY id";
 $sqlRegions = "SELECT * FROM `regions` ORDER BY id";
 $sqlTypes = "SELECT * FROM `types` ORDER BY id";
+
+
 
 try {
   $stmt = $pdo->prepare($sql);
@@ -95,23 +129,22 @@ $totalPage = ceil($totalLength / $perPage); //算總頁數
 
 function generate_filter_link($param_name, $param_value)
 {
-  $current_params = $_GET; // Get all current GET parameters
+  $current_params = $_GET; 
   $new_params = [];
 
   if (isset($current_params['search']) && trim($current_params['search']) !== '') {
     $new_params['search'] = trim($current_params['search']);
   }
 
-  // If param_value is 0, it means "All" for this category, so remove the parameter
   if ($param_value == 0 || $param_value === '') {
 
   } else {
-    // Otherwise, set/update the parameter
+    
     $new_params[$param_name] = $param_value;
   }
 
   if (empty($new_params)) {
-    return "./ticketIndex.php"; // No params, clean URL
+    return "./ticketIndex.php";
   }
   return "./ticketIndex.php?" . http_build_query($new_params);
 }
@@ -123,6 +156,13 @@ if ($regionId != 0)
   $base_pagination_params['regionid'] = $regionId;
 if ($typeId != 0)
   $base_pagination_params['typeid'] = $typeId;
+
+if ($idSort !== null)
+  $base_pagination_params['idsort'] = $idSort;
+if ($stockSort !== null)
+  $base_pagination_params['ssort'] = $stockSort;
+if ($viewSort !== null)
+  $base_pagination_params['vsort'] = $viewSort;
 if ($search !== "")
   $base_pagination_params['search'] = $search;
 
@@ -199,7 +239,6 @@ $all_link = "./ticketIndex.php";
       display: inline-flex;
       align-items: center;
       vertical-align: middle;
-
     }
 
     .form-control-s {
@@ -207,7 +246,6 @@ $all_link = "./ticketIndex.php";
       border-color: #fff;
       background-color: #ffffff1c;
     }
-
 
     .form-control-s:focus {
       color: #fff;
@@ -244,7 +282,6 @@ $all_link = "./ticketIndex.php";
       font-size: 14px;
     }
 
-
     .pacontainer {
       width: 100%;
       max-width: 940px;
@@ -252,8 +289,6 @@ $all_link = "./ticketIndex.php";
       position: relative;
       text-align: center;
     }
-
-
 
     .nvbar {
       background-color: #6e5432;
@@ -297,6 +332,7 @@ $all_link = "./ticketIndex.php";
       color: #6e5432;
     }
 
+    /* search欄位 */
     .nv-search {
       border: 2px solid #eac891;
       background-color: #6e5432;
@@ -327,23 +363,6 @@ $all_link = "./ticketIndex.php";
       margin-top: 5px;
       left: -0.5rem;
       color: #eac891;
-
-    }
-
-    .bx-show-alt {
-      margin-right: 3px;
-      margin-top: 3px;
-
-    }
-
-    .bx-edit-alt {
-      margin-right: 2px;
-      margin-top: 2px;
-    }
-
-    .bx-trash {
-      margin-left: 1px;
-      margin-bottom: 2px;
     }
 
     .app-brand {
@@ -354,6 +373,32 @@ $all_link = "./ticketIndex.php";
       max-height: 180px;
       width: auto;
       display: block;
+    }
+
+    /* 操作區圓形按鈕 */
+    .action-buttons .btn {
+      width: 30px;         
+      height: 30px;        
+      padding: 0;
+      margin: 0 2px; 
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .action-buttons .btn .bx { 
+      font-size: 15px;
+      vertical-align: middle;
+    }
+
+    /* 登出區 */
+    .head {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      margin-right: 2px;
+      object-fit: cover;
     }
   </style>
 </head>
@@ -461,7 +506,29 @@ $all_link = "./ticketIndex.php";
               </li>
             </ul>
           </li>
+
+          <!-- menu登出 -->
+          <li class="menu-header small text-uppercase">
+            <span class="menu-text fw-bold">會員資訊</span>
+          </li>
+          <div class="container text-center">
+
+            <div class="d-flex justify-content-center gap-3 mb-3">
+              <img class="head" src="../user/img/<?= $_SESSION["members"]["avatar"] ?>" alt="">
+              <div class="menu-text fw-bold align-self-center"><?= $_SESSION["members"]["name"] ?></div>
+            </div>
+
+            <li class="menu-item row justify-content-center">
+              <a href="../user/doLogout.php"
+                class="btn rounded-pill btn-gradient-success btn-ban col-10 justify-content-center">
+                <div class="menu-text fw-bold"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>登出</div>
+              </a>
+            </li>
+          </div>
+          <!-- /menu登出 -->
         </ul>
+
+        
       </aside>
       <!-- / Menu -->
 
@@ -494,7 +561,7 @@ $all_link = "./ticketIndex.php";
                 class="d-flex align-items-center position-relative flex-nowrap justify-content-between filter-button-row nvbar">
                 <div class="filter-button-item filter-btn-up">
                   <a class="top-btn fs-5  <?= ($staId == 0 && $regionId == 0 && $typeId == 0) ? "active" : "" ?>"
-                    href="<?= $all_link ?>">全部</a>
+                    href="<?= $all_link ?>"><i class="fa-solid fa-broom fs-6 me-1"></i>清除</a>
                 </div>
                 <!-- 狀態分頁 -->
                 <?php foreach ($rowsSta as $rowSta): ?>
@@ -607,15 +674,43 @@ $all_link = "./ticketIndex.php";
                     <!--/頁數-->
                     <thead>
                       <tr>
-                        <th class="id text-primary text-center fw-bold">#</th>
-                        <th class="status text-primary text-center fw-bold">狀態</th>
-                        <th class="name text-primary text-center fw-bold">商品名稱</th>
-                        <th class="region text-primary text-center fw-bold">地區</th>
-                        <th class="city text-primary text-center fw-bold">城市</th>
-                        <th class="type text-primary text-center fw-bold">類型1</th>
-                        <th class="act text-primary text-center fw-bold">類型2</th>
-                        <th class="stock text-primary text-center fw-bold">庫存</th>
-                        <th class="text-primary text-center fw-bold">操作</th>
+                        <!-- id加順序按鈕 -->
+                        <th class="id text-primary text-center fw-bold fs-6">
+                          <div class="d-flex align-items-center justify-content-center fs-6">
+                            <span class="text-primary text-center fw-bold fs-6">#</span>
+                            <div class="d-flex flex-column id-up-down ms-1" data-sort="" role="button">
+                              <i class="fa-solid fa-caret-up fs-8px"></i>
+                              <i class="fa-solid fa-caret-down fs-8px"></i>
+                            </div>
+                          </div>
+                        </th>
+                        <th class="status text-primary text-center fw-bold fs-6">狀態</th>
+                        <th class="name text-primary text-center fw-bold fs-6">商品名稱</th>
+                        <th class="region text-primary text-center fw-bold fs-6">地區</th>
+                        <th class="city text-primary text-center fw-bold fs-6">城市</th>
+                        <th class="type text-primary text-center fw-bold fs-6">類型1</th>
+                        <th class="act text-primary text-center fw-bold fs-6">類型2</th>
+                        <!-- 庫存加順序按鈕 -->
+                        <th class="stock text-primary text-center fw-bold fs-6">
+                          <div class="d-flex align-items-center justify-content-center fs-6">
+                            <span class="text-primary text-center fw-bold fs-6">庫存</span>
+                            <div class="d-flex flex-column stock-up-down ms-1" data-sort="" role="button">
+                              <i class="fa-solid fa-caret-up fs-8px"></i>
+                              <i class="fa-solid fa-caret-down fs-8px"></i>
+                            </div>
+                          </div>
+                        </th>
+                        <!-- 瀏覽人次加順序按鈕 -->
+                        <th class="view text-primary">
+                          <div class="d-flex align-items-center justify-content-center fs-6">
+                            <span class="text-primary text-center fw-bold fs-6">瀏覽人次</span>
+                            <div class="d-flex flex-column view-up-down ms-1" data-sort="" role="button">
+                              <i class="fa-solid fa-caret-up fs-8px"></i>
+                              <i class="fa-solid fa-caret-down fs-8px"></i>
+                            </div>
+                          </div>
+                        </th>
+                        <th class="text-primary text-center fw-bold fs-6">操作</th>
                       </tr>
                     </thead>
 
@@ -648,15 +743,16 @@ $all_link = "./ticketIndex.php";
                           <td class="type text-center"><?= $row["type_name"] ?? 'N/A' ?></td>
                           <td class="act text-center"><?= $row["act_name"] ?? 'N/A' ?></td>
                           <td class="stock text-center"><?= $row["stock"] ?></td>
+                          <td class="text-center"><?= $row["view_count"] ?></td>
                           <td class="text-center"> <!-- 操作區三按鈕 -->
                             <div class="action-buttons">
-                              <span class="btn-circle btn btn-warning"><a href="./ticketView.php?id=<?= $row["id"] ?>"><i
+                              <span class="btn btn-sm rounded-pill btn-warning"><a href="./ticketView.php?id=<?= $row["id"] ?>"><i
                                     class="bx bx-show-alt text-white"></i></a></span>
-                              <span class="btn-circle btn btn-info"><a href="./ticketUpdate.php?id=<?= $row["id"] ?>"><i
+                              <span class="btn btn-sm rounded-pill btn-info"><a href="./ticketUpdate.php?id=<?= $row["id"] ?>"><i
                                     class="bx bx-edit-alt " style="color: #50402c;"></i></a></span>
-                              <button class="btn-circle btn-del btn btn-success" data-id="<?= $row["id"] ?>"
+                              <button class="btn btn-sm rounded-pill btn-success" data-id="<?= $row["id"] ?>"
                                 data-name="<?= htmlspecialchars($row["name"]) ?>">
-                                <i class="bx bx-trash me-1"></i>
+                                <i class="bx bx-trash"></i>
                               </button>
                             </div>
                           </td>
@@ -816,6 +912,9 @@ $all_link = "./ticketIndex.php";
       const deletetkName = document.querySelector("#deltkName");
       const btnConfirmDels = document.querySelector("#confirmDelete");
       const deleteModal = new bootstrap.Modal(deleteModalElement);
+      const idBtn = document.querySelector(".id-up-down");
+      const stockBtn = document.querySelector(".stock-up-down");
+      const viewBtn = document.querySelector(".view-up-down");
 
       btnDels.forEach(function (btn) {
         btn.addEventListener("click", function () {
@@ -851,6 +950,41 @@ $all_link = "./ticketIndex.php";
         }
       });
 
+      // id 庫存 瀏覽順序按鈕
+      idBtn.addEventListener("click", () => {
+        sorts("idsort");
+      });
+
+      stockBtn.addEventListener("click", () => {
+        sorts("ssort");
+      });
+
+      viewBtn.addEventListener("click", () => {
+        sorts("vsort");
+      });
+
+      function sorts(getkey) {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        const currentSort = urlParams.get(getkey) || "";
+        let newSort = setSortData(currentSort);
+
+        urlParams.delete("idsort");
+        urlParams.delete("ssort");
+        urlParams.delete("vsort");
+
+        urlParams.set("page", 1);
+        urlParams.set(getkey, newSort); //加入前面判定後的網址參數
+        window.location.href = `./ticketIndex.php?${urlParams.toString()}`;
+      }
+
+      function setSortData(current) {
+        if (current === "" || current === "desc") {
+          return "asc";
+        } else {
+          return "desc";
+        }
+      }
 
     </script>
 </body>
