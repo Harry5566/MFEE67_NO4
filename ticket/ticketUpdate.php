@@ -512,14 +512,22 @@ try {
 
   <script>
     let cities = [];
+    let acts = [];
 
     cities = <?php echo json_encode($rowsCity) ?>;
+    acts = <?php echo json_encode($rowsAct) ?>;
 
     const selectRegion = document.querySelector("select[name=region]");
     const selectCity = document.querySelector("select[name=city]");
+    const selectType = document.querySelector("select[name=type]");
+    const selectAct = document.querySelector("select[name=act]");
 
     selectRegion.addEventListener("change", function () {
       setCityMenu(this.value)
+    })
+
+    selectType.addEventListener("change", function () {
+      setActMenu(this.value)
     })
 
     function setCityMenu(id) {
@@ -533,7 +541,18 @@ try {
       });
     }
 
-    // 刪除
+    function setActMenu(id) {
+      const ary = acts.filter(act => act.type_id == id);
+      selectAct.innerHTML = "<option value selected disabled>請選擇</option>";
+      ary.forEach(act => {
+        const option = document.createElement("option");
+        option.value = act.id;
+        option.innerHTML = act.name;
+        selectAct.append(option);
+      });
+    }
+
+    // 刪除鍵
       const btnDels = document.querySelectorAll(".btn-del");
       const deleteModalElement = document.querySelector("#deleteModal");
       const deletetkId = document.querySelector("#deletetkId");

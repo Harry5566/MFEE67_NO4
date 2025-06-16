@@ -467,7 +467,7 @@ try {
 
     function setActMenu(id) {
       const ary = acts.filter(act => act.type_id == id);
-      selectAct.innerHTML = "<option value selected disabled>請選擇城市</option>";
+      selectAct.innerHTML = "<option value selected disabled>請選擇活動子分類</option>";
       ary.forEach(act => {
         const option = document.createElement("option");
         option.value = act.id;
