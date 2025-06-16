@@ -366,7 +366,6 @@ $endPage = min($totalPage, $page + 2);
             <span>
               <span><img class="logo" src="../assets/img/favicon/vnlogo.png" alt=""></span>
             </span>
-            <span class="fs-4 fw-bold ms-2 app-brand-text demo menu-text align-items-center"></span>
           </a>
 
           <a href="javascript:void(0);" class="layout-menu-toggle menu-link ms-auto">

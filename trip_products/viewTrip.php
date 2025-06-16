@@ -186,12 +186,11 @@ $updatedDate = $updatedAt->format("Y-m-d");
 			<!-- Menu -->
 
 			<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-				<div class="app-brand demo">
+				<div class="app-brand demo d-flex justify-content-center align-items-center">
 					<a href="./index.php" class="app-brand-link">
 						<span>
-							<span><img class="w-40px h-40px" src="../assets/img/favicon/vnlogo.png" alt=""></span>
+							<span><img class="logo" src="../assets/img/favicon/vnlogo.png" alt=""></span>
 						</span>
-						<span class="fs-4 fw-bold ms-2 app-brand-text demo menu-text align-items-center">xin_chào</span>
 					</a>
 
 					<a href="javascript:void(0);" class="layout-menu-toggle menu-link ms-auto">
