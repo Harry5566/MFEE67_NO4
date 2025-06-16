@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
-$username = "admin";
-$password = "a12345";
+$username = "root";
+$password = "";
 $dbname = "viet_tk";
 $port = 3306;
 
