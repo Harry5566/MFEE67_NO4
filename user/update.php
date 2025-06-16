@@ -84,7 +84,7 @@ try {
     <link rel="stylesheet" href="../assets/css/demo.css" />
 
     <!-- custom.css -->
-    <link rel="stylesheet" href="./css/custom.css">
+    <link rel="stylesheet" href="../assets/css/custom.css">
 
     <!-- update.css -->
     <link rel="stylesheet" href="./css/update.css">

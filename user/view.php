@@ -128,7 +128,7 @@ function getGenderIcon($gender)
   <link rel="stylesheet" href="../assets/css/demo.css" />
 
   <!-- custom.css -->
-  <link rel="stylesheet" href="./css/custom.css">
+  <link rel="stylesheet" href="../assets/css/custom.css">
 
   <style>
     .color-vip {

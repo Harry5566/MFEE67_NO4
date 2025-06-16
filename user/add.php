@@ -51,7 +51,7 @@ $levels = $levelStmt->fetchAll(PDO::FETCH_ASSOC);
   <link rel="stylesheet" href="../assets/vendor/css/pages/page-auth.css" />
 
   <!-- custom.css -->
-  <link rel="stylesheet" href="./css/custom.css">
+  <link rel="stylesheet" href="../assets/css/custom.css">
 
   <style>
     body {

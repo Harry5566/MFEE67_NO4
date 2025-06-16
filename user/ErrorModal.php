@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>錯誤提示</title>
-    <link rel="icon" type="image/x-icon" href="./images/logo.ico" />
+    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/vnlogo-ic.ico" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
