@@ -331,7 +331,7 @@ function getGenderIcon($gender)
               <div class="menu-text fw-bold fs-5" data-i18n="Dashboards">票券管理</div>
             </a>
             <ul class="menu-sub">
-              <li class="menu-item active">
+              <li class="menu-item">
                 <a href="../ticket/ticketIndex.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Analytics">票券列表</div>
                 </a>

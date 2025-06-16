@@ -228,7 +228,7 @@ function getGenderIcon($gender)
           <li class="menu-item active">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
               <i class=" fa-solid fa-users me-4"></i>
-              <div class="menu-text fw-bold" data-i18n="Dashboards">會員管理</div>
+              <div class="menu-text fw-bold fs-5" data-i18n="Dashboards">會員管理</div>
             </a>
             <ul class="menu-sub">
               <li class="menu-item active">
@@ -251,18 +251,18 @@ function getGenderIcon($gender)
 
           <!-- 商品管理 -->
           <li class="menu-item">
-            <a href="productTrip-Index.php" class="menu-link menu-toggle">
+            <a href="#" class="menu-link menu-toggle">
               <i class="fa-solid fa-map-location-dot me-2 menu-text"></i>
-              <div class="menu-text fw-bold" data-i18n="Layouts">商品管理</div>
+              <div class="menu-text fw-bold fs-5" data-i18n="Layouts">商品管理</div>
             </a>
             <ul class="menu-sub">
               <li class="menu-item ">
-                <a href="productTrip-Index.php" class="menu-link">
+                <a href="../trip_products/index.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Without menu">行程列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="./addTrip.php" class="menu-link">
+                <a href="../trip_products/addTrip.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Without menu">新增行程</div>
                 </a>
               </li>
@@ -273,16 +273,16 @@ function getGenderIcon($gender)
           <li class="menu-item">
             <a href="#" class="menu-link menu-toggle">
               <i class="fa-solid fa-ticket me-2 menu-text"></i>
-              <div class="menu-text fw-bold" data-i18n="Dashboards">票券管理</div>
+              <div class="menu-text fw-bold fs-5" data-i18n="Dashboards">票券管理</div>
             </a>
             <ul class="menu-sub">
-              <li class="menu-item active">
-                <a href="#" class="menu-link">
+              <li class="menu-item">
+                <a href="../ticket/ticketIndex.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Analytics">票券列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a href="../ticket/ticketAdd.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Analytics">新增票券</div>
                 </a>
               </li>
@@ -293,16 +293,16 @@ function getGenderIcon($gender)
           <li class="menu-item">
             <a href="#" class="menu-link menu-toggle">
               <i class="fa-solid fa-tags me-2 menu-text"></i>
-              <div class="menu-text fw-bold" data-i18n="Dashboards">優惠券管理</div>
+              <div class="menu-text fw-bold fs-5" data-i18n="Dashboards">優惠券管理</div>
             </a>
             <ul class="menu-sub">
               <li class="menu-item active">
-                <a href="#" class="menu-link">
+                <a href="../coupons/index.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Analytics">優惠券列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a href="../coupons/add.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Analytics">新增優惠券</div>
                 </a>
               </li>
