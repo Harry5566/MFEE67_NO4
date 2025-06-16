@@ -86,7 +86,7 @@ if (!$row) {
 
       <!-- Menu -->
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-         <div class="app-brand demo d-flex justify-content-center align-items-center">
+        <div class="app-brand demo d-flex justify-content-center align-items-center">
           <a href="index.html" class="app-brand-link">
             <img class="logo" src="../assets/img/favicon/vnlogo.png" alt="">
           </a>
@@ -122,7 +122,7 @@ if (!$row) {
                   <div class="menu-text fw-bold">新增會員</div>
                 </a>
               </li>
-             
+
             </ul>
           </li>
           <!-- 商品管理 -->
@@ -185,7 +185,25 @@ if (!$row) {
               </li>
             </ul>
           </li>
-        </ul>
+          <!-- 登出 -->
+          <li class="menu-header small text-uppercase">
+            <span class="menu-text fw-bold">會員資訊</span>
+          </li>
+          <div class="container text-center">
+
+            <div class="d-flex justify-content-center gap-3 mb-3">
+              <img class="head" src="./img/<?= $_SESSION["members"]["avatar"] ?>" alt="">
+              <div class="menu-text fw-bold align-self-center"><?= $_SESSION["members"]["name"] ?></div>
+            </div>
+
+            <li class="menu-item row justify-content-center">
+              <a href="./doLogout.php"
+                class="btn rounded-pill btn-gradient-success btn-ban col-10 justify-content-center">
+                <div class="menu-text fw-bold"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>登出</div>
+              </a>
+            </li>
+
+          </div>
         </ul>
 
       </aside>
