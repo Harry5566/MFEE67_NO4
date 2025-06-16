@@ -27,7 +27,7 @@ try {
     $result = $stmt->execute([':member_id' => $memberId]);
 
     if ($result) {
-        alertGoTo("會員解封成功！", "index.php");
+        alertGoTo("會員解封成功！", "./view.php?id={$memberId}");
     } else {
         alertGoToFail("解封失敗，請重試！", "index.php");
     }

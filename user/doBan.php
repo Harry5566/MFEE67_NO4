@@ -43,7 +43,7 @@ try {
     ]);
 
     if ($result) {
-        alertGoTo("會員封鎖成功！", "index.php");
+        alertGoTo("會員封鎖成功！", "./view.php?id={$memberId}");
     } else {
         alertGoToFail("封鎖失敗，請重試！", "index.php");
     }
