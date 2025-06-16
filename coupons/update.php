@@ -1,5 +1,13 @@
 <?php
-require_once "connect.php";
+
+session_start();
+
+if (!isset($_SESSION["members"])) {
+  header("location: ../login.php");
+  exit;
+}
+
+require_once "./connect.php";
 
 if (!isset($_GET["id"])) {
   die("缺少 id");
@@ -105,37 +113,33 @@ if (!$row) {
             </a>
             <ul class="menu-sub">
               <li class="menu-item active">
-                <a href="#" class="menu-link">
+                <a href="../user/index.php" class="menu-link">
                   <div class="menu-text fw-bold">會員列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a href="../user/add.php" class="menu-link">
                   <div class="menu-text fw-bold">新增會員</div>
                 </a>
               </li>
-              <li class="menu-item">
-                <a href="#" class="menu-link">
-                  <div class="menu-text fw-bold">已刪除會員</div>
-                </a>
-              </li>
+             
             </ul>
           </li>
           <!-- 商品管理 -->
           <li class="menu-item">
-            <a href="productTrip-Index.php" class="menu-link menu-toggle">
+            <a href="../trip_products/index.php" class="menu-link menu-toggle">
               <i class="fa-solid fa-map-location-dot me-2 menu-text"></i>
               <div class="menu-text fw-bold" data-i18n="Layouts">商品管理</div>
             </a>
 
             <ul class="menu-sub">
               <li class="menu-item ">
-                <a href="productTrip-Index.php" class="menu-link">
+                <a href="../trip_products/index.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Without menu">行程列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="./addTrip.php" class="menu-link">
+                <a href="../trip_products/addTrip.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Without menu">新增行程</div>
                 </a>
               </li>
@@ -144,18 +148,18 @@ if (!$row) {
 
           <!-- 票券管理 -->
           <li class="menu-item">
-            <a href="#" class="menu-link menu-toggle">
+            <a href="../ticket/ticketIndex.php" class="menu-link menu-toggle">
               <i class="fa-solid fa-ticket me-2 menu-text"></i>
               <div class="menu-text fw-bold" data-i18n="Dashboards">票券管理</div>
             </a>
             <ul class="menu-sub">
               <li class="menu-item active">
-                <a href="#" class="menu-link">
+                <a href="../ticket/ticketIndex.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Analytics">票券列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a href="../ticket/ticketAdd.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Analytics">新增票券</div>
                 </a>
               </li>

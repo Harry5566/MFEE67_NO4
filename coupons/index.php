@@ -1,6 +1,11 @@
 <?php
-require_once "connect.php";
-require_once "Utilities.php";
+session_start();
+if (!isset($_SESSION["members"])) {
+  header("location: ../login.php");
+  exit;
+}
+require_once "./connect.php";
+
 
 $perPage = 10;
 $page = intval($_GET["page"] ?? 1);
@@ -112,9 +117,6 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
     rel="stylesheet" />
 
   <link rel="stylesheet" href="../assets/vendor/fonts/iconify-icons.css" />
-
-
-  <link rel="stylesheet" href="../assets/vendor/fonts/iconify-icons.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -172,44 +174,39 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
           <li class="menu-header small text-uppercase">
             <span class="menu-text fw-bold">後台功能</span>
           </li>
-          <li class="menu-item active open">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class=" fa-solid fa-users me-4"></i>
-              <div class="menu-text fw-bold" data-i18n="Dashboards">會員管理</div>
+          <li class="menu-item ">
+            <a href="../user/index.php" class="menu-link menu-toggle">
+              <i class=" fa-solid fa-users menu-text me-4"></i>
+              <div class="menu-text fw-bold fs-5" data-i18n="Dashboards">會員管理</div>
             </a>
             <ul class="menu-sub">
-              <li class="menu-item active">
-                <a href="index.php" class="menu-link">
+              <li class="menu-item">
+                <a href="../user/index.php" class="menu-link">
                   <div class="menu-text fw-bold">會員列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="add.php" class="menu-link">
+                <a href="../user/add.php" class="menu-link">
                   <div class="menu-text fw-bold">新增會員</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="deletedMembers.php" class="menu-link">
-                  <div class="menu-text fw-bold">已刪除會員</div>
                 </a>
               </li>
             </ul>
           </li>
           <!-- 商品管理 -->
           <li class="menu-item">
-            <a href="productTrip-Index.php" class="menu-link menu-toggle">
+            <a href="../trip_products/index.php"  class="menu-link menu-toggle">
               <i class="fa-solid fa-map-location-dot me-2 menu-text"></i>
               <div class="menu-text fw-bold" data-i18n="Layouts">商品管理</div>
             </a>
 
             <ul class="menu-sub">
-              <li class="menu-item ">
-                <a href="productTrip-Index.php" class="menu-link">
+              <li class="menu-item">
+                <a href="../trip_products/index.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Without menu">行程列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a href="../trip_products/addTrip.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Without menu">新增行程</div>
                 </a>
               </li>
@@ -217,19 +214,19 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
           </li>
 
           <!-- 票券管理 -->
-          <li class="menu-item">
-            <a href="#" class="menu-link menu-toggle">
+          <li class="menu-item ">
+            <a href="../ticket/ticketIndex.php" class="menu-link menu-toggle">
               <i class="fa-solid fa-ticket me-2 menu-text"></i>
               <div class="menu-text fw-bold" data-i18n="Dashboards">票券管理</div>
             </a>
             <ul class="menu-sub">
-              <li class="menu-item active">
-                <a href="#" class="menu-link">
+              <li class="menu-item">
+                <a href="../ticket/ticketIndex.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Analytics">票券列表</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a href="../ticket/ticketAdd.php" class="menu-link">
                   <div class="menu-text fw-bold" data-i18n="Analytics">新增票券</div>
                 </a>
               </li>
@@ -237,7 +234,7 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
           </li>
 
           <!-- 優惠券管理 -->
-          <li class="menu-item">
+          <li class="menu-item active open">
             <a href="index.php" class="menu-link menu-toggle">
               <i class="fa-solid fa-tags me-2 menu-text"></i>
               <div class="menu-text fw-bold" data-i18n="Dashboards">優惠券管理</div>
@@ -256,6 +253,25 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
             </ul>
           </li>
         </ul>
+         <!-- 登出 -->
+          <li class="menu-header small text-uppercase">
+            <span class="menu-text fw-bold">會員資訊</span>
+          </li>
+          <div class="container text-center">
+
+            <div class="d-flex justify-content-center gap-3 mb-3">
+              <img class="head" src="./img/<?= $_SESSION["members"]["avatar"] ?>" alt="">
+              <div class="menu-text fw-bold align-self-center"><?= $_SESSION["members"]["name"] ?></div>
+            </div>
+
+            <li class="menu-item row justify-content-center">
+              <a href="./doLogout.php"
+                class="btn rounded-pill btn-gradient-success btn-ban col-10 justify-content-center">
+                <div class="menu-text fw-bold"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>登出</div>
+              </a>
+            </li>
+
+          </div>
         </ul>
 
       </aside>
@@ -283,7 +299,9 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
               <li class="breadcrumb-item active" class="text-primary">優惠券列表</li>
             </ol>
           </nav>
+          
         </div>
+        
         <!-- Content wrapper -->
         <div class="content-wrapper">
           <div class="container-fluid flex-grow-1 container-p-y">
