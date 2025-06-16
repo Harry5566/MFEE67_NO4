@@ -106,13 +106,13 @@ if (!$row) {
           <li class="menu-header small text-uppercase">
             <span class="menu-text fw-bold">後台功能</span>
           </li>
-          <li class="menu-item active open">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class=" fa-solid fa-users me-4"></i>
-              <div class="menu-text fw-bold" data-i18n="Dashboards">會員管理</div>
+          <li class="menu-item">
+            <a href="../user/index.php" class="menu-link menu-toggle">
+              <i class=" fa-solid fa-users menu-text me-4"></i>
+              <div class="menu-text fw-bold fs-5" data-i18n="Dashboards">會員管理</div>
             </a>
             <ul class="menu-sub">
-              <li class="menu-item active">
+              <li class="menu-item">
                 <a href="../user/index.php" class="menu-link">
                   <div class="menu-text fw-bold">會員列表</div>
                 </a>
@@ -129,7 +129,7 @@ if (!$row) {
           <li class="menu-item">
             <a href="../trip_products/index.php" class="menu-link menu-toggle">
               <i class="fa-solid fa-map-location-dot me-2 menu-text"></i>
-              <div class="menu-text fw-bold" data-i18n="Layouts">商品管理</div>
+              <div class="menu-text fw-bold fs-5" data-i18n="Layouts">商品管理</div>
             </a>
 
             <ul class="menu-sub">
@@ -150,7 +150,7 @@ if (!$row) {
           <li class="menu-item">
             <a href="../ticket/ticketIndex.php" class="menu-link menu-toggle">
               <i class="fa-solid fa-ticket me-2 menu-text"></i>
-              <div class="menu-text fw-bold" data-i18n="Dashboards">票券管理</div>
+              <div class="menu-text fw-bold fs-5" data-i18n="Dashboards">票券管理</div>
             </a>
             <ul class="menu-sub">
               <li class="menu-item active">
@@ -167,10 +167,10 @@ if (!$row) {
           </li>
 
           <!-- 優惠券管理 -->
-          <li class="menu-item">
+          <li class="menu-item active open">
             <a href="index.php" class="menu-link menu-toggle">
               <i class="fa-solid fa-tags me-2 menu-text"></i>
-              <div class="menu-text fw-bold" data-i18n="Dashboards">優惠券管理</div>
+              <div class="menu-text fw-bold fs-5" data-i18n="Dashboards">優惠券管理</div>
             </a>
             <ul class="menu-sub">
               <li class="menu-item active">
@@ -192,12 +192,12 @@ if (!$row) {
           <div class="container text-center">
 
             <div class="d-flex justify-content-center gap-3 mb-3">
-              <img class="head" src="./img/<?= $_SESSION["members"]["avatar"] ?>" alt="">
+              <img class="head" src="../user/img/<?= $_SESSION["members"]["avatar"] ?>" alt="">
               <div class="menu-text fw-bold align-self-center"><?= $_SESSION["members"]["name"] ?></div>
             </div>
 
             <li class="menu-item row justify-content-center">
-              <a href="./doLogout.php"
+              <a href="../user/doLogout.php"
                 class="btn rounded-pill btn-gradient-success btn-ban col-10 justify-content-center">
                 <div class="menu-text fw-bold"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>登出</div>
               </a>
