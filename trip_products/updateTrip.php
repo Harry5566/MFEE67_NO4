@@ -154,9 +154,12 @@ $disablePublished = $publishedAt < $now ? "disabled" : "";
 
 				<ul class="menu-inner py-1">
 					<!-- 會員管理 -->
+					<li class="menu-header small text-uppercase">
+						<span class="menu-text fw-bold">後台功能</span>
+					</li>
 					<li class="menu-item">
 						<a href="javascript:void(0);" class="menu-link menu-toggle ">
-							<i class="fa-solid fa-users me-3 menu-text"></i>
+							<i class="fa-solid fa-users me-4 menu-text"></i>
 							<div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">會員管理</div>
 						</a>
 						<ul class="menu-sub">
@@ -176,7 +179,7 @@ $disablePublished = $publishedAt < $now ? "disabled" : "";
 					<!-- 商品管理 -->
 					<li class="menu-item active open">
 						<a href="javascript:void(0);" class="menu-link menu-toggle">
-							<i class="fa-solid fa-map-location-dot me-3 menu-text"></i>
+							<i class="fa-solid fa-map-location-dot me-4 menu-text"></i>
 							<div class="menu-text fs-5 fw-bold" data-i18n="Layouts">商品管理</div>
 						</a>
 
@@ -197,7 +200,7 @@ $disablePublished = $publishedAt < $now ? "disabled" : "";
 					<!-- 票券管理 -->
 					<li class="menu-item">
 						<a href="javascript:void(0);" class="menu-link menu-toggle">
-							<i class="fa-solid fa-ticket me-3 menu-text"></i>
+							<i class="fa-solid fa-ticket me-4 menu-text"></i>
 							<div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">票券管理</div>
 						</a>
 						<ul class="menu-sub">
@@ -217,7 +220,7 @@ $disablePublished = $publishedAt < $now ? "disabled" : "";
 					<!-- 優惠券管理 -->
 					<li class="menu-item">
 						<a href="javascript:void(0);" class="menu-link menu-toggle">
-							<i class="fa-solid fa-tags me-3 menu-text"></i>
+							<i class="fa-solid fa-tags me-4 menu-text"></i>
 							<div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">優惠券管理</div>
 						</a>
 						<ul class="menu-sub">
@@ -291,8 +294,8 @@ $disablePublished = $publishedAt < $now ? "disabled" : "";
 							</div>
 
 							<div>
-								<a class="btn btn-sm rounded-pill btn-warning me-3" href="./viewTrip.php?id=<?= $row["id"] ?>" alt="檢視行程"><i
-										class="bx bx-show-alt me-1"></i>檢視行程</a>
+								<a class="btn btn-sm rounded-pill btn-warning me-3" href="./viewTrip.php?id=<?= $row["id"] ?>"
+									alt="檢視行程"><i class="bx bx-show-alt me-1"></i>檢視行程</a>
 							</div>
 						</div>
 
