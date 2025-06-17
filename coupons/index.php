@@ -195,7 +195,7 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
           <!-- 商品管理 -->
           <li class="menu-item">
             <a href="../trip_products/index.php" class="menu-link menu-toggle">
-              <i class="fa-solid fa-map-location-dot me-2 menu-text"></i>
+              <i class="fa-solid fa-map-location-dot me-4 menu-text"></i>
               <div class="menu-text fw-bold fs-5" data-i18n="Layouts">商品管理</div>
             </a>
 
@@ -216,7 +216,7 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
           <!-- 票券管理 -->
           <li class="menu-item ">
             <a href="../ticket/ticketIndex.php" class="menu-link menu-toggle">
-              <i class="fa-solid fa-ticket me-2 menu-text"></i>
+              <i class="fa-solid fa-ticket me-4 menu-text"></i>
               <div class="menu-text fw-bold  fs-5" data-i18n="Dashboards">票券管理</div>
             </a>
             <ul class="menu-sub">
@@ -236,7 +236,7 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
           <!-- 優惠券管理 -->
           <li class="menu-item active open">
             <a href="index.php" class="menu-link menu-toggle">
-              <i class="fa-solid fa-tags me-2 menu-text"></i>
+              <i class="fa-solid fa-tags me-4 menu-text"></i>
               <div class="menu-text fw-bold fs-5" data-i18n="Dashboards">優惠券管理</div>
             </a>
             <ul class="menu-sub">
@@ -474,36 +474,37 @@ $usage_scopeMap = [1 => "全站通用", 2 => "行程活動", 3 => "各式票卷"
 
 
 
-                  <!-- Footer -->
-                  <footer class="content-footer footer bg-footer-theme">
-                    <div class="container-fluid">
-                      <div
-                        class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
-                        <div class="mb-2 mb-md-0">
-                          Copyright ©
-                          <script>
-                            document.write(new Date().getFullYear());
-                          </script>
-                          <a href="./index.php" target="_blank" class="footer-link">心橋❤️</a>
-                          by 前端67-第四組
-                        </div>
-                        <div class="d-none d-lg-inline-block">
-                          <a href="./index.php" target="_blank" class="footer-link me-4">關於我們</a>
-                          <a href="./index.php" class="footer-link me-4" target="_blank">相關服務</a>
-                          <a href="./index.php" target="_blank" class="footer-link">進階設定</a>
-                        </div>
-                      </div>
-                    </div>
-                  </footer>
-                  <!-- / Footer -->
+
 
                   <div class="content-backdrop fade"></div>
                 </div>
                 <!-- Content wrapper -->
               </div>
               <!-- / Layout page -->
-            </div>
 
+            </div>
+            <!-- Footer -->
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-fluid">
+                <div
+                  class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                  <div class="mb-2 mb-md-0">
+                    Copyright ©
+                    <script>
+                      document.write(new Date().getFullYear());
+                    </script>
+                    <a href="./index.php" target="_blank" class="footer-link">心橋❤️</a>
+                    by 前端67-第四組
+                  </div>
+                  <div class="d-none d-lg-inline-block">
+                    <a href="./index.php" target="_blank" class="footer-link me-4">關於我們</a>
+                    <a href="./index.php" class="footer-link me-4" target="_blank">相關服務</a>
+                    <a href="./index.php" target="_blank" class="footer-link">進階設定</a>
+                  </div>
+                </div>
+              </div>
+            </footer>
+            <!-- / Footer -->
             <!-- Overlay -->
             <div class="layout-overlay layout-menu-toggle"></div>
             </>

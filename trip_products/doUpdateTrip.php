@@ -260,14 +260,16 @@ if ($totalNoticeCount < 1) {
   exit;
 }
 
-
-
-$imgs = [];
 $imagesChanged = false;
-$sqlImg = "SELECT `file_name` FROM `trip_images` WHERE `trip_id` = ?;";
+
+$oldImages = [];
+$sqlImg = "SELECT file_name FROM trip_images WHERE trip_id = ?";
+$stmtImg = $pdo->prepare($sqlImg);
+$stmtImg->execute([$id]);
+$rowsOldImg = $stmtImg->fetchAll(PDO::FETCH_ASSOC);
+$oldImages = array_column($rowsOldImg, "file_name");
 
 
-// 修改前先刪除全部資料庫中的圖片
 if (isset($_FILES["tripFile"])) {
   $countFile = count($_FILES["tripFile"]["name"]);
   $timestamp = time();

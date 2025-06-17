@@ -204,9 +204,12 @@ $updatedDate = $updatedAt->format("Y-m-d");
 
 				<ul class="menu-inner py-1">
 					<!-- 會員管理 -->
+					<li class="menu-header small text-uppercase">
+						<span class="menu-text fw-bold">後台功能</span>
+					</li>
 					<li class="menu-item">
 						<a href="javascript:void(0);" class="menu-link menu-toggle ">
-							<i class="fa-solid fa-users me-3 menu-text"></i>
+							<i class="fa-solid fa-users me-4 menu-text"></i>
 							<div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">會員管理</div>
 						</a>
 						<ul class="menu-sub">
@@ -226,7 +229,7 @@ $updatedDate = $updatedAt->format("Y-m-d");
 					<!-- 商品管理 -->
 					<li class="menu-item active open">
 						<a href="javascript:void(0);" class="menu-link menu-toggle">
-							<i class="fa-solid fa-map-location-dot me-3 menu-text"></i>
+							<i class="fa-solid fa-map-location-dot me-4 menu-text"></i>
 							<div class="menu-text fs-5 fw-bold" data-i18n="Layouts">商品管理</div>
 						</a>
 
@@ -247,7 +250,7 @@ $updatedDate = $updatedAt->format("Y-m-d");
 					<!-- 票券管理 -->
 					<li class="menu-item">
 						<a href="javascript:void(0);" class="menu-link menu-toggle">
-							<i class="fa-solid fa-ticket me-3 menu-text"></i>
+							<i class="fa-solid fa-ticket me-4 menu-text"></i>
 							<div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">票券管理</div>
 						</a>
 						<ul class="menu-sub">
@@ -267,7 +270,7 @@ $updatedDate = $updatedAt->format("Y-m-d");
 					<!-- 優惠券管理 -->
 					<li class="menu-item">
 						<a href="javascript:void(0);" class="menu-link menu-toggle">
-							<i class="fa-solid fa-tags me-3 menu-text"></i>
+							<i class="fa-solid fa-tags me-4 menu-text"></i>
 							<div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">優惠券管理</div>
 						</a>
 						<ul class="menu-sub">

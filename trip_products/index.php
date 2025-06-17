@@ -384,7 +384,7 @@ $endPage = min($totalPage, $page + 2);
           </li>
           <li class="menu-item">
             <a href="../user/index.php" class="menu-link menu-toggle ">
-              <i class="fa-solid fa-users me-3 menu-text"></i>
+              <i class="fa-solid fa-users me-4 menu-text"></i>
               <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">會員管理</div>
             </a>
             <ul class="menu-sub">
@@ -404,7 +404,7 @@ $endPage = min($totalPage, $page + 2);
           <!-- 商品管理 -->
           <li class="menu-item active open">
             <a href="./index.php" class="menu-link menu-toggle">
-              <i class="fa-solid fa-map-location-dot me-3 menu-text"></i>
+              <i class="fa-solid fa-map-location-dot me-4 menu-text"></i>
               <div class="menu-text fs-5 fw-bold" data-i18n="Layouts">商品管理</div>
             </a>
 
@@ -425,7 +425,7 @@ $endPage = min($totalPage, $page + 2);
           <!-- 票券管理 -->
           <li class="menu-item">
             <a href="../ticket/ticketIndex.php" class="menu-link menu-toggle">
-              <i class="fa-solid fa-ticket me-3 menu-text"></i>
+              <i class="fa-solid fa-ticket me-4 menu-text"></i>
               <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">票券管理</div>
             </a>
             <ul class="menu-sub">
@@ -445,7 +445,7 @@ $endPage = min($totalPage, $page + 2);
           <!-- 優惠券管理 -->
           <li class="menu-item">
             <a href="../coupons/index.php" class="menu-link menu-toggle">
-              <i class="fa-solid fa-tags me-3 menu-text"></i>
+              <i class="fa-solid fa-tags me-4 menu-text"></i>
               <div class="menu-text fs-5 fw-bold" data-i18n="Dashboards">優惠券管理</div>
             </a>
             <ul class="menu-sub">
@@ -681,6 +681,7 @@ $endPage = min($totalPage, $page + 2);
                     <span class="ms-6 my-2 text-primary">目前共&nbsp;<?= $totalCount ?>&nbsp;筆資料</span>
                   </div>
                 </div>
+                
                 <div class="tab-pane fade show active table-responsive full-width-card" id="navs-pills-top-home"
                   role="tabpanel">
                   <table class="table align-middle text-nowrap w-100 mb-4">

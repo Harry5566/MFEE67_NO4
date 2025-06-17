@@ -173,7 +173,7 @@ try {
                     <!-- 商品管理 -->
                     <li class="menu-item">
                         <a href="#" class="menu-link menu-toggle">
-                            <i class="fa-solid fa-map-location-dot me-2 menu-text"></i>
+                            <i class="fa-solid fa-map-location-dot me-4 menu-text"></i>
                             <div class="menu-text fw-bold fs-5" data-i18n="Layouts">商品管理</div>
                         </a>
                         <ul class="menu-sub">
@@ -193,7 +193,7 @@ try {
                     <!-- 票券管理 -->
                     <li class="menu-item">
                         <a href="#" class="menu-link menu-toggle">
-                            <i class="fa-solid fa-ticket me-2 menu-text"></i>
+                            <i class="fa-solid fa-ticket me-4 menu-text"></i>
                             <div class="menu-text fw-bold fs-5" data-i18n="Dashboards">票券管理</div>
                         </a>
                         <ul class="menu-sub">
@@ -213,7 +213,7 @@ try {
                     <!-- 優惠券管理 -->
                     <li class="menu-item">
                         <a href="#" class="menu-link menu-toggle">
-                            <i class="fa-solid fa-tags me-2 menu-text"></i>
+                            <i class="fa-solid fa-tags me-4 menu-text"></i>
                             <div class="menu-text fw-bold fs-5" data-i18n="Dashboards">優惠券管理</div>
                         </a>
                         <ul class="menu-sub">
